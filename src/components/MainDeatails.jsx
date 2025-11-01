@@ -11,17 +11,14 @@ import React, { useState } from "react";
 import { FaClosedCaptioning, FaPlay, FaStar } from "react-icons/fa";
 import { FaVolumeHigh } from "react-icons/fa6";
 import { MdBookmarkAdd } from "react-icons/md";
+import { useNavigate } from "react-router";
 
 export default function MainDeatails({ data }) {
+  const nav = useNavigate();
   const [showMore, setShowMore] = useState(false);
   return (
     <Stack flexDir={{ md: "row", base: "column" }} w={"100%"} gap={10}>
-      <Image
-        h={"400px"}
-        borderRadius={"lg"}
-        minW={"300px"}
-        src={data?.poster}
-      />
+      <Image h={"400px"} borderRadius={"lg"} w={"300px"} src={data?.poster} />
       <Box display={"flex"} flexDir={"column"} gap={5}>
         <HStack>
           <Text
@@ -80,7 +77,7 @@ export default function MainDeatails({ data }) {
             mt={4}
             colorScheme="teal"
             height={50}
-            onClick={() => handleclick(data.id)}
+            onClick={() => nav(`/watch/${data?.id}`)}
             backgroundColor={"#32a88b"}
             boxShadow={"0 0 20px #32a88b"}
             _hover={{

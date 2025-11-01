@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 export default function Animelist({ title, data }) {
   const nav = useNavigate();
   return (
-    <Stack width={"70%"} gap={5}>
+    <Stack width={{ lg: "70%", base: "100%" }} marginTop={"60px"} gap={5}>
       <Heading>{title}</Heading>
       <Box display={"flex"} flexWrap={"wrap"} gap={5}>
         {data?.slice(0, 12)?.map((item) => (

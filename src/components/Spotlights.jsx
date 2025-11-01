@@ -85,7 +85,7 @@ export default function Spotlights({ data }) {
       position="relative"
       borderRadius={"xl"}
       boxShadow="0 0 15px #32a88b"
-      height={"500px"}
+      height={"575px"}
     >
       {data ? (
         <Slider {...settings}>
@@ -103,7 +103,7 @@ export default function Spotlights({ data }) {
                 alt={item.title || "Anime poster"}
                 borderRadius="xl"
                 boxShadow="lg"
-                h={"500px"}
+                h={"575px"}
                 minW={"full"}
               />
               <Box
@@ -180,7 +180,7 @@ export default function Spotlights({ data }) {
                     colorScheme="teal"
                     width={50}
                     height={50}
-                    onClick={() => handleclick(data.id)}
+                    onClick={() => nav(`watch/${item.id}`)}
                     backgroundColor="rgba(0, 0, 0, 0.57)"
                     backdropFilter="blur(10px)"
                     WebkitBackdropFilter="blur(10px)"

@@ -33,9 +33,14 @@ export default function Homepage() {
   return (
     <Box position={"relative"} display={"flex"} flexDir={"column"}>
       <Navbar />
-      <Box marginTop={"120px"}>
+      <Box marginTop={"80px"}>
         <Spotlights data={homepage.spotlights} />
-        <Box display={"flex"} width={"95%"} mx={"auto"} marginTop={30}>
+        <Box
+          display={"flex"}
+          flexDir={{ base: "column", lg: "row" }}
+          width={"95%"}
+          mx={"auto"}
+        >
           <Animelist title={"Latest Episodes"} data={homepage.latestEpisode} />
           <ToptenAnimeList data={homepage.topTen} />
         </Box>

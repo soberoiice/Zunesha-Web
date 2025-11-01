@@ -21,7 +21,13 @@ export default function ToptenAnimeList({ data }) {
     { name: "This Month", link: "month" },
   ];
   return (
-    <Box display={"flex"} flexDir={"column"} width={"30%"} gap={2.5}>
+    <Box
+      display={"flex"}
+      flexDir={"column"}
+      width={{ lg: "30%", base: "100%" }}
+      gap={2.5}
+      marginTop={"60px"}
+    >
       {console.log("top ten :", data)}
       <Stack flexDir={"row"} justifyContent={"space-between"}>
         <Heading>Top 10</Heading>

@@ -11,9 +11,11 @@ import {
 import React from "react";
 import Zunisha from "../assets/Zunisha.png";
 import { LuSearch } from "react-icons/lu";
-import { FaFilter } from "react-icons/fa";
+import { useNavigate } from "react-router";
+import { FaRandom } from "react-icons/fa";
 
 export default function Navbar() {
+  const nav = useNavigate();
   return (
     <HStack
       position={"fixed"}
@@ -27,7 +29,13 @@ export default function Navbar() {
       paddingX={10}
       justifyContent={"space-between"}
     >
-      <HStack gap={2}>
+      <HStack
+        gap={2}
+        onClick={() => {
+          nav("/");
+        }}
+        cursor={"pointer"}
+      >
         <Image
           boxShadow="0 0 50px #32a88b57"
           src={Zunisha}
@@ -54,7 +62,7 @@ export default function Navbar() {
           />
         </InputGroup>
         <IconButton borderRadius={"xl"} backgroundColor={"#161616ff"}>
-          <FaFilter color={"#535353ff"} />
+          <FaRandom color={"#535353ff"} />
         </IconButton>
       </HStack>
     </HStack>
