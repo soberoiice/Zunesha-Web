@@ -57,7 +57,7 @@ export default function ToptenAnimeList({ data }) {
           onClick={() => {
             nav(`details/${item.id}`);
           }}
-          maxW={"95%"}
+          maxW={"100%"}
           key={item.id}
           display={"flex"}
           height={"100px"}

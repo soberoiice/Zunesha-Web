@@ -85,7 +85,7 @@ export default function Spotlights({ data }) {
       position="relative"
       borderRadius={"xl"}
       boxShadow="0 0 15px #32a88b"
-      height={"575px"}
+      h={{ lg: "575px", base: "300px" }}
     >
       {data ? (
         <Slider {...settings}>
@@ -103,7 +103,7 @@ export default function Spotlights({ data }) {
                 alt={item.title || "Anime poster"}
                 borderRadius="xl"
                 boxShadow="lg"
-                h={"575px"}
+                h={{ lg: "575px", base: "300px" }}
                 minW={"full"}
               />
               <Box
@@ -120,7 +120,7 @@ export default function Spotlights({ data }) {
                   w="50%"
                   color="white"
                   flexDir="column"
-                  display={"flex"}
+                  display={{ lg: "flex", base: "none" }}
                   justifyContent={"center"}
                   px={4}
                   zIndex="100"
@@ -186,6 +186,9 @@ export default function Spotlights({ data }) {
                     WebkitBackdropFilter="blur(10px)"
                     color={"white"}
                     borderRadius={"xl"}
+                    _hover={{
+                      transform: "scale(1.1)",
+                    }}
                   >
                     <FaPlay />
                   </Button>
@@ -200,6 +203,9 @@ export default function Spotlights({ data }) {
                     backgroundColor="rgba(255, 255, 255, 0.66)"
                     backdropFilter="blur(10px)"
                     WebkitBackdropFilter="blur(10px)"
+                    _hover={{
+                      transform: "scale(1.1)",
+                    }}
                   >
                     Details
                   </Button>

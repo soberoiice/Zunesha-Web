@@ -28,7 +28,7 @@ export const AnimeProvider = ({ children }) => {
     }
   };
 
-  // FUNCTION TO GET HOMEPAGE INFO
+  // FUNCTION TO GET ANIME INFO
   const getAnimeDetails = async (id) => {
     try {
       setInfo([]);

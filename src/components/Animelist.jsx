@@ -8,7 +8,13 @@ export default function Animelist({ title, data }) {
   return (
     <Stack width={{ lg: "70%", base: "100%" }} marginTop={"60px"} gap={5}>
       <Heading>{title}</Heading>
-      <Box display={"flex"} flexWrap={"wrap"} gap={5}>
+      <Box
+        w={"100%"}
+        display={"flex"}
+        flexWrap={"wrap"}
+        gap={5}
+        justifyContent={{ base: "center", lg: "flex-start" }}
+      >
         {data?.slice(0, 12)?.map((item) => (
           <Box
             key={item.id}
@@ -19,12 +25,13 @@ export default function Animelist({ title, data }) {
             onClick={() => {
               nav(`details/${item.id}`);
             }}
+            w={{ base: "45%", lg: "20%" }}
           >
             <Image
-              height={"225px"}
               borderRadius={"lg"}
-              w={"175px"}
+              w={"100%"}
               src={item.poster}
+              mx={"auto"}
             />
             <Box
               width={"95%"}

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import Hls from "hls.js";
+import { Box } from "@chakra-ui/react";
 
 export default function HLSPlayer({ src, epInfo }) {
   const videoRef = useRef(null);
@@ -28,7 +29,14 @@ export default function HLSPlayer({ src, epInfo }) {
       const hls = new Hls({ enableWebVTT: true });
       hls.loadSource(videoSource);
       hls.attachMedia(video);
+
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        if (video.textTracks && video.textTracks.length > 0) {
+          for (let i = 0; i < video.textTracks.length; i++) {
+            video.textTracks[i].mode = i === 0 ? "showing" : "hidden";
+          }
+        }
+
         video.play().catch(() => {});
       });
 
@@ -39,12 +47,17 @@ export default function HLSPlayer({ src, epInfo }) {
   }, [src]);
 
   return (
-    <div>
+    <Box>
       <video
         ref={videoRef}
         controls
         crossOrigin="anonymous"
-        style={{ width: "100%", margin: "10px auto", aspectRatio: 16 / 9 }}
+        style={{
+          width: "100%",
+          margin: "auto",
+          aspectRatio: 16 / 9,
+          borderRadius: "8px 8px 0 0",
+        }}
       >
         {subtitles.map((sub, i) => (
           <track
@@ -58,6 +71,6 @@ export default function HLSPlayer({ src, epInfo }) {
           />
         ))}
       </video>
-    </div>
+    </Box>
   );
 }

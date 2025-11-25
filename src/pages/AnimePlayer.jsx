@@ -15,15 +15,17 @@ import axios from "axios";
 import ReactPlayer from "react-player";
 import Navbar from "../components/Navbar";
 import HLSReactPlayer from "../components/HLSReactPlayer";
+import EpisodesContainer from "../components/EpisodesContainer";
+import ServerListContainer from "../components/ServerListContainer";
+import MiniInfo from "../components/MiniInfo";
 
 export default function HLSPlayer() {
-  const videoRef = useRef(null);
   const { getAnimeEpisodes, episodes, loading, setLoading } = useAnime();
   const [currentEpisodeIndex, setCurentEpisodeIndex] = useState(0);
   const [currentEpisodeInfo, setCurentEpisodeInfo] = useState({});
   const [type, setType] = useState("sub");
   const [server, setServer] = useState("hd-2");
-  const { id } = useParams();
+  const { animeid } = useParams();
   const file = currentEpisodeInfo?.streamingLink?.link?.file;
   const [videoReady, setVideoReady] = useState(false);
   const subServers = currentEpisodeInfo?.servers?.filter(
@@ -38,6 +40,7 @@ export default function HLSPlayer() {
   }, [file]);
 
   useEffect(() => {
+    setType("sub");
     const getAnimeEpisodeInfo = async (id) => {
       try {
         setCurentEpisodeInfo({});
@@ -63,8 +66,8 @@ export default function HLSPlayer() {
   }, [currentEpisodeIndex, episodes, server, type]);
 
   useEffect(() => {
-    getAnimeEpisodes(id);
-  }, [id]);
+    getAnimeEpisodes(animeid);
+  }, [animeid]);
 
   if (loading) {
     return (
@@ -84,151 +87,45 @@ export default function HLSPlayer() {
   return (
     <Box position={"relative"} display={"flex"} flexDir={"column"} mb={"60px"}>
       <Navbar />
-      <Box
-        backgroundColor={"#333333ff"}
-        width={{ lg: "60%", base: "95%" }}
-        marginX={"auto"}
-        paddingX={2}
-        py={5}
-        marginTop={"80px"}
-        borderRadius={"lg"}
+      <Stack
+        flexDir={{ lg: "row", base: "column" }}
+        justifyContent={"center"}
+        gap={5}
       >
-        <Box w={"95%"} mx={"auto"}>
-          <Text
-            fontWeight={"bold"}
-            color={"#32a88b"}
-            fontSize={"xl"}
-            mb={"10px"}
-          >
-            {episodes[currentEpisodeIndex]?.title}
-          </Text>
-          <HLSReactPlayer src={file} epInfo={currentEpisodeInfo} />
-        </Box>
-        <Stack
-          mx={"auto"}
-          width={"95%"}
-          flexDir={{ md: "row", base: "column" }}
-          mt={"20px"}
-          maxH={"400px"}
+        <Box
+          backgroundColor={"#333333ff"}
+          width={{ lg: "70%", base: "95%" }}
+          marginTop={"80px"}
+          borderRadius={"lg"}
+          maxH={"800px"}
         >
-          <Stack w={{ md: "70%", base: "100%" }} flexWrap={"wrap"} gap={2}>
-            <Text fontWeight={"bold"} color={"#32a88b"} fontSize={"xl"}>
-              Episodes
-            </Text>
-            <Stack
-              flexDir={"row"}
-              flexWrap={"wrap"}
-              gap={2}
-              overflow={"scroll"}
-              maxH={"340px"}
-            >
-              {episodes.length > 0 &&
-                episodes.map((ep, index) => (
-                  <Button
-                    key={ep?.id || index}
-                    onClick={() => setCurentEpisodeIndex(index)}
-                    colorScheme="teal"
-                    width={"50px"}
-                    height={"35px"}
-                    backgroundColor="rgba(0, 0, 0, 0.57)"
-                    backdropFilter="blur(10px)"
-                    WebkitBackdropFilter="blur(10px)"
-                    color={"white"}
-                    borderRadius={"lg"}
-                  >
-                    {ep?.episode_no || `Episode ${index + 1}`}
-                  </Button>
-                ))}
-            </Stack>
-          </Stack>
+          <Box w={"100%"} paddingTop={0}>
+            <HLSReactPlayer src={file} epInfo={currentEpisodeInfo} />
+          </Box>
           <Stack
-            width={{ md: "35%", base: "100%" }}
-            height={"200px"}
-            backgroundColor="rgba(0, 0, 0, 0.57)"
-            backdropFilter="blur(10px)"
-            WebkitBackdropFilter="blur(10px)"
-            borderRadius={"xl"}
-            alignItems={"center"}
-            justifyContent={"center"}
+            mx={"auto"}
+            width={"95%"}
+            flexDir={{ md: "row", base: "column" }}
+            mt={"20px"}
+            mb={"20px"}
+            maxH={"400px"}
           >
-            <Stack gap={3}>
-              {subServers && (
-                <Box>
-                  <Text lineHeight={2}>Sub Servers</Text>
-                  <HStack>
-                    {subServers.map((item, index) => (
-                      <Button
-                        key={index}
-                        onClick={() => {
-                          setServer(item?.serverName.toLowerCase());
-                          setType("sub");
-                        }}
-                        colorScheme="teal"
-                        width={"50px"}
-                        height={"35px"}
-                        backgroundColor={
-                          server == item?.serverName.toLowerCase() &&
-                          type == "sub"
-                            ? "rgba(255, 255, 255, 0.57)"
-                            : "#00000096"
-                        }
-                        backdropFilter="blur(10px)"
-                        WebkitBackdropFilter="blur(10px)"
-                        color={
-                          server == item?.serverName.toLowerCase() &&
-                          type == "sub"
-                            ? "rgba(0, 0, 0, 1)"
-                            : "#ffffffff"
-                        }
-                        borderRadius={"lg"}
-                      >
-                        {item?.serverName}
-                      </Button>
-                    ))}
-                  </HStack>
-                </Box>
-              )}
-
-              {dubServers && (
-                <Box>
-                  <Text lineHeight={2}>Dub Servers</Text>
-                  <HStack>
-                    {dubServers.map((item, index) => (
-                      <Button
-                        key={index}
-                        onClick={() => {
-                          setServer(item?.serverName.toLowerCase());
-                          setType("dub");
-                        }}
-                        colorScheme="teal"
-                        width={"50px"}
-                        height={"35px"}
-                        backgroundColor={
-                          server == item?.serverName.toLowerCase() &&
-                          type == "dub"
-                            ? "rgba(243, 243, 243, 0.59)"
-                            : "#000000a1"
-                        }
-                        backdropFilter="blur(10px)"
-                        WebkitBackdropFilter="blur(10px)"
-                        color={
-                          server == item?.serverName.toLowerCase() &&
-                          type == "dub"
-                            ? "rgba(0, 0, 0, 1)"
-                            : "#ffffffff"
-                        }
-                        borderRadius={"lg"}
-                      >
-                        {item?.serverName}
-                      </Button>
-                    ))}
-                  </HStack>
-                </Box>
-              )}
-            </Stack>
+            <EpisodesContainer
+              episodes={episodes}
+              setCurentEpisodeIndex={setCurentEpisodeIndex}
+            />
+            <ServerListContainer
+              setServer={setServer}
+              server={server}
+              subServers={subServers}
+              dubServers={dubServers}
+              type={type}
+              setType={setType}
+            />
           </Stack>
-        </Stack>
-      </Box>
+        </Box>
+        <MiniInfo animeId={animeid} />
+      </Stack>
     </Box>
   );
 }

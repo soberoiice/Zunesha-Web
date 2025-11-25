@@ -14,7 +14,7 @@ function App() {
           <Routes>
             <Route path="/" exact element={<Homepage />} />
             <Route path="/details/:id" exact element={<Animedeatails />} />
-            <Route path="/watch/:id" exact element={<AnimePlayer />} />
+            <Route path="/watch/:animeid" exact element={<AnimePlayer />} />
             <Route path="*" exact element={<NotFound />} />
           </Routes>
         </BrowserRouter>
