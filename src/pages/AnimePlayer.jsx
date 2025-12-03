@@ -22,6 +22,7 @@ import MiniInfo from "../components/MiniInfo";
 export default function HLSPlayer() {
   const { getAnimeEpisodes, episodes, loadingEpisodes, setLoadingEpisodes } =
     useAnime();
+  const PROXY_URL = import.meta.env.VITE_PROXY_URL;
   const [currentEpisodeIndex, setCurentEpisodeIndex] = useState(0);
   const [currentEpisodeInfo, setCurentEpisodeInfo] = useState({});
   const [type, setType] = useState("sub");
@@ -46,9 +47,7 @@ export default function HLSPlayer() {
       const targetUrl = `${apiUrl}stream?id=${id}&server=${server}&type=${type}`;
       const encodedUrl = encodeURIComponent(targetUrl);
       console.log(targetUrl);
-      const response = await axios.get(
-        `https://corsproxy-psi.vercel.app/api/proxy?url=${encodedUrl}`
-      );
+      const response = await axios.get(`${PROXY_URL}${encodedUrl}`);
       setCurentEpisodeInfo(response.data.results);
       console.log("episode data anime player:", response.data.results);
     } catch (error) {

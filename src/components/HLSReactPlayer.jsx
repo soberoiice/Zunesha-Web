@@ -4,15 +4,14 @@ import { Box } from "@chakra-ui/react";
 
 export default function HLSPlayer({ src, epInfo }) {
   const videoRef = useRef(null);
+  const PROXY_URL = import.meta.env.VITE_PROXY_URL;
 
   const subtitles =
     Array.isArray(epInfo?.streamingLink?.tracks) &&
     epInfo?.streamingLink?.tracks.length > 0
       ? epInfo.streamingLink.tracks.map((t, i) => ({
           kind: t.kind || "subtitles",
-          src: `https://corsproxy-psi.vercel.app/api/proxy?url=${encodeURIComponent(
-            t.file
-          )}`,
+          src: `${PROXY_URL}${encodeURIComponent(t.file)}`,
           srcLang: t.srcLang || "en",
           label: t.label || `Subtitle ${i + 1}`,
           default: t.default || i === 0,
@@ -23,7 +22,7 @@ export default function HLSPlayer({ src, epInfo }) {
     const video = videoRef.current;
     if (!video) return;
 
-    const videoSource = `https://zunisha-cors-proxy.vercel.app/proxy?url=${src}`;
+    const videoSource = `${PROXY_URL}${src}`;
 
     if (Hls.isSupported()) {
       const hls = new Hls({ enableWebVTT: true });
