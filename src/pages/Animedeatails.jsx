@@ -1,19 +1,19 @@
 import { Box, Center, Spinner, Stack } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
-import { useAnime } from "../utils/AnimeProvider";
 import MainDeatails from "../components/MainDeatails";
 import Navbar from "../components/Navbar";
+import { useAnime } from "../components/Contexts/AnimeProvider";
 
 export default function Animedeatails() {
   const { id } = useParams();
-  const { info, getAnimeDetails, loading } = useAnime();
+  const { info, getAnimeDetails, loadingDetails } = useAnime();
 
   useEffect(() => {
     console.log("anime id", id);
     getAnimeDetails(id);
   }, [id]);
-  if (loading) {
+  if (loadingDetails) {
     return (
       <Center minH="100vh">
         <Spinner size="xl" color="teal.400" />

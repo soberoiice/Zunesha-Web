@@ -13,6 +13,7 @@ export default function EpisodesContainer({ episodes, setCurentEpisodeIndex }) {
         gap={2}
         overflow={"scroll"}
         maxH={"340px"}
+        scrollbar={"hidden"}
       >
         {episodes.length > 0 &&
           episodes.map((ep, index) => (

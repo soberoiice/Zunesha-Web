@@ -1,16 +1,16 @@
-import { Box, Center, Image, Stack, Text } from "@chakra-ui/react";
+import { Box, Center, Image, Spinner, Stack, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { useAnime } from "../utils/AnimeProvider";
+import { useAnime } from "./Contexts/AnimeProvider";
 
 export default function MiniInfo({ animeId }) {
-  const { info, getAnimeDetails, loading } = useAnime();
+  const { info, getAnimeDetails, loadingDetails } = useAnime();
 
   useEffect(() => {
     console.log("anime id", animeId);
     getAnimeDetails(animeId);
   }, [animeId]);
 
-  if (loading) {
+  if (loadingDetails) {
     return (
       <Box
         backgroundColor={"#333333ff"}

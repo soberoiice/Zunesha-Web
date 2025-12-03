@@ -1,20 +1,20 @@
 import { Box, Center, Image, Spinner } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { useAnime } from "../utils/AnimeProvider";
+import { useAnime } from "../components/Contexts/AnimeProvider";
 import Spotlights from "../components/Spotlights";
 import Navbar from "../components/Navbar";
 import Animelist from "../components/Animelist";
 import ToptenAnimeList from "../components/ToptenAnimeList";
 
 export default function Homepage() {
-  const { getHomepage, homepage, loading } = useAnime();
+  const { getHomepage, homepage, loadingHomepage } = useAnime();
   const { content, setContent } = useState();
 
   const list = ["New Episodes"];
   useEffect(() => {
     getHomepage();
   }, []);
-  if (loading) {
+  if (loadingHomepage) {
     return (
       <Center minH="100vh">
         <Spinner size="xl" color="teal.400" />

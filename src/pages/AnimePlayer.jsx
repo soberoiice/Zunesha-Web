@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Hls from "hls.js";
-import { useAnime } from "../utils/AnimeProvider";
+import { useAnime } from "../components/Contexts/AnimeProvider";
 import { useParams } from "react-router";
 import {
   Box,
@@ -20,7 +20,8 @@ import ServerListContainer from "../components/ServerListContainer";
 import MiniInfo from "../components/MiniInfo";
 
 export default function HLSPlayer() {
-  const { getAnimeEpisodes, episodes, loading, setLoading } = useAnime();
+  const { getAnimeEpisodes, episodes, loadingEpisodes, setLoadingEpisodes } =
+    useAnime();
   const [currentEpisodeIndex, setCurentEpisodeIndex] = useState(0);
   const [currentEpisodeInfo, setCurentEpisodeInfo] = useState({});
   const [type, setType] = useState("sub");
@@ -38,38 +39,37 @@ export default function HLSPlayer() {
   useEffect(() => {
     if (file) setVideoReady(true);
   }, [file]);
-
+  const getAnimeEpisodeInfo = async (id) => {
+    try {
+      setCurentEpisodeInfo({});
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const targetUrl = `${apiUrl}stream?id=${id}&server=${server}&type=${type}`;
+      const encodedUrl = encodeURIComponent(targetUrl);
+      console.log(targetUrl);
+      const response = await axios.get(
+        `https://corsproxy-psi.vercel.app/api/proxy?url=${encodedUrl}`
+      );
+      setCurentEpisodeInfo(response.data.results);
+      console.log("episode data anime player:", response.data.results);
+    } catch (error) {
+      console.error(error);
+    } finally {
+    }
+  };
   useEffect(() => {
-    setType("sub");
-    const getAnimeEpisodeInfo = async (id) => {
-      try {
-        setCurentEpisodeInfo({});
-        const apiUrl = import.meta.env.VITE_API_URL;
-        const targetUrl = `${apiUrl}stream?id=${id}&server=${server}&type=${type}`;
-        const encodedUrl = encodeURIComponent(targetUrl);
-        console.log(targetUrl);
-        const response = await axios.get(
-          `https://corsproxy-psi.vercel.app/api/proxy?url=${encodedUrl}`
-        );
-        setCurentEpisodeInfo(response.data.results);
-        console.log("episode data:", response.data.results);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (episodes && episodes.length) {
+    if (episodes && episodes.length > 0) {
+      console.log("episode id", "running");
       getAnimeEpisodeInfo(episodes[currentEpisodeIndex].id);
       console.log("current ep index", episodes[currentEpisodeIndex].id);
     }
-  }, [currentEpisodeIndex, episodes, server, type]);
+  }, [currentEpisodeIndex, episodes, server, type, loadingEpisodes]);
 
   useEffect(() => {
+    setType("sub");
     getAnimeEpisodes(animeid);
   }, [animeid]);
 
-  if (loading) {
+  if (loadingEpisodes) {
     return (
       <Center minH="100vh">
         <Spinner size="xl" color="teal.400" />
@@ -124,7 +124,7 @@ export default function HLSPlayer() {
             />
           </Stack>
         </Box>
-        {/* <MiniInfo animeId={animeid} /> */}
+        <MiniInfo animeId={animeid} />
       </Stack>
     </Box>
   );

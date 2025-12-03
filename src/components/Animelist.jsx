@@ -32,6 +32,7 @@ export default function Animelist({ title, data }) {
               w={"100%"}
               src={item.poster}
               mx={"auto"}
+              h={"275px"}
             />
             <Box
               width={"95%"}
