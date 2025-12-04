@@ -15,7 +15,7 @@ export default function EpisodesContainer({
         lineClamp={1}
       >
         Episode {currentEpisodeIndex + 1} :{" "}
-        {episodes[currentEpisodeIndex].title}
+        {episodes[currentEpisodeIndex]?.title}
       </Text>
       <Stack
         flexDir={"row"}
