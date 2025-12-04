@@ -1,10 +1,10 @@
 import { Box, Center, Image, Spinner } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { useAnime } from "../components/Contexts/AnimeProvider";
 import Spotlights from "../components/Spotlights";
 import Navbar from "../components/Navbar";
 import Animelist from "../components/Animelist";
 import ToptenAnimeList from "../components/ToptenAnimeList";
+import { useAnime } from "../Contexts/AnimeProvider";
 
 export default function Homepage() {
   const { getHomepage, homepage, loadingHomepage } = useAnime();

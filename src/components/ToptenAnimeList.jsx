@@ -8,7 +8,6 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { BsCameraVideoFill } from "react-icons/bs";
 import { FaClosedCaptioning, FaVolumeHigh } from "react-icons/fa6";
 import { useNavigate } from "react-router";
 
@@ -28,7 +27,6 @@ export default function ToptenAnimeList({ data }) {
       gap={2.5}
       marginTop={"60px"}
     >
-      {console.log("top ten :", data)}
       <Stack flexDir={"row"} justifyContent={"space-between"}>
         <Heading>Top 10</Heading>
         <HStack>

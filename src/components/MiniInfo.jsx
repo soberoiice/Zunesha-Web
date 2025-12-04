@@ -1,12 +1,12 @@
 import { Box, Center, Image, Spinner, Stack, Text } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { useAnime } from "./Contexts/AnimeProvider";
+import React, { useEffect } from "react";
+import { useAnime } from "../Contexts/AnimeProvider";
 
 export default function MiniInfo({ animeId }) {
   const { info, getAnimeDetails, loadingDetails } = useAnime();
 
   useEffect(() => {
-    console.log("anime id", animeId);
+    // console.log("anime id", animeId);
     getAnimeDetails(animeId);
   }, [animeId]);
 
@@ -47,18 +47,19 @@ export default function MiniInfo({ animeId }) {
   }
   return (
     <Box
+      display={{ base: "flex", lg: "block" }}
       backgroundColor={"#333333ff"}
-      width={{ lg: "20%", base: "95%" }}
+      width={{ lg: "240px", base: "95%" }}
       paddingX={0}
-      py={5}
-      marginTop={"80px"}
       borderRadius={"xl"}
-      paddingTop={0}
+      h={{ lg: "780px" }}
     >
       <Image
-        w={"100%"}
-        height={"auto"}
-        borderTopRadius={"xl"}
+        w={{ lg: "100%", base: "15%" }}
+        aspectRatio={2 / 3}
+        borderBottomLeftRadius={{ lg: 0, base: "xl" }}
+        borderTopRightRadius={{ lg: "xl", base: 0 }}
+        borderTopLeftRadius={{ lg: "xl", base: "xl" }}
         src={info?.data?.poster}
       />
       <Box w={"90%"} mx={"auto"} mt={3}>

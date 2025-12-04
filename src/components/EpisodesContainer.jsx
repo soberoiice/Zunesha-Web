@@ -1,18 +1,28 @@
 import { Button, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 
-export default function EpisodesContainer({ episodes, setCurentEpisodeIndex }) {
+export default function EpisodesContainer({
+  episodes,
+  setCurentEpisodeIndex,
+  currentEpisodeIndex,
+}) {
   return (
     <Stack w={{ md: "70%", base: "100%" }} flexWrap={"wrap"} gap={2}>
-      <Text fontWeight={"bold"} color={"#32a88b"} fontSize={"xl"}>
-        Episodes
+      <Text
+        fontWeight={"bold"}
+        color={"#ffffffff"}
+        fontSize={"xl"}
+        lineClamp={1}
+      >
+        Episode {currentEpisodeIndex + 1} :{" "}
+        {episodes[currentEpisodeIndex].title}
       </Text>
       <Stack
         flexDir={"row"}
         flexWrap={"wrap"}
         gap={2}
         overflow={"scroll"}
-        maxH={"340px"}
+        maxH={"150px"}
         scrollbar={"hidden"}
       >
         {episodes.length > 0 &&
@@ -23,7 +33,11 @@ export default function EpisodesContainer({ episodes, setCurentEpisodeIndex }) {
               colorScheme="teal"
               width={"50px"}
               height={"35px"}
-              backgroundColor="rgba(0, 0, 0, 0.57)"
+              backgroundColor={
+                index == currentEpisodeIndex
+                  ? "#32a88b8e"
+                  : "rgba(0, 0, 0, 0.57)"
+              }
               backdropFilter="blur(10px)"
               WebkitBackdropFilter="blur(10px)"
               color={"white"}

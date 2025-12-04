@@ -1,6 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import Hls from "hls.js";
-import { useAnime } from "../components/Contexts/AnimeProvider";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import {
   Box,
@@ -11,25 +9,26 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import axios from "axios";
-import ReactPlayer from "react-player";
 import Navbar from "../components/Navbar";
 import HLSReactPlayer from "../components/HLSReactPlayer";
 import EpisodesContainer from "../components/EpisodesContainer";
 import ServerListContainer from "../components/ServerListContainer";
 import MiniInfo from "../components/MiniInfo";
+import { useAnime } from "../Contexts/AnimeProvider";
 
 export default function HLSPlayer() {
-  const { getAnimeEpisodes, episodes, loadingEpisodes, setLoadingEpisodes } =
-    useAnime();
-  const PROXY_URL = import.meta.env.VITE_PROXY_URL;
+  const {
+    getAnimeEpisodes,
+    episodes,
+    loadingEpisodes,
+    getCurrentEpisodeInfo,
+    currentEpisodeInfo,
+  } = useAnime();
   const [currentEpisodeIndex, setCurentEpisodeIndex] = useState(0);
-  const [currentEpisodeInfo, setCurentEpisodeInfo] = useState({});
   const [type, setType] = useState("sub");
   const [server, setServer] = useState("hd-2");
   const { animeid } = useParams();
   const file = currentEpisodeInfo?.streamingLink?.link?.file;
-  const [videoReady, setVideoReady] = useState(false);
   const subServers = currentEpisodeInfo?.servers?.filter(
     (subs) => subs?.type.toString() === "sub"
   );
@@ -38,28 +37,9 @@ export default function HLSPlayer() {
   );
 
   useEffect(() => {
-    if (file) setVideoReady(true);
-  }, [file]);
-  const getAnimeEpisodeInfo = async (id) => {
-    try {
-      setCurentEpisodeInfo({});
-      const apiUrl = import.meta.env.VITE_API_URL;
-      const targetUrl = `${apiUrl}stream?id=${id}&server=${server}&type=${type}`;
-      const encodedUrl = encodeURIComponent(targetUrl);
-      console.log(targetUrl);
-      const response = await axios.get(`${PROXY_URL}${encodedUrl}`);
-      setCurentEpisodeInfo(response.data.results);
-      console.log("episode data anime player:", response.data.results);
-    } catch (error) {
-      console.error(error);
-    } finally {
-    }
-  };
-  useEffect(() => {
     if (episodes && episodes.length > 0) {
-      console.log("episode id", "running");
-      getAnimeEpisodeInfo(episodes[currentEpisodeIndex].id);
-      console.log("current ep index", episodes[currentEpisodeIndex].id);
+      getCurrentEpisodeInfo(episodes[currentEpisodeIndex].id, server, type);
+      // console.log("current ep index", episodes[currentEpisodeIndex].id);
     }
   }, [currentEpisodeIndex, episodes, server, type, loadingEpisodes]);
 
@@ -84,44 +64,66 @@ export default function HLSPlayer() {
     );
   }
   return (
-    <Box position={"relative"} display={"flex"} flexDir={"column"} mb={"60px"}>
+    <Box
+      position={"relative"}
+      justifyContent={"center"}
+      alignItems={"center"}
+      display={"flex"}
+      flexDir={"column"}
+      mb={"60px"}
+    >
       <Navbar />
       <Stack
         flexDir={{ lg: "row", base: "column" }}
-        justifyContent={"center"}
+        alignItems={{ base: "center", lg: "flex-start" }}
+        justifyContent={{ lg: "center", base: "flex-start" }}
         gap={5}
+        marginTop={"80px"}
+        w={"95%"}
       >
         <Box
-          backgroundColor={"#333333ff"}
+          display={"flex"}
           width={{ lg: "70%", base: "95%" }}
-          marginTop={"80px"}
-          borderRadius={"lg"}
-          maxH={"800px"}
+          gap={5}
+          flexDir={"column"}
         >
-          <Box w={"100%"} paddingTop={0}>
+          <Box
+            w={"100%"}
+            borderRadius={"lg"}
+            paddingTop={0}
+            backgroundColor={"#333333ff"}
+          >
             <HLSReactPlayer src={file} epInfo={currentEpisodeInfo} />
           </Box>
-          <Stack
-            mx={"auto"}
-            width={"95%"}
-            flexDir={{ md: "row", base: "column" }}
-            mt={"20px"}
-            mb={"20px"}
-            maxH={"400px"}
+          <Box
+            backgroundColor={"#333333ff"}
+            w={"full"}
+            borderRadius={"lg"}
+            py={3}
+            px={2}
+            minH={"250px"}
           >
-            <EpisodesContainer
-              episodes={episodes}
-              setCurentEpisodeIndex={setCurentEpisodeIndex}
-            />
-            <ServerListContainer
-              setServer={setServer}
-              server={server}
-              subServers={subServers}
-              dubServers={dubServers}
-              type={type}
-              setType={setType}
-            />
-          </Stack>
+            <Stack
+              mx={"auto"}
+              width={"95%"}
+              flexDir={{ md: "row", base: "column" }}
+              maxH={"400px"}
+            >
+              <EpisodesContainer
+                episodes={episodes}
+                setCurentEpisodeIndex={setCurentEpisodeIndex}
+                currentEpisodeIndex={currentEpisodeIndex}
+              />
+              <ServerListContainer
+                setServer={setServer}
+                server={server}
+                subServers={subServers}
+                dubServers={dubServers}
+                type={type}
+                setType={setType}
+              />
+            </Stack>
+          </Box>
         </Box>
         <MiniInfo animeId={animeid} />
       </Stack>

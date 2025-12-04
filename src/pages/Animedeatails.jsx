@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import MainDeatails from "../components/MainDeatails";
 import Navbar from "../components/Navbar";
-import { useAnime } from "../components/Contexts/AnimeProvider";
+import { useAnime } from "../Contexts/AnimeProvider";
 
 export default function Animedeatails() {
   const { id } = useParams();

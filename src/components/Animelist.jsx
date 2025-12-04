@@ -15,7 +15,7 @@ export default function Animelist({ title, data }) {
         gap={5}
         justifyContent={{ base: "center", lg: "flex-start" }}
       >
-        {data?.slice(0, 12)?.map((item) => (
+        {data?.slice(0, 16)?.map((item) => (
           <Box
             key={item.id}
             position={"relative"}

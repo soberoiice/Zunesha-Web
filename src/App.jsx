@@ -4,7 +4,7 @@ import { Provider } from "./components/ui/provider";
 import Animedeatails from "./pages/Animedeatails";
 import AnimePlayer from "./pages/AnimePlayer";
 import NotFound from "./pages/NotFound";
-import { AnimeProvider } from "./components/Contexts/AnimeProvider";
+import { AnimeProvider } from "./Contexts/AnimeProvider";
 
 function App() {
   return (

@@ -55,7 +55,7 @@ export default function HLSPlayer({ src, epInfo }) {
           width: "100%",
           margin: "auto",
           aspectRatio: 16 / 9,
-          borderRadius: "8px 8px 0 0",
+          borderRadius: "8px",
         }}
       >
         {subtitles.map((sub, i) => (
