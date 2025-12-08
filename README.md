@@ -1,16 +1,129 @@
-# React + Vite
+# 🎬 Zunesha-Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> A clean and fast anime-streaming web app built with React and Vite.
 
-Currently, two official plugins are available:
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![React](https://img.shields.io/badge/React-18-61dafb)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-Build-646CFF)](https://vitejs.dev/)
+[![Status](https://img.shields.io/badge/Status-Active-green)]()
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Zunesha-Web lets users browse and watch anime through a smooth interface with quick loading and a simple layout.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ Features
 
-## Expanding the ESLint configuration
+### Main Functions
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 🎥 **Episode Streaming** — Watch anime through a clean built-in player
+- 🗂️ **Anime Catalog** — Browse shows with quick page loads
+- 📱 **Works on All Devices** — Mobile, tablet, and desktop
+- ⚡ **Fast Build Setup** — Powered by React + Vite
+
+### Dev-Focused
+
+- 🔧 **Modular Components**
+- 📦 **Simple File Layout**
+- 🚀 **Ready for hosting on Vercel, Netlify, or any static server**
+
+---
+
+## 🚀 Quick Start
+
+### Requirements
+
+- Node.js 14+
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/BU-SENG/foss-project-light-pink.git
+   cd foss-project-light-pink
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   Edit `.env` and add your Supabase credentials:
+
+   ```env
+   VITE_SUPABASE_URL=your_supabase_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
+
+4. **Set up Supabase** (see detailed guide below)
+
+   - Create a new Supabase project
+   - Run database migrations
+   - Deploy Edge Functions
+   - Configure authentication
+
+5. **Start the development server**
+
+   ```bash
+   npm run dev
+   ```
+
+6. **Open your browser**
+   Navigate to `http://localhost:5173`
+
+### Live Demo
+
+https://zunesha-web.vercel.app/
+
+### Project Structure
+
+```bash
+Zunesha-Web/
+├── public/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── hooks/
+│   ├── utils/
+│   └── styles/
+├── .env.example
+├── vite.config.js
+├── package.json
+└── README.md
+
+```
+
+### 🛠️ Scripts
+
+```bash
+npm run dev       # start development server
+npm run build     # build for production
+npm run preview   # preview build
+```
+
+### 🤝 Contributing
+
+1. Fork the repo
+2. Make a new branch
+3. Add your changes
+4. Open a pull request
+
+### 🗺️ Roadmap
+
+1. Add search
+2. Add user profiles
+3. Add watch history
+4. Improve player controls
+5. Add more anime sources
+
+### 📝 License
+
+This project is under the MIT license.
