@@ -18,6 +18,7 @@ export default function ServerListContainer({
       WebkitBackdropFilter="blur(10px)"
       borderRadius={"xl"}
       alignItems={"center"}
+      color={"white"}
       justifyContent={"center"}
     >
       <Stack gap={3}>

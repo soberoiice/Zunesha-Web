@@ -206,6 +206,7 @@ export default function Spotlights({ data }) {
                     _hover={{
                       transform: "scale(1.1)",
                     }}
+                    color={"black"}
                   >
                     Details
                   </Button>

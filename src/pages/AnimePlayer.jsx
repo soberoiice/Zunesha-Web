@@ -15,6 +15,7 @@ import EpisodesContainer from "../components/EpisodesContainer";
 import ServerListContainer from "../components/ServerListContainer";
 import MiniInfo from "../components/MiniInfo";
 import { useAnime } from "../Contexts/AnimeProvider";
+import Loader from "../components/Loader";
 
 export default function HLSPlayer() {
   const {
@@ -49,11 +50,7 @@ export default function HLSPlayer() {
   }, [animeid]);
 
   if (loadingEpisodes) {
-    return (
-      <Center minH="100vh">
-        <Spinner size="xl" color="teal.400" />
-      </Center>
-    );
+    return <Loader />;
   }
 
   if (!episodes || episodes.length === 0) {
@@ -70,7 +67,8 @@ export default function HLSPlayer() {
       alignItems={"center"}
       display={"flex"}
       flexDir={"column"}
-      mb={"60px"}
+      height={"100%"}
+      background={"black"}
     >
       <Navbar />
       <Stack

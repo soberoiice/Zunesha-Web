@@ -11,7 +11,7 @@ import React, { useState } from "react";
 import { FaClosedCaptioning, FaVolumeHigh } from "react-icons/fa6";
 import { useNavigate } from "react-router";
 
-export default function ToptenAnimeList({ data }) {
+export default function ToptenAnimeList({ data, type, title }) {
   const [content, setContent] = useState("today");
   const nav = useNavigate();
   const list = [
@@ -19,6 +19,7 @@ export default function ToptenAnimeList({ data }) {
     { name: "This Week", link: "week" },
     { name: "This Month", link: "month" },
   ];
+
   return (
     <Box
       display={"flex"}
@@ -26,9 +27,10 @@ export default function ToptenAnimeList({ data }) {
       width={{ lg: "30%", base: "100%" }}
       gap={2.5}
       marginTop={"60px"}
+      color={"white"}
     >
       <Stack flexDir={"row"} justifyContent={"space-between"}>
-        <Heading>Top 10</Heading>
+        <Heading>{title}</Heading>
         <HStack>
           {list.map((item) => (
             <Button

@@ -6,13 +6,19 @@ import { useNavigate } from "react-router";
 export default function Animelist({ title, data }) {
   const nav = useNavigate();
   return (
-    <Stack width={{ lg: "70%", base: "100%" }} marginTop={"60px"} gap={5}>
-      <Heading>{title}</Heading>
+    <Stack
+      width={{ lg: "70%", base: "100%" }}
+      marginTop={"60px"}
+      gap={5}
+      color={"white"}
+      s
+    >
+      <Heading fontSize={"2xl"}>{title}</Heading>
       <Box
         w={"100%"}
         display={"flex"}
         flexWrap={"wrap"}
-        gap={5}
+        gap={{ base: 2, lg: 5 }}
         justifyContent={{ base: "center", lg: "flex-start" }}
       >
         {data?.slice(0, 16)?.map((item) => (
@@ -23,16 +29,18 @@ export default function Animelist({ title, data }) {
               boxShadow: "0 0 15px #32a88bff",
             }}
             onClick={() => {
-              nav(`details/${item.id}`);
+              nav(`/details/${item.id}`);
             }}
-            w={{ base: "45%", lg: "20%" }}
+            w={{ base: "170px", lg: "200px" }}
+            cursor={"pointer"}
+            h={{ base: "250px", lg: "275px" }}
           >
             <Image
-              borderRadius={"lg"}
               w={"100%"}
+              h={{ base: "250px", lg: "275px" }}
+              borderRadius={"lg"}
               src={item.poster}
               mx={"auto"}
-              h={"275px"}
             />
             <Box
               width={"95%"}

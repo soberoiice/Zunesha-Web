@@ -3,6 +3,7 @@ import { fetchHomepage } from "../utils/fetchHomepage";
 import { fetchAnimeDetails } from "../utils/fetchAnimeDetails";
 import { fetchAnimeEpisodes } from "../utils/fetchAnimeEpisodes";
 import { fetchCurrentEpisodeInfo } from "../utils/fetchCurrentEpisodeInfo";
+import { fetchAnime } from "../utils/fetchAnime";
 
 const AnimeContext = createContext();
 export const useAnime = () => useContext(AnimeContext);
@@ -15,8 +16,8 @@ export const AnimeProvider = ({ children }) => {
   const [loadingHomepage, setLoadingHomepage] = useState(false);
   const [loadingDetails, setLoadingDetails] = useState(false);
   const [loadingEpisodes, setLoadingEpisodes] = useState(false);
-  const [loadingEpisodesInfo, setLoadingEpisodesInfo] = useState(false);
-
+  const [searchResults, setSearchResults] = useState([]);
+  const [loadingSearch, setLoadingSearch] = useState(false);
   const getHomepage = async () => {
     try {
       setLoadingHomepage(true);
@@ -61,7 +62,6 @@ export const AnimeProvider = ({ children }) => {
 
   const getCurrentEpisodeInfo = async (id, server, type) => {
     try {
-      setLoadingEpisodesInfo(true);
       setCurrentEpisodeInfo({});
       const data = await fetchCurrentEpisodeInfo(id, server, type);
       setCurrentEpisodeInfo(data);
@@ -69,7 +69,21 @@ export const AnimeProvider = ({ children }) => {
     } catch (error) {
       console.error(error);
     } finally {
-      setLoadingEpisodesInfo(false);
+    }
+  };
+
+  const getAnime = async (searchTerm) => {
+    try {
+      setLoadingSearch(true);
+      setSearchResults({});
+      const data = await fetchAnime(searchTerm);
+      setSearchResults(data.data);
+      console.log("Search Results data:", data.data);
+      // console.log("Current Episodes data:", data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoadingSearch(false);
     }
   };
   return (
@@ -87,6 +101,9 @@ export const AnimeProvider = ({ children }) => {
         getAnimeEpisodes,
         getCurrentEpisodeInfo,
         currentEpisodeInfo,
+        getAnime,
+        searchResults,
+        loadingSearch,
       }}
     >
       {children}

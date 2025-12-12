@@ -1,4 +1,6 @@
 import {
+  Avatar,
+  Box,
   Heading,
   HStack,
   IconButton,
@@ -16,6 +18,16 @@ import { FaRandom } from "react-icons/fa";
 
 export default function Navbar() {
   const nav = useNavigate();
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (searchTerm) {
+      nav(`/search/${encodeURIComponent(searchTerm)}`);
+      setSearchTerm("");
+    }
+  };
+
   return (
     <HStack
       position={"fixed"}
@@ -26,7 +38,7 @@ export default function Navbar() {
       backgroundColor="rgba(0, 0, 0, 0.76)"
       backdropFilter="blur(10px)"
       WebkitBackdropFilter="blur(10px)"
-      paddingX={10}
+      paddingX={{ lg: 10, base: 2 }}
       justifyContent={"space-between"}
     >
       <HStack
@@ -47,23 +59,44 @@ export default function Navbar() {
           fontSize={"2xl"}
           fontWeight={"bold"}
           textAlign={"left"}
+          display={{ lg: "block", base: "none" }}
         >
           Zunisha
         </Text>
       </HStack>
-      <HStack>
-        <InputGroup endElement={<LuSearch />} w={"400px"}>
-          <Input
-            placeholder="Search"
-            focusRing={"none"}
-            border={"none"}
-            backgroundColor={"#161616ff"}
-            borderRadius={"xl"}
-          />
-        </InputGroup>
-        <IconButton borderRadius={"xl"} backgroundColor={"#161616ff"}>
-          <FaRandom color={"#535353ff"} />
-        </IconButton>
+      <HStack gap={2}>
+        <HStack>
+          <form onSubmit={handleSubmit}>
+            <InputGroup
+              endElement={
+                <IconButton
+                  backgroundColor={"#161616ff"}
+                  marginRight={0}
+                  type="submit"
+                >
+                  <LuSearch color={"#535353ff"} />
+                </IconButton>
+              }
+              w={{ lg: "400px", base: "200px" }}
+            >
+              <Input
+                placeholder="Search"
+                focusRing={"none"}
+                border={"none"}
+                backgroundColor={"#161616ff"}
+                borderRadius={"xl"}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                color={"white"}
+              />
+            </InputGroup>
+          </form>
+          <IconButton borderRadius={"xl"} backgroundColor={"#161616ff"}>
+            <FaRandom color={"#535353ff"} />
+          </IconButton>
+        </HStack>
+        <Avatar.Root colorPalette={"grey"} cursor={"pointer"}>
+          <Avatar.Fallback />
+        </Avatar.Root>
       </HStack>
     </HStack>
   );

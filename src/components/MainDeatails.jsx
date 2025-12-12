@@ -17,7 +17,12 @@ export default function MainDeatails({ data }) {
   const nav = useNavigate();
   const [showMore, setShowMore] = useState(false);
   return (
-    <Stack flexDir={{ md: "row", base: "column" }} w={"100%"} gap={10}>
+    <Stack
+      flexDir={{ md: "row", base: "column" }}
+      w={"100%"}
+      gap={10}
+      color={"white"}
+    >
       <Image h={"400px"} borderRadius={"lg"} w={"300px"} src={data?.poster} />
       <Box display={"flex"} flexDir={"column"} gap={5}>
         <HStack>

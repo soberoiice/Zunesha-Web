@@ -53,6 +53,7 @@ export default function MiniInfo({ animeId }) {
       paddingX={0}
       borderRadius={"xl"}
       h={{ lg: "780px" }}
+      color={"white"}
     >
       <Image
         w={{ lg: "100%", base: "15%" }}

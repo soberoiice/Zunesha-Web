@@ -1,9 +1,10 @@
-import { Box, Center, Spinner, Stack } from "@chakra-ui/react";
+import { Box, Center, Stack } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import MainDeatails from "../components/MainDeatails";
 import Navbar from "../components/Navbar";
 import { useAnime } from "../Contexts/AnimeProvider";
+import Loader from "../components/Loader";
 
 export default function Animedeatails() {
   const { id } = useParams();
@@ -14,11 +15,7 @@ export default function Animedeatails() {
     getAnimeDetails(id);
   }, [id]);
   if (loadingDetails) {
-    return (
-      <Center minH="100vh">
-        <Spinner size="xl" color="teal.400" />
-      </Center>
-    );
+    return <Loader />;
   }
 
   if (!info) {
