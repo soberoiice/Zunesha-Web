@@ -2,7 +2,12 @@ import { Center, Text, VStack } from "@chakra-ui/react";
 
 export default function NotFound() {
   return (
-    <Center minH="100vh" color="gray.400" backgroundColor={"black"}>
+    <Center
+      minH="100vh"
+      color="gray.400"
+      backgroundColor={"black"}
+      paddingBottom={"50px"}
+    >
       <VStack>
         <Text fontSize={"8xl"} fontWeight={"900"} color={"#32a88b"}>
           404

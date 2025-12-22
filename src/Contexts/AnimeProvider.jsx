@@ -4,6 +4,7 @@ import { fetchAnimeDetails } from "../utils/fetchAnimeDetails";
 import { fetchAnimeEpisodes } from "../utils/fetchAnimeEpisodes";
 import { fetchCurrentEpisodeInfo } from "../utils/fetchCurrentEpisodeInfo";
 import { fetchAnime } from "../utils/fetchAnime";
+import { fetchSchedule } from "../utils/fetrchSchedule";
 
 const AnimeContext = createContext();
 export const useAnime = () => useContext(AnimeContext);
@@ -11,6 +12,7 @@ export const useAnime = () => useContext(AnimeContext);
 export const AnimeProvider = ({ children }) => {
   const [homepage, setHomepage] = useState([]);
   const [info, setInfo] = useState([]);
+  const [schedule, setSchedule] = useState([]);
   const [episodes, setEpisodes] = useState({});
   const [currentEpisodeInfo, setCurrentEpisodeInfo] = useState({});
   const [loadingHomepage, setLoadingHomepage] = useState(false);
@@ -18,6 +20,7 @@ export const AnimeProvider = ({ children }) => {
   const [loadingEpisodes, setLoadingEpisodes] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [loadingSearch, setLoadingSearch] = useState(false);
+  const [loadingSchedule, setLoadingSchedule] = useState(false);
   const getHomepage = async () => {
     try {
       setLoadingHomepage(true);
@@ -72,6 +75,19 @@ export const AnimeProvider = ({ children }) => {
     }
   };
 
+  const getSchedule = async (date) => {
+    try {
+      setLoadingSchedule(true);
+      setSchedule({});
+      const data = await fetchSchedule(date);
+      setSchedule(data);
+      console.log("Current schedule data:", data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoadingSchedule(false);
+    }
+  };
   const getAnime = async (searchTerm) => {
     try {
       setLoadingSearch(true);
@@ -104,6 +120,9 @@ export const AnimeProvider = ({ children }) => {
         getAnime,
         searchResults,
         loadingSearch,
+        getSchedule,
+        schedule,
+        loadingSchedule,
       }}
     >
       {children}

@@ -72,7 +72,7 @@ export default function Animelist({ title, data, icon }) {
               border: "none",
             }}
             color="white"
-            height={"250px"}
+            height={{ lg: "250px", base: "165px" }}
             borderRadius={"none"}
             bgGradient="to-r"
             gradientFrom="rgba(0,0,0,0.8)"
@@ -97,7 +97,7 @@ export default function Animelist({ title, data, icon }) {
             }}
             bg="transparent"
             color="white"
-            height={"250px"}
+            height={{ lg: "250px", base: "165px" }}
             borderRadius={"none"}
             bgGradient="to-l"
             gradientFrom="rgba(0, 0, 0, 1)"
@@ -113,7 +113,7 @@ export default function Animelist({ title, data, icon }) {
           w="100%"
           overflowX="scroll"
           spacing={{ base: 2, lg: 5 }}
-          height={"250px"}
+          height={{ lg: "250px", base: "165px" }}
           scrollbarWidth="none"
           gap={2}
         >
@@ -123,9 +123,9 @@ export default function Animelist({ title, data, icon }) {
               position="relative"
               zIndex={1}
               onClick={() => nav(`/details/${item.id}`)}
-              w="175px"
+              w={{ lg: "175px", base: "120px" }}
               cursor="pointer"
-              h="250px"
+              h={{ lg: "250px", base: "165px" }}
               flex="0 0 auto"
               borderRadius="lg"
             >

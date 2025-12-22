@@ -1,8 +1,37 @@
-import { Box, Center, Heading, Text } from "@chakra-ui/react";
-import React from "react";
+import { Box, Button, Center, Heading, Text } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { RiCalendarScheduleFill } from "react-icons/ri";
+import { useAnime } from "../Contexts/AnimeProvider";
+import ScheduleList from "./ScheduleList";
+import Loader from "./Loader";
 
 export default function Schedule() {
+  const [content, setContent] = useState(0);
+  const { schedule, getSchedule, loadingSchedule } = useAnime();
+  useEffect(() => {
+    getSchedule(getNextSevenDays()[content]?.date);
+  }, [content]);
+  const getNextSevenDays = () => {
+    const dates = [];
+    const today = new Date();
+
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+
+      dates.push({
+        date: date
+          .toISOString({ year: "numeric", month: "long", day: "numeric" })
+          .split("T")[0],
+        month: date.toLocaleString("default", { month: "short" }),
+        day: date.toLocaleString("default", { day: "2-digit" }),
+        weekDay: date.toLocaleString("default", { weekday: "short" }),
+      });
+    }
+
+    return dates;
+  };
+
   return (
     <Box w={"98%"} color={"white"}>
       <Heading
@@ -10,24 +39,46 @@ export default function Schedule() {
         alignItems={"center"}
         gap={2}
         fontSize={"2xl"}
-        marginBottom={"10px"}
+        marginBottom={"20px"}
       >
         <RiCalendarScheduleFill />
         <Text>Schedule</Text>
       </Heading>
+      <Box w={"100%"} display={"flex"} gap={2} marginBottom={"20px"}>
+        {getNextSevenDays().map((date, index) => (
+          <Button
+            onClick={() => setContent(index)}
+            color="#fff"
+            borderRadius="lg"
+            backgroundColor={
+              content === index ? "#32a88b88" : "rgba(0, 0, 0, 0.57)"
+            }
+            boxShadow={content === index ? "0 0 15px #32a88bff" : ""}
+            _hover={{
+              transform: "scale(1.05)",
+            }}
+            transition="all 0.2s ease-in-out"
+            flexDirection={"column"}
+            w={"13.5%"}
+            key={index}
+            gap={0}
+            height={"60px"}
+          >
+            <Text fontWeight={"bold"}>{date.weekDay}</Text>
+            <Text>
+              {date.month} {date.day}
+            </Text>
+          </Button>
+        ))}
+      </Box>
       <Box
         borderWidth={"2px"}
-        borderColor={"#32a88b"}
-        p={"5px"}
-        bg={"rgba(29, 29, 29, 1)"}
-        height={"300px"}
+        p={"10px"}
         borderRadius={"xl"}
+        overflow={"scroll"}
+        padding={"10px"}
       >
-        <Center h={"100%"}>
-          <Text fontWeight={"bold"} fontSize={"2xl"}>
-            Comming Soon
-          </Text>
-        </Center>
+        <ScheduleList data={schedule} loadingSchedule={loadingSchedule} />
       </Box>
     </Box>
   );

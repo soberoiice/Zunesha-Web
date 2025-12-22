@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <Stack
       w={"100%"}
-      h={"250px"}
+      h={{ lg: "250px", base: "auto" }}
       backgroundColor={"black"}
       bgGradient="to-tr"
       gradientFrom="rgba(0, 0, 0, 1)"
@@ -17,16 +17,18 @@ export default function Footer() {
       justifyContent={"center"}
       gap={5}
       color={"white"}
+      py={"20px"}
     >
       <Stack
         w={"90%"}
-        flexDir={"row"}
+        flexDir={{ lg: "row" }}
+        flexWrap={"wrap"}
         alignItems={"center"}
         justifyContent={"space-between"}
         gap={10}
         mx={"auto"}
       >
-        <Box w={"60%"}>
+        <Box w={{ lg: "60%", base: "100%" }}>
           <HStack gap={2}>
             <Image
               boxShadow="0 0 50px #32a88b57"
@@ -50,7 +52,7 @@ export default function Footer() {
             should be taken up with them.
           </Text>
         </Box>
-        <Box w={"15%"}>
+        <Box w={{ lg: "15%" }}>
           <Text fontSize={"lg"} fontWeight={"bold"}>
             Resourses
           </Text>
@@ -60,7 +62,7 @@ export default function Footer() {
             </Text>
           ))}
         </Box>
-        <Box w={"15%"}>
+        <Box w={{ lg: "15%" }}>
           <Text fontSize={"lg"} fontWeight={"bold"}>
             Browse
           </Text>

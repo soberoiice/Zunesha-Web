@@ -9,6 +9,7 @@ import Loader from "../components/Loader";
 import { IoSparkles, IoTimeSharp } from "react-icons/io5";
 import { FaStar } from "react-icons/fa";
 import Schedule from "../components/Schedule";
+import { RiFilmFill } from "react-icons/ri";
 
 export default function Homepage() {
   const { getHomepage, homepage, loadingHomepage } = useAnime();
@@ -18,17 +19,6 @@ export default function Homepage() {
   useEffect(() => {
     getHomepage();
   }, []);
-  if (loadingHomepage) {
-    return <Loader />;
-  }
-
-  if (!homepage || homepage.length === 0) {
-    return (
-      <Center minH="100vh" color="gray.400">
-        No anime found.
-      </Center>
-    );
-  }
 
   return (
     <Box
@@ -57,7 +47,7 @@ export default function Homepage() {
           >
             <Animelist
               title={"Latest Episodes"}
-              icon={<IoSparkles />}
+              icon={<RiFilmFill />}
               data={homepage.latestEpisode}
             />
             <Animelist

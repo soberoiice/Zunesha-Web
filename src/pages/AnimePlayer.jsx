@@ -69,6 +69,7 @@ export default function HLSPlayer() {
       flexDir={"column"}
       height={"100%"}
       background={"black"}
+      paddingBottom={"50px"}
     >
       <Navbar />
       <Stack
