@@ -6,6 +6,9 @@ import Animelist from "../components/Animelist";
 import ToptenAnimeList from "../components/ToptenAnimeList";
 import { useAnime } from "../Contexts/AnimeProvider";
 import Loader from "../components/Loader";
+import { IoSparkles, IoTimeSharp } from "react-icons/io5";
+import { FaStar } from "react-icons/fa";
+import Schedule from "../components/Schedule";
 
 export default function Homepage() {
   const { getHomepage, homepage, loadingHomepage } = useAnime();
@@ -34,6 +37,7 @@ export default function Homepage() {
       flexDir={"column"}
       h={"100%"}
       backgroundColor={"black"}
+      paddingBottom={"50px"}
     >
       <Navbar />
       <Box marginTop={"80px"}>
@@ -44,7 +48,30 @@ export default function Homepage() {
           width={"95%"}
           mx={"auto"}
         >
-          <Animelist title={"Latest Episodes"} data={homepage.latestEpisode} />
+          <Box
+            display={"flex"}
+            flexDir={"column"}
+            gap={10}
+            marginTop={"60px"}
+            width={{ lg: "70%", base: "100%" }}
+          >
+            <Animelist
+              title={"Latest Episodes"}
+              icon={<IoSparkles />}
+              data={homepage.latestEpisode}
+            />
+            <Animelist
+              title={"Latest Completed"}
+              icon={<IoTimeSharp />}
+              data={homepage.latestCompleted}
+            />
+            <Animelist
+              title={"Most Favorite"}
+              icon={<FaStar />}
+              data={homepage.mostFavorite}
+            />
+            <Schedule />
+          </Box>
           <ToptenAnimeList data={homepage.topTen} title={"Top 10"} />
         </Box>
       </Box>

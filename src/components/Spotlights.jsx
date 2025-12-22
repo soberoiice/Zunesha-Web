@@ -14,14 +14,13 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import {
-  FaBookOpen,
   FaCalendar,
   FaChevronLeft,
   FaChevronRight,
-  FaClock,
   FaPlay,
 } from "react-icons/fa";
 import { useNavigate } from "react-router";
+import { IoIosVideocam } from "react-icons/io";
 
 export default function Spotlights({ data }) {
   const nav = useNavigate();
@@ -84,8 +83,7 @@ export default function Spotlights({ data }) {
       mx="auto"
       position="relative"
       borderRadius={"xl"}
-      boxShadow="0 0 15px #32a88b"
-      h={{ lg: "575px", base: "300px" }}
+      h={{ lg: "400px", base: "300px" }}
     >
       {data ? (
         <Slider {...settings}>
@@ -95,15 +93,17 @@ export default function Spotlights({ data }) {
               key={item.id}
               position="relative"
               width={"full"}
-              borderRadius={"xl"}
+              borderRadius={"2xl"}
+              borderWidth={"2px"}
+              borderColor={"#32a88b"}
+              p={"5px"}
             >
               <Image
                 key={item.id || index}
                 src={item.poster}
                 alt={item.title || "Anime poster"}
                 borderRadius="xl"
-                boxShadow="lg"
-                h={{ lg: "575px", base: "300px" }}
+                h={{ lg: "400px", base: "300px" }}
                 minW={"full"}
               />
               <Box
@@ -155,8 +155,8 @@ export default function Spotlights({ data }) {
                       {item?.tvInfo.showType}
                     </Text>
                     <HStack>
-                      <FaClock />
-                      {item?.tvInfo.duration}
+                      <IoIosVideocam size={25} />
+                      {item?.tvInfo?.episodeInfo?.sub}
                     </HStack>
                     <HStack>
                       <FaCalendar />

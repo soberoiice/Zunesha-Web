@@ -6,6 +6,7 @@ import AnimePlayer from "./pages/AnimePlayer";
 import NotFound from "./pages/NotFound";
 import { AnimeProvider } from "./Contexts/AnimeProvider";
 import Search from "./pages/Search";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="*" exact element={<NotFound />} />
           </Routes>
         </BrowserRouter>
+        <Footer />
       </AnimeProvider>
     </Provider>
   );

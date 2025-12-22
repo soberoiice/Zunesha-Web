@@ -8,6 +8,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { FaFireAlt } from "react-icons/fa";
 import { FaClosedCaptioning, FaVolumeHigh } from "react-icons/fa6";
 import { useNavigate } from "react-router";
 
@@ -16,8 +17,8 @@ export default function ToptenAnimeList({ data, type, title }) {
   const nav = useNavigate();
   const list = [
     { name: "Today", link: "today" },
-    { name: "This Week", link: "week" },
-    { name: "This Month", link: "month" },
+    { name: "Week", link: "week" },
+    { name: "Month", link: "month" },
   ];
 
   return (
@@ -30,7 +31,10 @@ export default function ToptenAnimeList({ data, type, title }) {
       color={"white"}
     >
       <Stack flexDir={"row"} justifyContent={"space-between"}>
-        <Heading>{title}</Heading>
+        <Heading display={"flex"} alignItems={"center"} gap={2}>
+          <FaFireAlt />
+          <Text>{title}</Text>
+        </Heading>
         <HStack>
           {list.map((item) => (
             <Button

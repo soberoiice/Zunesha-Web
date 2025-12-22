@@ -1,92 +1,161 @@
-import { Box, Heading, HStack, Image, Stack, Text } from "@chakra-ui/react";
-import React from "react";
-import { BsCameraVideoFill } from "react-icons/bs";
+import {
+  Box,
+  Heading,
+  Stack,
+  Text,
+  Image,
+  IconButton,
+  HStack,
+} from "@chakra-ui/react";
+import React, { useEffect, useRef } from "react";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useNavigate } from "react-router";
 
-export default function Animelist({ title, data }) {
+export default function Animelist({ title, data, icon }) {
   const nav = useNavigate();
+  const scrollRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = React.useState(false);
+  const [canScrollRight, setCanScrollRight] = React.useState(false);
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const { scrollLeft, clientWidth } = scrollRef.current;
+      const scrollAmount =
+        direction === "left"
+          ? scrollLeft - clientWidth
+          : scrollLeft + clientWidth;
+      scrollRef.current.scrollTo({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
+
+  const updateScrollButtons = () => {
+    if (!scrollRef.current) return;
+
+    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+
+    setCanScrollLeft(scrollLeft > 0);
+    setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 1);
+  };
+  useEffect(() => {
+    updateScrollButtons();
+  }, [data]);
+
   return (
-    <Stack
-      width={{ lg: "70%", base: "100%" }}
-      marginTop={"60px"}
-      gap={5}
-      color={"white"}
-      s
-    >
-      <Heading fontSize={"2xl"}>{title}</Heading>
+    <Stack gap={2} color={"white"}>
+      <Heading display={"flex"} alignItems={"center"} gap={2} fontSize={"2xl"}>
+        {icon}
+        <Text>{title}</Text>
+      </Heading>
       <Box
-        w={"100%"}
-        display={"flex"}
-        flexWrap={"wrap"}
-        gap={{ base: 2, lg: 5 }}
-        justifyContent={{ base: "center", lg: "flex-start" }}
+        position="relative"
+        w={"98%"}
+        // borderWidth={"2px"}
+        // borderColor={"#32a88b"}
+        // p={"5px"}
+        // borderRadius={"xl"}
       >
-        {data?.slice(0, 16)?.map((item) => (
-          <Box
-            key={item.id}
-            position={"relative"}
+        {/* Left Arrow */}
+        {canScrollLeft && (
+          <IconButton
+            position="absolute"
+            left={0}
+            top="50%"
+            transform="translateY(-50%)"
+            zIndex={10}
+            onClick={() => scroll("left")}
+            aria-label="Scroll Left"
+            bg="transparent"
             _hover={{
-              boxShadow: "0 0 15px #32a88bff",
+              bgGradient: "to-r",
+              gradientFrom: "rgba(0, 0, 0, 1)",
+              gradientTo: "transparent",
+              border: "none",
             }}
-            onClick={() => {
-              nav(`/details/${item.id}`);
-            }}
-            w={{ base: "170px", lg: "200px" }}
-            cursor={"pointer"}
-            h={{ base: "250px", lg: "275px" }}
+            color="white"
+            height={"250px"}
+            borderRadius={"none"}
+            bgGradient="to-r"
+            gradientFrom="rgba(0,0,0,0.8)"
+            gradientTo="rgba(0, 0, 0, 0)"
+            border={"none"}
           >
-            <Image
-              w={"100%"}
-              h={{ base: "250px", lg: "275px" }}
-              borderRadius={"lg"}
-              src={item.poster}
-              mx={"auto"}
-            />
+            <IoIosArrowBack />
+          </IconButton>
+        )}
+        {/* Right Arrow */}
+        {canScrollRight && (
+          <IconButton
+            position="absolute"
+            right={0}
+            top="50%"
+            transform="translateY(-50%)"
+            zIndex={10}
+            onClick={() => scroll("right")}
+            aria-label="Scroll Right"
+            _hover={{
+              bgGradient: "linear(to-l, rgba(0, 0, 0, 1), transparent)",
+            }}
+            bg="transparent"
+            color="white"
+            height={"250px"}
+            borderRadius={"none"}
+            bgGradient="to-l"
+            gradientFrom="rgba(0, 0, 0, 1)"
+            gradientTo="rgba(0, 0, 0, 0)"
+            border={"none"}
+          >
+            <IoIosArrowForward />
+          </IconButton>
+        )}
+        <HStack
+          ref={scrollRef}
+          onScroll={updateScrollButtons}
+          w="100%"
+          overflowX="scroll"
+          spacing={{ base: 2, lg: 5 }}
+          height={"250px"}
+          scrollbarWidth="none"
+          gap={2}
+        >
+          {data?.map((item) => (
             <Box
-              width={"95%"}
-              position={"absolute"}
-              borderRadius={"md"}
-              backgroundColor="rgba(0, 0, 0, 0.57)"
-              backdropFilter="blur(10px)"
-              WebkitBackdropFilter="blur(10px)"
-              bottom={1}
-              left={1}
-              px={2}
+              key={item.id}
+              position="relative"
+              zIndex={1}
+              onClick={() => nav(`/details/${item.id}`)}
+              w="175px"
+              cursor="pointer"
+              h="250px"
+              flex="0 0 auto"
+              borderRadius="lg"
             >
-              <Text truncate>{item.title}</Text>
+              <Image
+                w="100%"
+                h="100%"
+                borderRadius="lg"
+                src={item.poster}
+                mx="auto"
+                _hover={{
+                  scale: 1.05,
+                  transition: "0.3s",
+                }}
+              />
+              <Box
+                width="95%"
+                position="absolute"
+                borderRadius="md"
+                backgroundColor="rgba(0, 0, 0, 0.57)"
+                backdropFilter="blur(10px)"
+                WebkitBackdropFilter="blur(10px)"
+                bottom={1}
+                left={1}
+                px={2}
+              >
+                <Text truncate>{item.title}</Text>
+              </Box>
             </Box>
-            <HStack position={"absolute"} top={1} right={1} gap={1}>
-              <Box
-                borderRadius={"md"}
-                backgroundColor="rgba(0, 0, 0, 0.57)"
-                backdropFilter="blur(10px)"
-                WebkitBackdropFilter="blur(10px)"
-                px={2}
-              >
-                <Text fontSize={"sm"}>{item.tvInfo.showType}</Text>
-              </Box>
-              <Box
-                borderRadius={"md"}
-                backgroundColor="rgba(0, 0, 0, 0.57)"
-                backdropFilter="blur(10px)"
-                WebkitBackdropFilter="blur(10px)"
-                px={2}
-              >
-                <Text fontSize={"sm"}>{item.tvInfo.duration}</Text>
-              </Box>
-              <HStack
-                borderRadius={"md"}
-                backgroundColor="rgba(0, 0, 0, 0.57)"
-                backdropFilter="blur(10px)"
-                WebkitBackdropFilter="blur(10px)"
-                px={2}
-              >
-                <BsCameraVideoFill />
-                <Text fontSize={"sm"}>{item.tvInfo.sub}</Text>
-              </HStack>
-            </HStack>
-          </Box>
-        ))}
+          ))}
+        </HStack>
       </Box>
     </Stack>
   );

@@ -34,6 +34,7 @@ export default function Search() {
       flexDir={"column"}
       height={"100%"}
       backgroundColor={"black"}
+      paddingBottom={"50px"}
     >
       <Navbar />
       <Box width={"95%"} mx={"auto"} mt={"20px"}>

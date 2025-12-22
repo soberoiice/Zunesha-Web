@@ -15,6 +15,7 @@ import Zunisha from "../assets/Zunisha.png";
 import { LuSearch } from "react-icons/lu";
 import { useNavigate } from "react-router";
 import { FaRandom } from "react-icons/fa";
+import AuthDialog from "./AuthDialog";
 
 export default function Navbar() {
   const nav = useNavigate();
@@ -35,7 +36,6 @@ export default function Navbar() {
       top={0}
       width={"full"}
       height={"60px"}
-      backgroundColor="rgba(0, 0, 0, 0.76)"
       backdropFilter="blur(10px)"
       WebkitBackdropFilter="blur(10px)"
       paddingX={{ lg: 10, base: 2 }}
@@ -64,40 +64,36 @@ export default function Navbar() {
           Zunisha
         </Text>
       </HStack>
-      <HStack gap={2}>
-        <HStack>
-          <form onSubmit={handleSubmit}>
-            <InputGroup
-              endElement={
-                <IconButton
-                  backgroundColor={"#161616ff"}
-                  marginRight={0}
-                  type="submit"
-                >
-                  <LuSearch color={"#535353ff"} />
-                </IconButton>
-              }
-              w={{ lg: "400px", base: "200px" }}
-            >
-              <Input
-                placeholder="Search"
-                focusRing={"none"}
-                border={"none"}
+      <HStack>
+        <form onSubmit={handleSubmit}>
+          <InputGroup
+            endElement={
+              <IconButton
                 backgroundColor={"#161616ff"}
-                borderRadius={"xl"}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                color={"white"}
-              />
-            </InputGroup>
-          </form>
-          <IconButton borderRadius={"xl"} backgroundColor={"#161616ff"}>
-            <FaRandom color={"#535353ff"} />
-          </IconButton>
-        </HStack>
-        <Avatar.Root colorPalette={"grey"} cursor={"pointer"}>
-          <Avatar.Fallback />
-        </Avatar.Root>
+                marginRight={0}
+                type="submit"
+              >
+                <LuSearch color={"#535353ff"} />
+              </IconButton>
+            }
+            w={{ lg: "400px", base: "200px" }}
+          >
+            <Input
+              placeholder="Search"
+              focusRing={"none"}
+              border={"none"}
+              backgroundColor={"#161616ff"}
+              borderRadius={"2xl"}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              color={"white"}
+            />
+          </InputGroup>
+        </form>
+        <IconButton borderRadius={"xl"} backgroundColor={"#161616ff"}>
+          <FaRandom color={"#535353ff"} />
+        </IconButton>
       </HStack>
+      <AuthDialog />
     </HStack>
   );
 }
