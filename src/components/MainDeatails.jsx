@@ -8,7 +8,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useState, useMemo, memo, useCallback } from "react";
 import { FaClosedCaptioning, FaPlay, FaShareAlt, FaStar } from "react-icons/fa";
 import { FaVolumeHigh } from "react-icons/fa6";
 import { MdBookmarkAdd } from "react-icons/md";
@@ -16,219 +16,196 @@ import { useNavigate } from "react-router";
 import anilist from "../assets/anilist_logo_icon.svg";
 import mal from "../assets/myanimelist_logo_icon.svg";
 
-export default function MainDeatails({ data }) {
-  const nav = useNavigate();
+// Reusable Icon Button for consistent styling
+const IconButton = memo(({ children, onClick, bg = "#32a88b", size = 50 }) => (
+  <Button
+    onClick={onClick}
+    w={size}
+    h={size}
+    bg={bg}
+    boxShadow="0 0 20px #32a88b"
+    _hover={{ transform: "scale(1.05)" }}
+    backdropFilter="blur(10px)"
+    WebkitBackdropFilter="blur(10px)"
+    color="white"
+    borderRadius="xl"
+    p={3}
+  >
+    {children}
+  </Button>
+));
+
+// Memoized Overview component to prevent re-renders of the whole main component
+const Overview = memo(({ text }) => {
   const [showMore, setShowMore] = useState(false);
+
+  return (
+    <>
+      {/* Line clamp for short preview; shows full text when toggled */}
+      <Text lineClamp={showMore ? null : 3}>{text}</Text>
+      <Text
+        onClick={() => setShowMore(!showMore)}
+        color="#32a88b"
+        fontWeight="bold"
+        cursor="pointer"
+        ml="auto"
+      >
+        {showMore ? "- less" : "+ more"}
+      </Text>
+    </>
+  );
+});
+
+// Main component
+export default function MainDetails({ data }) {
+  const nav = useNavigate();
+
+  // Memoize the genres list to avoid recalculating on each render
+  const genreList = useMemo(() => {
+    return data?.animeInfo?.Genres?.map((item) => (
+      <Text
+        key={item}
+        cursor="pointer"
+        border="1px solid #fff"
+        borderRadius="2xl"
+        px={3}
+        py={1}
+        fontSize="xs"
+        color="#fff"
+      >
+        {item}
+      </Text>
+    ));
+  }, [data?.animeInfo?.Genres]);
+
+  // // Memoized handler to prevent recreation on each render
+  // const handleBookmark = useCallback(() => {
+  //   handleclick(data.id); // Replace with your bookmark function
+  // }, [data?.id]);
+
+  // const handleShare = useCallback(() => {
+  //   handleclick(data.id); // Replace with your share function
+  // }, [data.id]);
+
   return (
     <Stack
       flexDir={{ md: "row", base: "column" }}
-      w={"100%"}
+      w="100%"
       gap={10}
-      color={"white"}
+      color="white"
     >
+      {/* Poster Image */}
       <Image
-        h={"400px"}
-        borderRadius={"lg"}
-        w={"300px"}
-        mx={"auto"}
+        h="400px"
+        w="300px"
+        mx="auto"
         src={data?.poster}
+        loading="lazy"
+        decoding="async"
+        objectFit="cover"
+        borderRadius="lg"
       />
-      <Box display={"flex"} flexDir={"column"} gap={5}>
-        <HStack gap={5} flexWrap={"wrap"}>
+
+      <Box display="flex" flexDir="column" gap={5}>
+        {/* Top Info Tags */}
+        <HStack gap={5} flexWrap="wrap">
           <Text
             border="2px solid #32a88b"
-            borderRadius={"2xl"}
-            paddingX={"3"}
-            paddingY={"1"}
-            color={"#32a88b"}
-            fontWeight={"bold"}
+            borderRadius="2xl"
+            px={3}
+            py={1}
+            color="#32a88b"
+            fontWeight="bold"
           >
             {data?.showType}
           </Text>
-          <Text borderRadius={"2xl"} color={"#ffffffff"}>
+
+          <Text borderRadius="2xl" color="#fff">
             {data?.animeInfo?.Status}
           </Text>
+
           {data?.animeInfo["MAL Score"] !== "?" ? (
             <HStack>
-              <FaStar color={"#32a88b"} /> {data?.animeInfo["MAL Score"]}
+              <FaStar color="#32a88b" /> {data?.animeInfo["MAL Score"]}
             </HStack>
           ) : (
             <Text>No Rating</Text>
           )}
+
           <HStack>
-            <FaClosedCaptioning color={"#32a88b"} />{" "}
+            <FaClosedCaptioning color="#32a88b" />{" "}
             {data?.animeInfo?.tvInfo?.sub}
           </HStack>
+
           {data?.animeInfo?.tvInfo?.dub && (
             <HStack>
-              <FaVolumeHigh color={"#32a88b"} /> {data?.animeInfo?.tvInfo?.dub}
+              <FaVolumeHigh color="#32a88b" /> {data?.animeInfo?.tvInfo?.dub}
             </HStack>
           )}
         </HStack>
-        <Heading fontSize={"4xl"} fontWeight={"bold"} lineHeight={1.2}>
+
+        {/* Titles */}
+        <Heading fontSize="4xl" fontWeight="bold" lineHeight={1.2}>
           {data?.title}
         </Heading>
-        <Text fontSize={"md"} color={"#32a88b"} fontWeight={"bold"}>
+        <Text fontSize="md" color="#32a88b" fontWeight="bold">
           {data?.japanese_title}
         </Text>
-        <HStack flexWrap={"wrap"}>
-          {data?.animeInfo?.Genres.map((item) => (
-            <Text
-              cursor={"pointer"}
-              key={item}
-              border="1px solid #ffffffff"
-              borderRadius={"2xl"}
-              paddingX={"3"}
-              paddingY={"1"}
-              color={"#ffffffff"}
-              fontSize={"xs"}
-            >
-              {item}
-            </Text>
-          ))}
-        </HStack>
-        <Text lineClamp={showMore ? null : 3}>{data?.animeInfo?.Overview}</Text>
-        <Text
-          onClick={() => {
-            setShowMore(!showMore);
-          }}
-          color={"#32a88b"}
-          fontWeight={"bold"}
-          cursor={"pointer"}
-          marginLeft={"auto"}
-        >
-          {showMore ? "- less " : "+ more"}
-        </Text>
-        <HStack flexWrap={"wrap"}>
+
+        {/* Genres */}
+        {genreList?.length > 0 && <HStack flexWrap="wrap">{genreList}</HStack>}
+
+        {/* Overview Section */}
+        <Overview text={data?.animeInfo?.Overview} />
+
+        {/* Action Buttons */}
+        <HStack flexWrap="wrap" gap={3}>
           <Button
             colorScheme="teal"
             height={50}
             onClick={() => nav(`/watch/${data?.id}`)}
             backgroundColor={"#32a88b"}
             boxShadow={"0 0 20px #32a88b"}
-            _hover={{
-              transform: "scale(1.05)",
-            }}
+            _hover={{ transform: "scale(1.05)" }}
             transition="all 0.2s ease-in-out"
             color={"white"}
             borderRadius={"xl"}
           >
             <FaPlay /> Watch now
           </Button>
-          <Button
-            colorScheme="teal"
-            w={50}
-            height={50}
-            onClick={() => handleclick(data.id)}
-            backgroundColor={"#32a88b"}
-            boxShadow={"0 0 20px #32a88b"}
-            _hover={{
-              transform: "scale(1.05)",
-            }}
-            backdropFilter="blur(10px)"
-            WebkitBackdropFilter="blur(10px)"
-            color={"white"}
-            borderRadius={"xl"}
-          >
+
+          <IconButton>
             <MdBookmarkAdd />
-          </Button>
-          <Button
-            colorScheme="teal"
-            w={50}
-            height={50}
-            onClick={() => handleclick(data.id)}
-            backgroundColor={"#32a88b"}
-            boxShadow={"0 0 20px #32a88b"}
-            _hover={{
-              transform: "scale(1.05)",
-            }}
-            backdropFilter="blur(10px)"
-            WebkitBackdropFilter="blur(10px)"
-            color={"white"}
-            borderRadius={"xl"}
-          >
+          </IconButton>
+
+          <IconButton>
             <FaShareAlt />
-          </Button>
+          </IconButton>
+
+          {/* External Links */}
           {data?.malId && (
             <Link
               href={`https://myanimelist.net/anime/${data?.malId}`}
               target="_blank"
             >
-              <Button
-                colorScheme="teal"
-                w={50}
-                height={50}
-                backgroundColor="rgba(0, 0, 0, 0.57)"
-                _hover={{
-                  transform: "scale(1.05)",
-                }}
-                backdropFilter="blur(10px)"
-                WebkitBackdropFilter="blur(10px)"
-                color={"white"}
-                borderRadius={"xl"}
-                p={3}
-              >
+              <IconButton bg="rgba(0, 0, 0, 0.34)">
                 <Image src={mal} filter="invert(1)" />
-              </Button>
+              </IconButton>
             </Link>
           )}
+
           {data?.anilistId && (
             <Link
               href={`https://anilist.co/anime/${data?.anilistId}`}
               target="_blank"
             >
-              <Button
-                colorScheme="teal"
-                w={50}
-                height={50}
-                backgroundColor="rgba(0, 0, 0, 0.57)"
-                _hover={{
-                  transform: "scale(1.05)",
-                }}
-                backdropFilter="blur(10px)"
-                WebkitBackdropFilter="blur(10px)"
-                color={"white"}
-                borderRadius={"xl"}
-                p={3}
-              >
-                <Image src={anilist} w={"50px"} filter="invert(1)" />
-              </Button>
+              <IconButton bg="rgba(0, 0, 0, 0.34)">
+                <Image src={anilist} w="50px" filter="invert(1)" />
+              </IconButton>
             </Link>
           )}
         </HStack>
       </Box>
-      {/* <Box
-        background={"rgba(31, 31, 31, 0.84)"}
-        backdropFilter="blur(20px)"
-        height={"400px"}
-        minW={"300px"}
-        borderRadius={"lg"}
-        padding={5}
-        // border="1px solid #32a88b"
-        boxShadow={"0 0 15px #32a88b63"}
-        display={"flex"}
-        flexDir={"column"}
-        gap={5}
-      >
-        <Heading>Geners</Heading>
-        <Stack flexDir={"row"} flexWrap={"wrap"}>
-        </Stack>
-        <Text>
-          <b>Duration:</b> {data?.animeInfo?.Duration}
-        </Text>
-        <Text>
-          <b>Studio:</b> {data?.animeInfo?.Studios}
-        </Text>
-        <Text>
-          <b>Aired:</b> {data?.animeInfo?.Aired}
-        </Text>
-        <Text>
-          <b>Premiered:</b> {data?.animeInfo?.Premiered}
-        </Text>
-        <Text>
-          <b>Rating:</b> {data?.animeInfo?.tvInfo?.rating}
-        </Text>
-      </Box> */}
     </Stack>
   );
 }

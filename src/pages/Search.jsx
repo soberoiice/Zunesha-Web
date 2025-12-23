@@ -50,7 +50,7 @@ export default function Search() {
             page={page}
           />
         </Box>
-        <Box w={"20%"}>
+        <Box w={{ lg: "20%", base: "100%" }}>
           <FilterSearchForm />
         </Box>
       </Box>
