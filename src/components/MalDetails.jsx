@@ -8,9 +8,8 @@ export default function MalDetails({ id }) {
   const { metaData, getMetaData, loadingMetaData } = useAnime();
 
   useEffect(() => {
-    if (id) {
-      getMetaData(id);
-    }
+    if (!id) return;
+    getMetaData(id);
   }, [id]);
   if (loadingMetaData) {
     return (
@@ -58,7 +57,7 @@ export default function MalDetails({ id }) {
             alignItems={"flex-start"}
             w={"100%"}
             h={"50%"}
-            gap={10}
+            gap={{ md: 10 }}
           >
             <VStack alignItems={"flex-start"}>
               <HStack>
@@ -80,7 +79,7 @@ export default function MalDetails({ id }) {
                 <Text>{metaData?.rating}</Text>
               </HStack>
             </VStack>
-            <VStack w={"45%"} h={"90%"} alignItems={"flex-start"}>
+            <VStack h={"90%"} alignItems={"flex-start"}>
               <HStack>
                 <Text color={"rgba(255, 255, 255, 0.57)"} fontWeight={"bold"}>
                   Start date:
