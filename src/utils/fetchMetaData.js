@@ -2,11 +2,11 @@ import axios from "axios";
 
 const API_BASE_URL =
   window.location.hostname === "localhost"
-    ? "http://localhost:3000/api/mal-details?id="
-    : "/api/mal?id=";
+    ? "http://localhost:3000/api/meta"
+    : "/api/meta";
 
 export async function fetchMetaData(id) {
-  const res = await axios.get(`${API_BASE_URL}${id}`);
+  const res = await axios.get(`${API_BASE_URL}?id=${id}`);
   return res.data;
 }
 // async function getAnimeDetails(id) {

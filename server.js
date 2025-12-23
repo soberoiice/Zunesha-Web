@@ -8,7 +8,7 @@ const CLIENT_ID = process.env.VITE_MAL_CLIENT_ID;
 const app = express();
 app.use(cors());
 
-app.get("/api/mal-details", async (req, res) => {
+app.get("/api/meta", async (req, res) => {
   try {
     const { id } = req.query;
     if (!id) return res.status(400).json({ error: "Missing anime ID" });
