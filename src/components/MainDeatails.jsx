@@ -34,7 +34,7 @@ export default function MainDeatails({ data }) {
         src={data?.poster}
       />
       <Box display={"flex"} flexDir={"column"} gap={5}>
-        <HStack gap={5}>
+        <HStack gap={5} flexWrap={"wrap"}>
           <Text
             border="2px solid #32a88b"
             borderRadius={"2xl"}
@@ -71,7 +71,7 @@ export default function MainDeatails({ data }) {
         <Text fontSize={"md"} color={"#32a88b"} fontWeight={"bold"}>
           {data?.japanese_title}
         </Text>
-        <HStack>
+        <HStack flexWrap={"wrap"}>
           {data?.animeInfo?.Genres.map((item) => (
             <Text
               cursor={"pointer"}
