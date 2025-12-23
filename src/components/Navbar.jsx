@@ -24,7 +24,7 @@ export default function Navbar() {
     e.preventDefault();
 
     if (searchTerm) {
-      nav(`/search/${encodeURIComponent(searchTerm)}`);
+      nav(`/search/${searchTerm}`);
       setSearchTerm("");
     }
   };

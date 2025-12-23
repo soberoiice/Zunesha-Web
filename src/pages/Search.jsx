@@ -43,7 +43,10 @@ export default function Search() {
       <Navbar />
       <Box width={"95%"} mx={"auto"} mt={"20px"}>
         <Box w={"100%"}>
-          <SearchResultsList data={searchResults?.data} />
+          <SearchResultsList
+            searchTerm={searchTerm}
+            data={searchResults?.data}
+          />
           <PaginationComponent
             totalPages={searchResults?.totalPage}
             setPage={setPage}

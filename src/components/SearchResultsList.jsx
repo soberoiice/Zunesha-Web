@@ -44,7 +44,7 @@ const SearchItem = memo(({ item, onClick, width, height }) => (
   </Box>
 ));
 
-export default function SearchResultsList({ title, data }) {
+export default function SearchResultsList({ searchTerm, data }) {
   const nav = useNavigate();
 
   if (!data || data.length === 0) {
@@ -59,13 +59,13 @@ export default function SearchResultsList({ title, data }) {
     <Stack width={{ lg: "80%", base: "100%" }} mt="60px" gap={5} color="white">
       <Heading display="flex" alignItems="center" gap={2} fontSize="2xl">
         <FaSearch />
-        <Text>{title || "Search results"}</Text>
+        <Text> Search results for</Text>{" "}
+        <Text color={"#32a88b"}> {searchTerm}</Text>
       </Heading>
 
       <Box
         w={{ lg: "95%", base: "100%" }}
         display="flex"
-        overflowX="scroll"
         flexWrap="wrap"
         gap={{ base: 2, lg: 5 }}
       >
@@ -74,7 +74,7 @@ export default function SearchResultsList({ title, data }) {
             key={item.id}
             item={item}
             onClick={() => nav(`/details/${item.id}`)}
-            width={{ lg: "145px", base: "110px" }}
+            width={{ lg: "145px", base: "30%" }}
             height={{ lg: "200px", base: "165px" }}
           />
         ))}
