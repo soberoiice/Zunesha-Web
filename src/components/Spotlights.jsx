@@ -94,8 +94,6 @@ export default function Spotlights({ data }) {
               position="relative"
               width={"full"}
               borderRadius={"2xl"}
-              borderWidth={"2px"}
-              borderColor={"#32a88b"}
               p={"5px"}
             >
               <Image
@@ -216,7 +214,7 @@ export default function Spotlights({ data }) {
           ))}
         </Slider>
       ) : (
-        <Skeleton height="500px" width="100%" />
+        <Skeleton height="400px" width="100%" />
       )}
     </Box>
   );

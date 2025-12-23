@@ -12,7 +12,7 @@ export default function Footer() {
       backgroundColor={"black"}
       bgGradient="to-tr"
       gradientFrom="rgba(0, 0, 0, 1)"
-      gradientTo="#32a88b05"
+      gradientTo="#32a88b1a"
       flexDir={"column"}
       justifyContent={"center"}
       gap={5}

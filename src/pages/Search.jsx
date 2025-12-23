@@ -1,19 +1,23 @@
 import { Box, Center, Spinner } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useAnime } from "../Contexts/AnimeProvider";
 import Animelist from "../components/Animelist";
 import Navbar from "../components/Navbar";
 import Loader from "../components/Loader";
+import SearchResultsList from "../components/SearchResultsList";
+import PaginationComponent from "../components/Pagination";
+import FilterSearchForm from "../components/FilterSearchForm";
 
 export default function Search() {
   const { searchTerm } = useParams();
   const { getAnime, searchResults, loadingSearch } = useAnime();
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    getAnime(searchTerm);
+    getAnime(searchTerm, page);
     console.log("Searching for:", searchTerm);
-  }, [searchTerm]);
+  }, [searchTerm, page]);
 
   if (loadingSearch) {
     return <Loader />;
@@ -38,7 +42,17 @@ export default function Search() {
     >
       <Navbar />
       <Box width={"95%"} mx={"auto"} mt={"20px"}>
-        <Animelist data={searchResults} title={"Search Results"} />
+        <Box w={"100%"}>
+          <SearchResultsList data={searchResults?.data} />
+          <PaginationComponent
+            totalPages={searchResults?.totalPage}
+            setPage={setPage}
+            page={page}
+          />
+        </Box>
+        <Box w={"20%"}>
+          <FilterSearchForm />
+        </Box>
       </Box>
     </Box>
   );

@@ -34,14 +34,14 @@ export default function ScheduleList({ data, loadingSchedule }) {
           flexDir={"row"}
           bg={"rgba(29, 29, 29, 1)"}
           borderRadius={"xl"}
-          w={"98%"}
+          w={"100%"}
           mx={"auto"}
           h={"50px"}
           alignItems={"center"}
           gap={4}
           cursor={"pointer"}
         >
-          <Box textAlign={"center"} width={"10%"}>
+          <Box textAlign={"center"} width={{ md: "10%", base: "20%" }}>
             <Text>{anime?.time}</Text>
           </Box>
           <Box
@@ -49,7 +49,7 @@ export default function ScheduleList({ data, loadingSchedule }) {
             h={"80%"}
             backgroundColor={"rgba(0, 0, 0, 0.71)"}
           ></Box>
-          <Box w={"60%"}>
+          <Box w={{ md: "60%", base: "40%" }} lineClamp={1}>
             <Text>{anime?.title}</Text>
           </Box>
           <Box textAlign={"center"} width={"20%"}>

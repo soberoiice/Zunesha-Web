@@ -4,14 +4,17 @@ import {
   Heading,
   HStack,
   Image,
+  Link,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { FaClosedCaptioning, FaPlay, FaStar } from "react-icons/fa";
+import { FaClosedCaptioning, FaPlay, FaShareAlt, FaStar } from "react-icons/fa";
 import { FaVolumeHigh } from "react-icons/fa6";
 import { MdBookmarkAdd } from "react-icons/md";
 import { useNavigate } from "react-router";
+import anilist from "../assets/anilist_logo_icon.svg";
+import mal from "../assets/myanimelist_logo_icon.svg";
 
 export default function MainDeatails({ data }) {
   const nav = useNavigate();
@@ -23,9 +26,15 @@ export default function MainDeatails({ data }) {
       gap={10}
       color={"white"}
     >
-      <Image h={"400px"} borderRadius={"lg"} w={"300px"} src={data?.poster} />
+      <Image
+        h={"400px"}
+        borderRadius={"lg"}
+        w={"300px"}
+        mx={"auto"}
+        src={data?.poster}
+      />
       <Box display={"flex"} flexDir={"column"} gap={5}>
-        <HStack>
+        <HStack gap={5}>
           <Text
             border="2px solid #32a88b"
             borderRadius={"2xl"}
@@ -36,34 +45,47 @@ export default function MainDeatails({ data }) {
           >
             {data?.showType}
           </Text>
-          <Text
-            borderRadius={"2xl"}
-            paddingX={"3"}
-            paddingY={"1"}
-            color={"#ffffffff"}
-          >
+          <Text borderRadius={"2xl"} color={"#ffffffff"}>
             {data?.animeInfo?.Status}
           </Text>
+          {data?.animeInfo["MAL Score"] !== "?" ? (
+            <HStack>
+              <FaStar color={"#32a88b"} /> {data?.animeInfo["MAL Score"]}
+            </HStack>
+          ) : (
+            <Text>No Rating</Text>
+          )}
+          <HStack>
+            <FaClosedCaptioning color={"#32a88b"} />{" "}
+            {data?.animeInfo?.tvInfo?.sub}
+          </HStack>
+          {data?.animeInfo?.tvInfo?.dub && (
+            <HStack>
+              <FaVolumeHigh color={"#32a88b"} /> {data?.animeInfo?.tvInfo?.dub}
+            </HStack>
+          )}
         </HStack>
-        <Heading fontSize={"4xl"} fontWeight={"bold"}>
+        <Heading fontSize={"4xl"} fontWeight={"bold"} lineHeight={1.2}>
           {data?.title}
         </Heading>
         <Text fontSize={"md"} color={"#32a88b"} fontWeight={"bold"}>
           {data?.japanese_title}
         </Text>
-        <HStack gap={5} color={"#ffffffaf"}>
-          <HStack>
-            <FaStar color={"#32a88b"} /> {data?.animeInfo["MAL Score"]}
-          </HStack>
-          &middot;
-          <HStack>
-            <FaClosedCaptioning color={"#32a88b"} />{" "}
-            {data?.animeInfo?.tvInfo?.sub}
-          </HStack>
-          &middot;
-          <HStack>
-            <FaVolumeHigh color={"#32a88b"} /> {data?.animeInfo?.tvInfo?.dub}
-          </HStack>
+        <HStack>
+          {data?.animeInfo?.Genres.map((item) => (
+            <Text
+              cursor={"pointer"}
+              key={item}
+              border="1px solid #ffffffff"
+              borderRadius={"2xl"}
+              paddingX={"3"}
+              paddingY={"1"}
+              color={"#ffffffff"}
+              fontSize={"xs"}
+            >
+              {item}
+            </Text>
+          ))}
         </HStack>
         <Text lineClamp={showMore ? null : 3}>{data?.animeInfo?.Overview}</Text>
         <Text
@@ -77,9 +99,8 @@ export default function MainDeatails({ data }) {
         >
           {showMore ? "- less " : "+ more"}
         </Text>
-        <HStack>
+        <HStack flexWrap={"wrap"}>
           <Button
-            mt={4}
             colorScheme="teal"
             height={50}
             onClick={() => nav(`/watch/${data?.id}`)}
@@ -95,12 +116,15 @@ export default function MainDeatails({ data }) {
             <FaPlay /> Watch now
           </Button>
           <Button
-            mt={4}
             colorScheme="teal"
             w={50}
             height={50}
             onClick={() => handleclick(data.id)}
-            backgroundColor="rgba(0, 0, 0, 0.57)"
+            backgroundColor={"#32a88b"}
+            boxShadow={"0 0 20px #32a88b"}
+            _hover={{
+              transform: "scale(1.05)",
+            }}
             backdropFilter="blur(10px)"
             WebkitBackdropFilter="blur(10px)"
             color={"white"}
@@ -108,9 +132,72 @@ export default function MainDeatails({ data }) {
           >
             <MdBookmarkAdd />
           </Button>
+          <Button
+            colorScheme="teal"
+            w={50}
+            height={50}
+            onClick={() => handleclick(data.id)}
+            backgroundColor={"#32a88b"}
+            boxShadow={"0 0 20px #32a88b"}
+            _hover={{
+              transform: "scale(1.05)",
+            }}
+            backdropFilter="blur(10px)"
+            WebkitBackdropFilter="blur(10px)"
+            color={"white"}
+            borderRadius={"xl"}
+          >
+            <FaShareAlt />
+          </Button>
+          {data?.malId && (
+            <Link
+              href={`https://myanimelist.net/anime/${data?.malId}`}
+              target="_blank"
+            >
+              <Button
+                colorScheme="teal"
+                w={50}
+                height={50}
+                backgroundColor="rgba(0, 0, 0, 0.57)"
+                _hover={{
+                  transform: "scale(1.05)",
+                }}
+                backdropFilter="blur(10px)"
+                WebkitBackdropFilter="blur(10px)"
+                color={"white"}
+                borderRadius={"xl"}
+                p={3}
+              >
+                <Image src={mal} filter="invert(1)" />
+              </Button>
+            </Link>
+          )}
+          {data?.anilistId && (
+            <Link
+              href={`https://anilist.co/anime/${data?.anilistId}`}
+              target="_blank"
+            >
+              <Button
+                colorScheme="teal"
+                w={50}
+                height={50}
+                backgroundColor="rgba(0, 0, 0, 0.57)"
+                _hover={{
+                  transform: "scale(1.05)",
+                }}
+                backdropFilter="blur(10px)"
+                WebkitBackdropFilter="blur(10px)"
+                color={"white"}
+                borderRadius={"xl"}
+                p={3}
+              >
+                <Image src={anilist} w={"50px"} filter="invert(1)" />
+              </Button>
+            </Link>
+          )}
         </HStack>
       </Box>
-      <Box
+      {/* <Box
         background={"rgba(31, 31, 31, 0.84)"}
         backdropFilter="blur(20px)"
         height={"400px"}
@@ -125,19 +212,6 @@ export default function MainDeatails({ data }) {
       >
         <Heading>Geners</Heading>
         <Stack flexDir={"row"} flexWrap={"wrap"}>
-          {data?.animeInfo?.Genres.map((item) => (
-            <Text
-              key={item}
-              border="1px solid #ffffffff"
-              borderRadius={"2xl"}
-              paddingX={"3"}
-              paddingY={"1"}
-              color={"#ffffffff"}
-              fontSize={"xs"}
-            >
-              {item}
-            </Text>
-          ))}
         </Stack>
         <Text>
           <b>Duration:</b> {data?.animeInfo?.Duration}
@@ -154,7 +228,7 @@ export default function MainDeatails({ data }) {
         <Text>
           <b>Rating:</b> {data?.animeInfo?.tvInfo?.rating}
         </Text>
-      </Box>
+      </Box> */}
     </Stack>
   );
 }

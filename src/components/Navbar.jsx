@@ -69,11 +69,11 @@ export default function Navbar() {
           <InputGroup
             endElement={
               <IconButton
-                backgroundColor={"#161616ff"}
+                backgroundColor={"transparent"}
                 marginRight={0}
                 type="submit"
               >
-                <LuSearch color={"#535353ff"} />
+                <LuSearch color={"#c9c9c9ff"} />
               </IconButton>
             }
             w={{ lg: "400px", base: "200px" }}
@@ -82,15 +82,25 @@ export default function Navbar() {
               placeholder="Search"
               focusRing={"none"}
               border={"none"}
-              backgroundColor={"#161616ff"}
+              backgroundColor={"#16161688"}
               borderRadius={"2xl"}
               onChange={(e) => setSearchTerm(e.target.value)}
               color={"white"}
+              backdropFilter="blur(10px)"
+              WebkitBackdropFilter="blur(10px)"
+              _placeholder={{
+                color: "#c9c9c9ff",
+              }}
             />
           </InputGroup>
         </form>
-        <IconButton borderRadius={"xl"} backgroundColor={"#161616ff"}>
-          <FaRandom color={"#535353ff"} />
+        <IconButton
+          borderRadius={"xl"}
+          backgroundColor={"#16161688"}
+          backdropFilter="blur(10px)"
+          WebkitBackdropFilter="blur(10px)"
+        >
+          <FaRandom color={"#c9c9c9ff"} />
         </IconButton>
       </HStack>
       <AuthDialog />

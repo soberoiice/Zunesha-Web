@@ -12,7 +12,7 @@ import Schedule from "../components/Schedule";
 import { RiFilmFill } from "react-icons/ri";
 
 export default function Homepage() {
-  const { getHomepage, homepage, loadingHomepage } = useAnime();
+  const { getHomepage, homepage, loadingHomepage, getMalDetails } = useAnime();
   const { content, setContent } = useState();
 
   const list = ["New Episodes"];
@@ -20,6 +20,17 @@ export default function Homepage() {
     getHomepage();
   }, []);
 
+  if (loadingHomepage) {
+    return <Loader />;
+  }
+
+  if (!homepage || homepage.length === 0) {
+    return (
+      <Center minH="100vh" color="gray.400">
+        No anime found.
+      </Center>
+    );
+  }
   return (
     <Box
       position={"relative"}
@@ -37,13 +48,14 @@ export default function Homepage() {
           flexDir={{ base: "column", lg: "row" }}
           width={"95%"}
           mx={"auto"}
+          justifyContent={"space-between"}
         >
           <Box
             display={"flex"}
             flexDir={"column"}
-            gap={10}
+            gap={5}
             marginTop={"60px"}
-            width={{ lg: "70%", base: "100%" }}
+            width={{ lg: "68%", base: "100%" }}
           >
             <Animelist
               title={"Latest Episodes"}

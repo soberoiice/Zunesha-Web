@@ -44,7 +44,14 @@ export default function Schedule() {
         <RiCalendarScheduleFill />
         <Text>Schedule</Text>
       </Heading>
-      <Box w={"100%"} display={"flex"} gap={2} marginBottom={"20px"}>
+      <Box
+        w={"100%"}
+        display={"flex"}
+        gap={2}
+        marginBottom={"20px"}
+        overflow={"scroll"}
+        scrollBarWidth={"none"}
+      >
         {getNextSevenDays().map((date, index) => (
           <Button
             onClick={() => setContent(index)}
@@ -59,7 +66,7 @@ export default function Schedule() {
             }}
             transition="all 0.2s ease-in-out"
             flexDirection={"column"}
-            w={"13.5%"}
+            w={{ md: "13.5%", base: "30%" }}
             key={index}
             gap={0}
             height={"60px"}
@@ -71,13 +78,7 @@ export default function Schedule() {
           </Button>
         ))}
       </Box>
-      <Box
-        borderWidth={"2px"}
-        p={"10px"}
-        borderRadius={"xl"}
-        overflow={"scroll"}
-        padding={"10px"}
-      >
+      <Box borderRadius={"xl"} py={"10px"} scrollBarWidth={"none"}>
         <ScheduleList data={schedule} loadingSchedule={loadingSchedule} />
       </Box>
     </Box>
