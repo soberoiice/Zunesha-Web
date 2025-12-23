@@ -49,8 +49,8 @@ export default function Schedule() {
         display={"flex"}
         gap={2}
         marginBottom={"20px"}
-        overflow={"scroll"}
-        scrollBarWidth={"none"}
+        overflowX={"scroll"}
+        scrollbarWidth="none"
       >
         {getNextSevenDays().map((date, index) => (
           <Button
