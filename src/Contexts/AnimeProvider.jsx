@@ -6,6 +6,7 @@ import { fetchCurrentEpisodeInfo } from "../utils/fetchCurrentEpisodeInfo";
 import { fetchAnime } from "../utils/fetchAnime";
 import { fetchSchedule } from "../utils/fetrchSchedule";
 import { fetchMetaData } from "../utils/fetchMetaData";
+import { fetchAnimeCharacters } from "../utils/fetchAnimeCharacters";
 
 const AnimeContext = createContext();
 export const useAnime = () => useContext(AnimeContext);
@@ -16,6 +17,7 @@ export const AnimeProvider = ({ children }) => {
   const [schedule, setSchedule] = useState([]);
   const [episodes, setEpisodes] = useState({});
   const [metaData, setMetaData] = useState({});
+  const [animeCharacters, setAnimeCharacters] = useState([]);
   const [currentEpisodeInfo, setCurrentEpisodeInfo] = useState({});
   const [searchResults, setSearchResults] = useState([]);
   const [loadingHomepage, setLoadingHomepage] = useState(false);
@@ -24,6 +26,7 @@ export const AnimeProvider = ({ children }) => {
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [loadingSchedule, setLoadingSchedule] = useState(false);
   const [loadingMetaData, setLoadingMetaData] = useState(false);
+  const [loadingCharacters, setLoadingCharacters] = useState(false);
   const getHomepage = async () => {
     try {
       setLoadingHomepage(true);
@@ -58,7 +61,7 @@ export const AnimeProvider = ({ children }) => {
       setEpisodes({});
       const data = await fetchAnimeEpisodes(id);
       setEpisodes(data);
-      // console.log("Episodes data:", data);
+      console.log("Episodes data:", data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -121,6 +124,21 @@ export const AnimeProvider = ({ children }) => {
     }
   };
 
+  const getAnimeCharacters = async (id) => {
+    try {
+      setLoadingCharacters(true);
+      setAnimeCharacters([]);
+      const data = await fetchAnimeCharacters(id);
+      setAnimeCharacters(data.data);
+      console.log("character data", data);
+      // console.log("Current Episodes data:", data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoadingCharacters(false);
+    }
+  };
+
   return (
     <AnimeContext.Provider
       value={{
@@ -145,6 +163,9 @@ export const AnimeProvider = ({ children }) => {
         getMetaData,
         loadingMetaData,
         metaData,
+        getAnimeCharacters,
+        animeCharacters,
+        loadingCharacters,
       }}
     >
       {children}

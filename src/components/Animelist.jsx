@@ -13,26 +13,26 @@ import { useNavigate } from "react-router";
 
 export default function Animelist({ title, data, icon }) {
   const nav = useNavigate();
-  const scrollRef = useRef(null);
+  const animeListScrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(false);
 
   const scroll = useCallback((direction) => {
-    if (!scrollRef.current) return;
+    if (!animeListScrollRef.current) return;
 
-    const { scrollLeft, clientWidth } = scrollRef.current;
+    const { scrollLeft, clientWidth } = animeListScrollRef.current;
     const amount = direction === "left" ? scrollLeft - 300 : scrollLeft + 300;
 
-    scrollRef.current.scrollTo({
+    animeListScrollRef.current.scrollTo({
       left: amount,
       behavior: "smooth",
     });
   }, []);
 
   const updateScrollButtons = useCallback(() => {
-    if (!scrollRef.current) return;
+    if (!animeListScrollRef.current) return;
 
-    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+    const { scrollLeft, scrollWidth, clientWidth } = animeListScrollRef.current;
 
     setCanScrollLeft(scrollLeft > 0);
     setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 1);
@@ -103,7 +103,7 @@ export default function Animelist({ title, data, icon }) {
           </IconButton>
         )}
         <HStack
-          ref={scrollRef}
+          ref={animeListScrollRef}
           onScroll={updateScrollButtons}
           w="100%"
           overflowX="scroll"

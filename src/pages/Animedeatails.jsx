@@ -1,15 +1,56 @@
-import { Box, Center, Stack } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import { Box, Button, Center, Stack } from "@chakra-ui/react";
+import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 import MainDeatails from "../components/MainDeatails";
 import Navbar from "../components/Navbar";
 import { useAnime } from "../Contexts/AnimeProvider";
 import Loader from "../components/Loader";
 import MalDetails from "../components/MalDetails";
+import CharacterList from "../components/CharacterList";
+import Animelist from "../components/Animelist";
+import { FaGripLinesVertical } from "react-icons/fa";
 
 export default function Animedeatails() {
   const { id } = useParams();
   const { info, getAnimeDetails, loadingDetails, getMalDetails } = useAnime();
+  const [isActive, setIsActive] = useState("Details");
+  const scrollRef = useRef(null);
+
+  const tabs = ["Details", "Characters"];
+  const activeIndex = tabs.indexOf(isActive);
+
+  const handleclick = (option) => {
+    setIsActive(option);
+    console.log("Clicked:", option);
+    scroll(option === "Details" ? "left" : "right");
+  };
+  const scroll = useCallback((direction) => {
+    if (!scrollRef.current) return;
+
+    const { scrollLeft, clientWidth } = scrollRef.current;
+    const amount =
+      direction === "left"
+        ? scrollLeft - clientWidth
+        : scrollLeft + clientWidth + 2;
+
+    scrollRef.current.scrollTo({
+      left: amount,
+      behavior: "smooth",
+    });
+  }, []);
+  const TabButton = memo(({ children }) => (
+    <Button
+      position="relative"
+      bg="transparent"
+      borderRadius={0}
+      h="50px"
+      w={"100px"}
+      onClick={() => handleclick(children)}
+      flex={1}
+    >
+      {children}
+    </Button>
+  ));
 
   useEffect(() => {
     console.log("anime id", id);
@@ -49,8 +90,49 @@ export default function Animedeatails() {
         <Box w={"90%"} marginTop={"120px"}>
           <MainDeatails data={info?.data} />
         </Box>
-        <Box w={"90%"} marginTop={"60px"}>
-          <MalDetails id={info?.data?.malId} />
+        <Box position="relative" w="200px" mx="auto" mt="60px">
+          <Stack direction="row" spacing={0}>
+            {tabs.map((tab) => (
+              <TabButton key={tab}>{tab}</TabButton>
+            ))}
+          </Stack>
+
+          <Box
+            position="absolute"
+            bottom="0"
+            left="0"
+            h="3px"
+            w="100px"
+            bg="#32a88b"
+            transform={`translateX(${activeIndex * 100}%)`}
+            transition="transform 0.3s ease"
+            marginBottom={2}
+          />
+        </Box>
+
+        <Box
+          w="90%"
+          ref={scrollRef}
+          minH={"300px"}
+          display="flex"
+          overflowX="hidden"
+          gap={2}
+          alignItems={"center"}
+        >
+          <Box minW="100%">
+            <MalDetails id={info?.data?.malId} />
+          </Box>
+
+          <Box minW="100%">
+            <CharacterList id={info?.data?.malId} />
+          </Box>
+        </Box>
+        <Box w="90%" mb={"50px"}>
+          <Animelist
+            icon={<FaGripLinesVertical />}
+            title={"Recomended"}
+            data={info?.data?.recommended_data}
+          />
         </Box>
       </Stack>
     </Stack>

@@ -30,16 +30,12 @@ export default function EpisodesContainer({
             <Button
               key={ep?.id || index}
               onClick={() => setCurentEpisodeIndex(index)}
-              colorScheme="teal"
               width={"50px"}
               height={"35px"}
-              backgroundColor={
-                index == currentEpisodeIndex
-                  ? "#32a88b8e"
-                  : "rgba(0, 0, 0, 0.57)"
-              }
-              backdropFilter="blur(10px)"
-              WebkitBackdropFilter="blur(10px)"
+              backgroundColor={index == currentEpisodeIndex && "#32a88b8e"}
+              bgGradient={ep.filler && "to-tr"}
+              gradientFrom={"rgba(177, 77, 77, 1)"}
+              gradientTo={"#387969ff"}
               color={"white"}
               borderRadius={"lg"}
               _hover={{

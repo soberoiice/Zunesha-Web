@@ -19,7 +19,9 @@ export default function MalDetails({ id }) {
 
   // Fetch metadata when id changes
   useEffect(() => {
-    if (id) getMetaData(id);
+    if (id) {
+      getMetaData(id);
+    }
   }, [id]);
 
   if (loadingMetaData) {

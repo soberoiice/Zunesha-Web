@@ -6,11 +6,13 @@ import NotFound from "./pages/NotFound";
 import { AnimeProvider } from "./Contexts/AnimeProvider";
 import Search from "./pages/Search";
 import Footer from "./components/Footer";
+import TopLoadingBar from "./components/TopLoaderBar";
 
 function App() {
   return (
     <AnimeProvider>
       <BrowserRouter>
+        <TopLoadingBar />
         <Routes>
           <Route path="/" exact element={<Homepage />} />
           <Route path="/details/:id" exact element={<Animedeatails />} />
