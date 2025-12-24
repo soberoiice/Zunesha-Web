@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default async function handler(req, res) {
   try {
-    const { id } = req.query;
+    const { id, offset = 0 } = req.query;
 
     if (!id) {
       return res.status(400).json({ error: "Missing anime ID" });
@@ -19,6 +19,7 @@ export default async function handler(req, res) {
 
     res.status(200).json(response.data);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "MAL request failed" });
   }
 }
