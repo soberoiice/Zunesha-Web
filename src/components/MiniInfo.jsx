@@ -68,7 +68,7 @@ export default function MiniInfo({ animeId }) {
           {info?.data?.title}
         </Text>
         <Stack flexDir={"row"} flexWrap={"wrap"}>
-          {info?.data?.animeInfo?.Genres.map((item) => (
+          {info?.data?.animeInfo?.Genres?.map((item) => (
             <Text
               cursor={"pointer"}
               key={item}

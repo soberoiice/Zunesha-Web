@@ -7,6 +7,7 @@ import { fetchAnime } from "../utils/fetchAnime";
 import { fetchSchedule } from "../utils/fetrchSchedule";
 import { fetchMetaData } from "../utils/fetchMetaData";
 import { fetchAnimeCharacters } from "../utils/fetchAnimeCharacters";
+import { fetchAnimeEpisodeSchedule } from "../utils/fetchAnimeEpisodeSchedule";
 
 const AnimeContext = createContext();
 export const useAnime = () => useContext(AnimeContext);
@@ -20,6 +21,7 @@ export const AnimeProvider = ({ children }) => {
   const [animeCharacters, setAnimeCharacters] = useState([]);
   const [currentEpisodeInfo, setCurrentEpisodeInfo] = useState({});
   const [searchResults, setSearchResults] = useState([]);
+  const [episodeSchedule, setEpisodeSchedule] = useState([]);
   const [loadingHomepage, setLoadingHomepage] = useState(false);
   const [loadingDetails, setLoadingDetails] = useState(false);
   const [loadingEpisodes, setLoadingEpisodes] = useState(false);
@@ -27,6 +29,7 @@ export const AnimeProvider = ({ children }) => {
   const [loadingSchedule, setLoadingSchedule] = useState(false);
   const [loadingMetaData, setLoadingMetaData] = useState(false);
   const [loadingCharacters, setLoadingCharacters] = useState(false);
+  const [loadingEpisobeSchedule, setLoadingEpisodeSchedule] = useState(false);
   const getHomepage = async () => {
     try {
       setLoadingHomepage(true);
@@ -139,6 +142,20 @@ export const AnimeProvider = ({ children }) => {
     }
   };
 
+  const getAnimeEpisodeSchedule = async (id) => {
+    console.log("schedule id", id);
+    try {
+      setLoadingEpisodeSchedule(true);
+      setEpisodeSchedule([]);
+      const data = await fetchAnimeEpisodeSchedule(id);
+      setEpisodeSchedule(data);
+      console.log("episode schedule", data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoadingEpisodeSchedule(false);
+    }
+  };
   return (
     <AnimeContext.Provider
       value={{
@@ -166,6 +183,9 @@ export const AnimeProvider = ({ children }) => {
         getAnimeCharacters,
         animeCharacters,
         loadingCharacters,
+        getAnimeEpisodeSchedule,
+        episodeSchedule,
+        loadingEpisobeSchedule,
       }}
     >
       {children}

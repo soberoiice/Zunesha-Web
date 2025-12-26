@@ -113,14 +113,18 @@ export default function Animedeatails() {
         <Box
           w="90%"
           ref={scrollRef}
-          minH={"300px"}
+          maxH={
+            isActive === "Details" ? { lg: "400px", base: "auto" } : "250px"
+          }
           display="flex"
           overflowX="hidden"
+          scrollbarWidth={"none"}
           gap={2}
           alignItems={"center"}
+          overflowY={"hidden"}
         >
           <Box minW="100%">
-            <MalDetails id={info?.data?.malId} />
+            <MalDetails animeId={info?.data?.id} id={info?.data?.malId} />
           </Box>
 
           <Box minW="100%">

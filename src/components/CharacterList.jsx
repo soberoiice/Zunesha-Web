@@ -167,6 +167,18 @@ export default function CharacterList({ id }) {
             >
               <Text truncate>{item.character.name}</Text>
             </Box>
+            <Box
+              width="auto"
+              position="absolute"
+              borderRadius="md"
+              backgroundColor="rgba(0, 0, 0, 0.57)"
+              WebkitBackdropFilter="blur(10px)"
+              right={1}
+              top={1}
+              px={2}
+            >
+              <Text truncate>{item.role}</Text>
+            </Box>
           </Box>
         ))}
       </HStack>

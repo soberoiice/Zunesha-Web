@@ -7,22 +7,19 @@ export default function EpisodesContainer({
   currentEpisodeIndex,
 }) {
   return (
-    <Stack w={{ md: "70%", base: "100%" }} flexWrap={"wrap"} gap={2}>
-      <Text
-        fontWeight={"bold"}
-        color={"#ffffffff"}
-        fontSize={"xl"}
-        lineClamp={1}
-      >
-        Episode {currentEpisodeIndex + 1} :{" "}
-        {episodes[currentEpisodeIndex]?.title}
-      </Text>
+    <Stack
+      h={"200px"}
+      w={{ md: "70%", base: "100%" }}
+      flexWrap={"wrap"}
+      gap={2}
+      alignItems={"center"}
+    >
       <Stack
         flexDir={"row"}
         flexWrap={"wrap"}
         gap={2}
         overflow={"scroll"}
-        maxH={"150px"}
+        maxH={"98%"}
         scrollbar={"hidden"}
       >
         {episodes.length > 0 &&

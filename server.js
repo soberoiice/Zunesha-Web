@@ -18,7 +18,7 @@ app.get("/api/meta", async (req, res) => {
       {
         params: {
           fields:
-            "id,title,main_picture,node,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,background,related_anime,related_manga,recommendations,studios,statistics,videos,trailer",
+            "id,title,main_picture,episodes,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,background,related_anime,related_manga,recommendations,studios,statistics,videos,trailer",
         },
         headers: { "X-MAL-CLIENT-ID": CLIENT_ID },
       }

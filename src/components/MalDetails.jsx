@@ -6,15 +6,15 @@ import EpisodeCountdown from "./EpisodeCountdown";
 
 // Small reusable info row
 const InfoRow = memo(({ label, value }) => (
-  <HStack>
+  <Box display={"flex"} gap={2}>
     <Text color="rgba(255, 255, 255, 0.57)" fontWeight="bold">
       {label}
     </Text>
     <Text>{value || "N/A"}</Text>
-  </HStack>
+  </Box>
 ));
 
-export default function MalDetails({ id }) {
+export default function MalDetails({ animeId, id }) {
   const { metaData, getMetaData, loadingMetaData } = useAnime();
 
   // Fetch metadata when id changes
@@ -44,6 +44,7 @@ export default function MalDetails({ id }) {
 
   return (
     <Box
+      mt={"10px"}
       mb="50px"
       color="white"
       w="100%"
@@ -59,9 +60,9 @@ export default function MalDetails({ id }) {
     >
       {/* Left section: info + countdown */}
       <Box
-        w={{ lg: "50%", base: "100%" }}
+        w={{ lg: "60%", base: "100%" }}
         h="90%"
-        p={10}
+        p={{ base: 5, lg: 10 }}
         display={{ md: "flex", base: "block" }}
         flexDirection="column"
         justifyContent="space-between"
@@ -94,6 +95,7 @@ export default function MalDetails({ id }) {
 
         {/* Countdown component */}
         <EpisodeCountdown
+          animeId={animeId}
           day={metaData?.broadcast?.day_of_the_week}
           time={metaData?.broadcast?.start_time}
         />

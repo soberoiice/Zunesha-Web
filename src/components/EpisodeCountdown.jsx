@@ -1,7 +1,16 @@
 import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
+import { useAnime } from "../Contexts/AnimeProvider";
 
-export default function EpisodeCountdown({ day, time }) {
+export default function EpisodeCountdown({ day, time, animeId }) {
+  const { getAnimeEpisodeSchedule, episodeSchedule, loadingEpisodeSchedule } =
+    useAnime();
+  useEffect(() => {
+    getAnimeEpisodeSchedule(animeId);
+  }, []);
+  useEffect(() => {
+    console.log(episodeSchedule);
+  }, [episodeSchedule]);
   const [countdown, setCountdown] = useState({
     days: 0,
     hours: 0,
@@ -9,37 +18,39 @@ export default function EpisodeCountdown({ day, time }) {
     seconds: 0,
   });
 
-  function getNextBroadcastCountdown(dayOfWeek, startTime) {
-    const daysMap = {
-      sunday: 0,
-      monday: 1,
-      tuesday: 2,
-      wednesday: 3,
-      thursday: 4,
-      friday: 5,
-      saturday: 6,
-    };
-
+  function getCountdownFromDateTime(dateTimeString) {
+    if (!dateTimeString) {
+      return {
+        days: "00",
+        hours: "00",
+        minutes: "00",
+        seconds: "00",
+      };
+    }
     const now = new Date();
-    const targetDay = daysMap[dayOfWeek.toLowerCase()];
-    const [hours, minutes] = startTime.split(":").map(Number);
 
-    let targetDate = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate(),
-      hours,
-      minutes,
-      0,
-      0
-    );
+    const targetDate = new Date(dateTimeString.replace(" ", "T"));
+    setCountdown({
+      days: String(days).padStart(2, "0"),
+      hours: String(hours).padStart(2, "0"),
+      minutes: String(minutes).padStart(2, "0"),
+      seconds: String(seconds).padStart(2, "0"),
+    });
 
-    const dayDiff = (targetDay - targetDate.getDay() + 7) % 7;
-    if (dayDiff !== 0 || targetDate <= now) {
-      targetDate.setDate(targetDate.getDate() + (dayDiff === 0 ? 7 : dayDiff));
+    if (isNaN(targetDate)) {
+      return null;
     }
 
     const diffMs = targetDate - now;
+
+    if (diffMs <= 0) {
+      return {
+        days: "00",
+        hours: "00",
+        minutes: "00",
+        seconds: "00",
+      };
+    }
 
     return {
       days: String(Math.floor(diffMs / (1000 * 60 * 60 * 24))).padStart(2, "0"),
@@ -54,11 +65,11 @@ export default function EpisodeCountdown({ day, time }) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCountdown(getNextBroadcastCountdown(day, time));
+      setCountdown(getCountdownFromDateTime(episodeSchedule));
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [episodeSchedule]);
 
   return (
     <Box>

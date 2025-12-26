@@ -92,7 +92,13 @@ export default function HLSPlayer() {
             paddingTop={0}
             backgroundColor={"#333333ff"}
           >
-            <HLSReactPlayer src={file} epInfo={currentEpisodeInfo} />
+            <HLSReactPlayer
+              src={file}
+              epInfo={currentEpisodeInfo}
+              episodes={episodes}
+              currentEpisodeIndex={currentEpisodeIndex}
+              setCurrentEpisodeIndex={setCurentEpisodeIndex}
+            />
           </Box>
           <Box
             backgroundColor={"#333333ff"}

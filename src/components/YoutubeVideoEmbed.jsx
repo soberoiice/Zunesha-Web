@@ -3,9 +3,14 @@ import { Box } from "@chakra-ui/react";
 const YouTubeEmbed = ({ url }) => {
   const videoId = url.split("/").pop();
   return (
-    <Box height={{ lg: "270px", base: "150px" }}>
+    <Box
+      mx={"auto"}
+      w={{ base: "90%", lg: "auto" }}
+      height={{ lg: "270px", base: "auto" }}
+    >
       <iframe
         height={"100%"}
+        width={"100%"}
         style={{
           aspectRatio: 16 / 9,
           borderRadius: "12px",
