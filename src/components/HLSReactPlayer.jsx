@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Hls from "hls.js";
 import CustomOverlay from "./CustomOverlay";
-import { Box } from "@chakra-ui/react";
+import { Box, Toast, Toaster } from "@chakra-ui/react";
 
 export default function HLSPlayer({
   src,
@@ -33,6 +33,7 @@ export default function HLSPlayer({
   const [currentSubtitle, setCurrentSubtitle] = useState("");
   const [subtitleOffset] = useState(0.3);
   const [fontSize, setFonSize] = useState("20px");
+  const [message, setMessage] = useState("");
 
   // Prepare subtitles array when epInfo changes
   useEffect(() => {
@@ -58,7 +59,7 @@ export default function HLSPlayer({
       return;
     }
     const englishSub =
-      subtitles.find((s) => s.srcLang === "en") || subtitles[0];
+      subtitles.find((s) => s.label === "English") || subtitles[0];
     setSelectedSubtitle(englishSub);
   }, [subtitles]);
 
@@ -236,7 +237,7 @@ export default function HLSPlayer({
   const handleMouseMove = () => {
     setShowControls(true);
     clearTimeout(hideTimer.current);
-    hideTimer.current = setTimeout(() => setShowControls(false), 2500);
+    hideTimer.current = setTimeout(() => setShowControls(false), 3500);
   };
 
   // Load subtitle dynamically
@@ -269,6 +270,7 @@ export default function HLSPlayer({
       videoRef.current.currentTime = videoRef.current.currentTime - 5;
     }
   };
+
   function takeScreenshot() {
     const video = videoRef.current;
     if (!video) return;
@@ -293,6 +295,7 @@ export default function HLSPlayer({
 
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
+      setMessage("Screenshot taken");
     }, "image/png");
   }
 
@@ -382,6 +385,7 @@ export default function HLSPlayer({
           handleScreenShot={takeScreenshot}
         />
       )}
+      {message && <Toaster>message</Toaster>}
     </Box>
   );
 }

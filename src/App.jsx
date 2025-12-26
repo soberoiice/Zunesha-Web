@@ -7,6 +7,7 @@ import { AnimeProvider } from "./Contexts/AnimeProvider";
 import Search from "./pages/Search";
 import Footer from "./components/Footer";
 import TopLoadingBar from "./components/TopLoaderBar";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
       <BrowserRouter>
         <TopLoadingBar />
         <Routes>
-          <Route path="/" exact element={<Homepage />} />
+          <Route path="/" exact element={<LandingPage />} />
+          <Route path="/home" exact element={<Homepage />} />
           <Route path="/details/:id" exact element={<Animedeatails />} />
           <Route path="/watch/:animeid" exact element={<AnimePlayer />} />
           <Route path="/search/:searchTerm" exact element={<Search />} />

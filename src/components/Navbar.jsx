@@ -44,7 +44,7 @@ export default function Navbar() {
       <HStack
         gap={2}
         onClick={() => {
-          nav("/");
+          nav("/home");
         }}
         cursor={"pointer"}
       >

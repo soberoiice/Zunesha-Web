@@ -24,7 +24,7 @@ function ToptenAnimeList({ data, title }) {
 
   const handleNavigate = useCallback(
     (id) => {
-      nav(`details/${id}`);
+      nav(`/details/${id}`);
     },
     [nav]
   );
@@ -59,43 +59,54 @@ function ToptenAnimeList({ data, title }) {
           ))}
         </HStack>
       </Stack>
+      <Box bg={"rgba(29, 29, 29, 1)"} borderRadius="lg">
+        {data?.[content]?.map((item, index) => (
+          <HStack
+            key={item.id}
+            onClick={() => handleNavigate(item.id)}
+            h="100px"
+            px={3}
+            w={"95%"}
+            mx={"auto"}
+            cursor="pointer"
+            borderBottomWidth={index !== data?.[content]?.length - 1 && "1px"}
+            borderBottomColor={"rgba(63, 63, 63, 0.76)"}
+            gap={5}
+          >
+            {/* <CenterBadge number={item.number} /> */}
+            <Text
+              color={index < 3 ? `rgba(50,168,139,${1 - index / 5})` : "white"}
+              fontWeight={"bold"}
+              fontSize={"2xl"}
+              borderBottomWidth={index < 3 && "3px"}
+              borderBottomColor={`rgba(50,168,139,${1 - index / 5})`}
+            >
+              {item.number}
+            </Text>
+            <Image
+              src={item.poster}
+              w="70px"
+              h="80px"
+              borderRadius="lg"
+              loading="lazy"
+              decoding="async"
+              objectFit="cover"
+            />
 
-      {data?.[content]?.map((item) => (
-        <HStack
-          key={item.id}
-          onClick={() => handleNavigate(item.id)}
-          h="100px"
-          px={3}
-          borderRadius="lg"
-          cursor="pointer"
-          bg="rgba(65,65,65,0.6)"
-          boxShadow="0 0 10px rgba(0,0,0,0.25)"
-        >
-          <CenterBadge number={item.number} />
+            <Box flex="1" gap={2}>
+              <Text lineClamp={1}>{item.title}</Text>
 
-          <Image
-            src={item.poster}
-            w="70px"
-            h="80px"
-            borderRadius="lg"
-            loading="lazy"
-            decoding="async"
-            objectFit="cover"
-          />
-
-          <Box flex="1" py={2}>
-            <Text lineClamp={2}>{item.title}</Text>
-
-            <HStack mt={1}>
-              <MetaBadge
-                icon={<FaClosedCaptioning />}
-                value={item.tvInfo.sub}
-              />
-              <MetaBadge icon={<FaVolumeHigh />} value={item.tvInfo.dub} />
-            </HStack>
-          </Box>
-        </HStack>
-      ))}
+              <HStack mt={1}>
+                <MetaBadge
+                  icon={<FaClosedCaptioning />}
+                  value={item.tvInfo.sub}
+                />
+                <MetaBadge icon={<FaVolumeHigh />} value={item.tvInfo.dub} />
+              </HStack>
+            </Box>
+          </HStack>
+        ))}
+      </Box>
     </Box>
   );
 }
@@ -115,7 +126,14 @@ const CenterBadge = memo(({ number }) => (
 ));
 
 const MetaBadge = memo(({ icon, value }) => (
-  <HStack px={2} borderRadius="md" bg="rgba(0,0,0,0.6)" fontSize="sm">
+  <HStack
+    px={2}
+    borderRadius="md"
+    color={"rgba(50,168,139,1)"}
+    borderWidth={"1px"}
+    borderColor={"#32a88b"}
+    fontSize="sm"
+  >
     {icon}
     <Text>{value}</Text>
   </HStack>

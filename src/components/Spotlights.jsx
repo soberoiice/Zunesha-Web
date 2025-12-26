@@ -178,7 +178,7 @@ export default function Spotlights({ data }) {
                     colorScheme="teal"
                     width={50}
                     height={50}
-                    onClick={() => nav(`watch/${item.id}`)}
+                    onClick={() => nav(`/watch/${item.id}`)}
                     backgroundColor="rgba(0, 0, 0, 0.57)"
                     backdropFilter="blur(10px)"
                     WebkitBackdropFilter="blur(10px)"
@@ -196,7 +196,7 @@ export default function Spotlights({ data }) {
                     fontSize={"lg"}
                     width={90}
                     height={50}
-                    onClick={() => nav(`details/${item.id}`)}
+                    onClick={() => nav(`/details/${item.id}`)}
                     borderRadius={"xl"}
                     backgroundColor="rgba(255, 255, 255, 0.66)"
                     backdropFilter="blur(10px)"

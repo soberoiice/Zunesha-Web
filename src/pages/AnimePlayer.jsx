@@ -112,7 +112,7 @@ export default function HLSPlayer() {
               mx={"auto"}
               width={"95%"}
               flexDir={{ md: "row", base: "column" }}
-              maxH={"400px"}
+              maxH={"460px"}
             >
               <EpisodesContainer
                 episodes={episodes}

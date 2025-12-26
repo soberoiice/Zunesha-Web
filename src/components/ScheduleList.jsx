@@ -1,7 +1,16 @@
 import { Box, Center, Spinner, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useCallback } from "react";
+import { useNavigate } from "react-router";
 
 export default function ScheduleList({ data, loadingSchedule }) {
+  const nav = useNavigate();
+
+  const handleNavigate = useCallback(
+    (id) => {
+      nav(`/details/${id}`);
+    },
+    [nav]
+  );
   if (loadingSchedule) {
     return (
       <Center minH="100%">
@@ -40,6 +49,7 @@ export default function ScheduleList({ data, loadingSchedule }) {
           alignItems={"center"}
           gap={4}
           cursor={"pointer"}
+          onClick={() => handleNavigate(anime?.id)}
         >
           <Box textAlign={"center"} width={{ md: "10%", base: "20%" }}>
             <Text>{anime?.time}</Text>

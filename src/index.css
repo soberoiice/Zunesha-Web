@@ -1,5 +1,31 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 body {
+  background-color: "black";
   font-family: "DM Sans", sans-serif !important;
+}
+/* width of the scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* scrollbar track */
+::-webkit-scrollbar-track {
+  background: #0f0f0f;
+}
+
+/* scrollbar handle */
+::-webkit-scrollbar-thumb {
+  background: #32a88b;
+  border-radius: 8px;
+}
+
+/* hover state */
+::-webkit-scrollbar-thumb:hover {
+  background: #32a88b8a;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #32a88b #0f0f0f;
+  scrollbar-arrow-color: none;
 }

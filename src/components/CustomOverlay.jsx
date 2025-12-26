@@ -5,6 +5,8 @@ import {
   IconButton,
   Slider,
   Text,
+  Toast,
+  Toaster,
 } from "@chakra-ui/react";
 import React from "react";
 import {
@@ -101,7 +103,7 @@ export default function CustomOverlay({
         right="0"
         py={"5px"}
         px="16px"
-        height={"15%"}
+        height={{ md: "15%", base: "22%" }}
         display={"flex"}
         flexDir={"column"}
         w={"98%"}

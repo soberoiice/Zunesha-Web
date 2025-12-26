@@ -1,5 +1,6 @@
-import { Box, Button, HStack, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, HStack, Stack, Text, VStack } from "@chakra-ui/react";
 import React from "react";
+import { FaClosedCaptioning, FaMicrophone, FaServer } from "react-icons/fa";
 
 export default function ServerListContainer({
   subServers,
@@ -10,22 +11,39 @@ export default function ServerListContainer({
   type,
 }) {
   return (
-    <Stack
+    <Box
       width={{ md: "35%", base: "100%" }}
-      height={"200px"}
-      backgroundColor="rgba(0, 0, 0, 0.57)"
-      backdropFilter="blur(10px)"
-      WebkitBackdropFilter="blur(10px)"
-      borderRadius={"xl"}
-      alignItems={"center"}
+      height={"250px"}
       color={"white"}
-      justifyContent={"center"}
+      display={"flex"}
+      flexDir={"column"}
+      gap={2}
     >
-      <Stack gap={3}>
+      <HStack fontWeight={"bold"}>
+        <FaServer />
+        <Text>Available Servers</Text>
+      </HStack>
+      <Stack
+        w={"100%"}
+        h={"75%"}
+        backdropFilter="blur(10px)"
+        WebkitBackdropFilter="blur(10px)"
+        alignItems={"center"}
+        justifyContent={"center"}
+        flexDir={"row"}
+      >
         {subServers && (
-          <Box>
-            <Text lineHeight={2}>Sub Servers</Text>
-            <HStack>
+          <VStack
+            h={"100%"}
+            w={"50%"}
+            borderRadius={"xl"}
+            backgroundColor="rgba(0, 0, 0, 0.57)"
+          >
+            <HStack w={"50px"} mx={"auto"}>
+              <FaClosedCaptioning />
+              Sub
+            </HStack>
+            <VStack>
               {subServers.map((item, index) => (
                 <Button
                   key={index}
@@ -56,14 +74,22 @@ export default function ServerListContainer({
                   {item?.serverName}
                 </Button>
               ))}
-            </HStack>
-          </Box>
+            </VStack>
+          </VStack>
         )}
 
         {dubServers && (
-          <Box>
-            <Text lineHeight={2}>Dub Servers</Text>
-            <HStack>
+          <VStack
+            h={"100%"}
+            w={"50%"}
+            borderRadius={"xl"}
+            backgroundColor="rgba(0, 0, 0, 0.57)"
+          >
+            <HStack w={"50px"} mx={"auto"}>
+              <FaMicrophone />
+              Dub
+            </HStack>
+            <VStack>
               {dubServers.map((item, index) => (
                 <Button
                   key={index}
@@ -94,10 +120,23 @@ export default function ServerListContainer({
                   {item?.serverName}
                 </Button>
               ))}
-            </HStack>
-          </Box>
+            </VStack>
+          </VStack>
         )}
       </Stack>
-    </Stack>
+      <Box
+        h={"50px"}
+        borderWidth={"1px"}
+        borderColor={"#32a88b"}
+        borderRadius={"lg"}
+        display={"flex"}
+        alignItems={"center"}
+        justifyContent={"center"}
+        color={"#32a88b"}
+        bg={"#32a88b28"}
+      >
+        <Text>change servers if playback error</Text>
+      </Box>
+    </Box>
   );
 }
