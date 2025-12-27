@@ -18,7 +18,7 @@ function App() {
           <Route path="/" exact element={<LandingPage />} />
           <Route path="/home" exact element={<Homepage />} />
           <Route path="/details/:id" exact element={<Animedeatails />} />
-          <Route path="/watch/:animeid" exact element={<AnimePlayer />} />
+          <Route path="/watch/:animeid/:currentEpisode" exact element={<AnimePlayer />} />
           <Route path="/search/:searchTerm" exact element={<Search />} />
           <Route path="*" exact element={<NotFound />} />
         </Routes>

@@ -16,6 +16,7 @@ import { LuSearch } from "react-icons/lu";
 import { useNavigate } from "react-router";
 import { FaRandom } from "react-icons/fa";
 import AuthDialog from "./AuthDialog";
+import NavMenu from "./NavMenu";
 
 export default function Navbar() {
   const nav = useNavigate();
@@ -41,30 +42,33 @@ export default function Navbar() {
       paddingX={{ lg: 10, base: 2 }}
       justifyContent={"space-between"}
     >
-      <HStack
-        gap={2}
-        onClick={() => {
-          nav("/home");
-        }}
-        cursor={"pointer"}
-      >
-        <Image
-          boxShadow="0 0 50px #32a88b57"
-          src={Zunisha}
-          width={"45px"}
-          borderRadius={"4xl"}
-        />
-        <Text
-          color={"#32a88b"}
-          fontSize={"2xl"}
-          fontWeight={"bold"}
-          textAlign={"left"}
-          display={{ lg: "block", base: "none" }}
-        >
-          Zunisha
-        </Text>
-      </HStack>
       <HStack>
+        <NavMenu />
+        <HStack
+          gap={2}
+          onClick={() => {
+            nav("/home");
+          }}
+          cursor={"pointer"}
+        >
+          <Image
+            boxShadow="0 0 50px #32a88b57"
+            src={Zunisha}
+            width={"45px"}
+            borderRadius={"4xl"}
+          />
+          <Text
+            color={"#32a88b"}
+            fontSize={"2xl"}
+            fontWeight={"bold"}
+            textAlign={"left"}
+            display={{ lg: "block", base: "none" }}
+          >
+            Zunisha
+          </Text>
+        </HStack>
+      </HStack>
+      <HStack w={{ lg: "65%" }} justifyContent={"flex-start"} display={"flex"}>
         <form onSubmit={handleSubmit}>
           <InputGroup
             endElement={
@@ -91,6 +95,7 @@ export default function Navbar() {
               _placeholder={{
                 color: "#c9c9c9ff",
               }}
+              w={"400px"}
             />
           </InputGroup>
         </form>
@@ -103,7 +108,6 @@ export default function Navbar() {
           <FaRandom color={"#c9c9c9ff"} />
         </IconButton>
       </HStack>
-      <AuthDialog />
     </HStack>
   );
 }

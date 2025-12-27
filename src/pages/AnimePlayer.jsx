@@ -17,7 +17,7 @@ import MiniInfo from "../components/MiniInfo";
 import { useAnime } from "../Contexts/AnimeProvider";
 import Loader from "../components/Loader";
 
-export default function HLSPlayer() {
+export default function AnimePlayer() {
   const {
     getAnimeEpisodes,
     episodes,
@@ -25,10 +25,10 @@ export default function HLSPlayer() {
     getCurrentEpisodeInfo,
     currentEpisodeInfo,
   } = useAnime();
-  const [currentEpisodeIndex, setCurentEpisodeIndex] = useState(0);
+  // const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(null);
   const [type, setType] = useState("sub");
   const [server, setServer] = useState("hd-2");
-  const { animeid } = useParams();
+  const { animeid, currentEpisode } = useParams();
   const file = currentEpisodeInfo?.streamingLink?.link?.file;
   const subServers = currentEpisodeInfo?.servers?.filter(
     (subs) => subs?.type.toString() === "sub"
@@ -39,10 +39,14 @@ export default function HLSPlayer() {
 
   useEffect(() => {
     if (episodes && episodes.length > 0) {
-      getCurrentEpisodeInfo(episodes[currentEpisodeIndex].id, server, type);
+      getCurrentEpisodeInfo(
+        episodes[Number(currentEpisode) - 1].id,
+        server,
+        type
+      );
       // console.log("current ep index", episodes[currentEpisodeIndex].id);
     }
-  }, [currentEpisodeIndex, episodes, server, type, loadingEpisodes]);
+  }, [currentEpisode, episodes, server, type, loadingEpisodes]);
 
   useEffect(() => {
     setType("sub");
@@ -96,8 +100,7 @@ export default function HLSPlayer() {
               src={file}
               epInfo={currentEpisodeInfo}
               episodes={episodes}
-              currentEpisodeIndex={currentEpisodeIndex}
-              setCurrentEpisodeIndex={setCurentEpisodeIndex}
+              currentEpisodeIndex={currentEpisode}
             />
           </Box>
           <Box
@@ -114,11 +117,7 @@ export default function HLSPlayer() {
               flexDir={{ md: "row", base: "column" }}
               maxH={"460px"}
             >
-              <EpisodesContainer
-                episodes={episodes}
-                setCurentEpisodeIndex={setCurentEpisodeIndex}
-                currentEpisodeIndex={currentEpisodeIndex}
-              />
+              <EpisodesContainer episodes={episodes} />
               <ServerListContainer
                 setServer={setServer}
                 server={server}

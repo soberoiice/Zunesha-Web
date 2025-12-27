@@ -96,8 +96,7 @@ export default function MalDetails({ animeId, id }) {
         {/* Countdown component */}
         <EpisodeCountdown
           animeId={animeId}
-          day={metaData?.broadcast?.day_of_the_week}
-          time={metaData?.broadcast?.start_time}
+          place={'details'}
         />
       </Box>
 

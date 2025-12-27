@@ -29,6 +29,7 @@ import {
 } from "react-icons/fa6";
 import VideoPlayerSettings from "./VideoPlayerSettings";
 import { useAnime } from "../Contexts/AnimeProvider";
+import { useNavigate, useParams } from "react-router";
 
 export default function CustomOverlay({
   playing,
@@ -40,15 +41,12 @@ export default function CustomOverlay({
   seekValue,
   setSeekValue,
   setSeeking,
-  currentIndex,
-  setCurrentIndex,
   isFullScreen,
   handleFullScreen,
   bufferedTime,
   subs,
   loadSubtitle,
   setFontSize,
-  handleEpisodeChange,
   fontSize,
   playerRef,
   isMute,
@@ -58,7 +56,8 @@ export default function CustomOverlay({
 }) {
   const bufferedPercent = duration > 0 ? (bufferedTime / duration) * 100 : 0;
   const { episodes } = useAnime();
-
+  const { animeid, currentEpisode } = useParams();
+  const nav = useNavigate();
   const formatTime = (time) => {
     if (!time) return "00:00";
 
@@ -127,7 +126,7 @@ export default function CustomOverlay({
             color="white"
             fontSize="sm"
           >
-            {episodes[currentIndex]?.title}
+            {episodes[Number(currentEpisode) - 1]?.title}
           </Text>
           <Text lineHeight={0.9} color="white" fontSize="sm">
             {formatTime(currentTime)} / {formatTime(duration)}
@@ -190,19 +189,21 @@ export default function CustomOverlay({
           fontSize={"18px"}
         >
           <HStack gap={2} h={"20px"}>
-            {currentIndex > 0 && (
+            {currentEpisode != 1 && (
               <Box
                 cursor={"pointer"}
-                onClick={() => handleEpisodeChange("prev")}
+                onClick={() => nav(`/watch/${animeid}/${currentEpisode - 1}`)}
               >
                 <FaStepBackward />
               </Box>
             )}
             <Box onClick={togglePlay}>{playing ? <FaPause /> : <FaPlay />}</Box>
-            {currentIndex !== episodes?.length - 1 && (
+            {currentEpisode !== episodes?.length && (
               <Box
                 cursor={"pointer"}
-                onClick={() => handleEpisodeChange("next")}
+                onClick={() =>
+                  nav(`/watch/${animeid}/${Number(currentEpisode) + 1}`)
+                }
               >
                 <FaStepForward />
               </Box>

@@ -246,15 +246,6 @@ export default function HLSPlayer({
     if (sub) setSelectedSubtitle(sub);
   };
 
-  //handle changing episodes with controles
-  const handleEpisodeChange = (dir) => {
-    if (dir === "next") {
-      setCurrentEpisodeIndex(currentEpisodeIndex + 1);
-    } else {
-      setCurrentEpisodeIndex(currentEpisodeIndex - 1);
-    }
-  };
-
   //handle muting
   const handleMuting = () => {
     setIsMute(!isMute);
@@ -376,7 +367,6 @@ export default function HLSPlayer({
           subs={subtitles}
           loadSubtitle={loadSubtitle}
           setFontSize={setFonSize}
-          handleEpisodeChange={handleEpisodeChange}
           fontSize={fontSize}
           playerRef={playerRef}
           isMute={isMute}
@@ -385,7 +375,6 @@ export default function HLSPlayer({
           handleScreenShot={takeScreenshot}
         />
       )}
-      {message && <Toaster>message</Toaster>}
     </Box>
   );
 }

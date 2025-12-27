@@ -18,6 +18,7 @@ export const AnimeProvider = ({ children }) => {
   const [schedule, setSchedule] = useState([]);
   const [episodes, setEpisodes] = useState({});
   const [metaData, setMetaData] = useState({});
+  const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(0);
   const [animeCharacters, setAnimeCharacters] = useState([]);
   const [currentEpisodeInfo, setCurrentEpisodeInfo] = useState({});
   const [searchResults, setSearchResults] = useState([]);
@@ -30,6 +31,9 @@ export const AnimeProvider = ({ children }) => {
   const [loadingMetaData, setLoadingMetaData] = useState(false);
   const [loadingCharacters, setLoadingCharacters] = useState(false);
   const [loadingEpisobeSchedule, setLoadingEpisodeSchedule] = useState(false);
+  useEffect(() => {
+    setCurrentEpisodeIndex(0);
+  }, [episodes]);
   const getHomepage = async () => {
     try {
       setLoadingHomepage(true);
@@ -186,6 +190,8 @@ export const AnimeProvider = ({ children }) => {
         getAnimeEpisodeSchedule,
         episodeSchedule,
         loadingEpisobeSchedule,
+        setCurrentEpisodeIndex,
+        currentEpisodeIndex,
       }}
     >
       {children}

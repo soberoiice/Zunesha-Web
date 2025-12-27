@@ -15,15 +15,14 @@ import React, { useEffect, useMemo, useState } from "react";
 import { LuSearch } from "react-icons/lu";
 import { createListCollection } from "@chakra-ui/react";
 import { FaFilm } from "react-icons/fa6";
+import { useNavigate, useParams } from "react-router";
 
-export default function EpisodesContainer({
-  episodes,
-  setCurentEpisodeIndex,
-  currentEpisodeIndex,
-}) {
+export default function EpisodesContainer({ episodes, setCurentEpisodeIndex }) {
   const [chunks, setChunks] = useState([]);
   const [selectedChunk, setSelectedChunk] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const nav = useNavigate();
+  const { animeid, currentEpisode } = useParams();
 
   const splitToChunks = (array) => {
     const result = [];
@@ -161,10 +160,10 @@ export default function EpisodesContainer({
           return (
             <Button
               key={ep?.id || index}
-              onClick={() => setCurentEpisodeIndex(realIndex)}
+              onClick={() => nav(`/watch/${animeid}/${ep?.episode_no}`)}
               width={"8.5%"}
               // height={"35px"}
-              backgroundColor={realIndex == currentEpisodeIndex && "#32a88b8e"}
+              backgroundColor={realIndex == currentEpisode - 1 && "#32a88b8e"}
               bgGradient={ep.filler && "to-tr"}
               gradientFrom={"rgba(177, 77, 77, 1)"}
               gradientTo={"#387969ff"}
