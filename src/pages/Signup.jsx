@@ -88,7 +88,7 @@ export default function Signup() {
         </Box>
 
         <Box
-          w={"460px"}
+          w={{md:"460px",base:'90%'}}
           ref={scrollRef}
           display="flex"
           overflowX="hidden"

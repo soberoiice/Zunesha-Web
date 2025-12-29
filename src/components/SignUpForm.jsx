@@ -28,7 +28,7 @@ export default function SignUpForm() {
     <form onSubmit={handleSubmit}>
       <Box
         height={"400px"}
-        w={"450px"}
+        w={{ md: "450px", base: "100%" }}
         justifyContent={"space-between"}
         display={"flex"}
         flexDir={"column"}
