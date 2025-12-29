@@ -103,7 +103,6 @@ export default function Navbar() {
           borderRadius={"xl"}
           backgroundColor={"#16161688"}
           backdropFilter="blur(10px)"
-          WebkitBackdropFilter="blur(10px)"
         >
           <FaRandom color={"#c9c9c9ff"} />
         </IconButton>

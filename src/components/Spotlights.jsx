@@ -141,7 +141,7 @@ export default function Spotlights({ data }) {
                   <Heading fontSize="2xl" fontWeight={"bold"}>
                     {item.title}
                   </Heading>
-                  {/* <Text lineClamp={3}>{item.description}</Text> */}
+                  <Text lineClamp={2}>{item.description}</Text>
                   <HStack gap={5}>
                     <Text
                       border="1px solid #32a88b"

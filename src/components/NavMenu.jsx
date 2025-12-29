@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Button,
   CloseButton,
   Drawer,
@@ -11,8 +12,10 @@ import React from "react";
 import { TiThMenu } from "react-icons/ti";
 import AuthDialog from "./AuthDialog";
 import Zunisha from "../assets/Zunisha.png";
+import { useNavigate } from "react-router";
 
 export default function NavMenu() {
+  const nav = useNavigate();
   return (
     <Drawer.Root placement={"start"}>
       <Drawer.Trigger asChild>
@@ -56,7 +59,9 @@ export default function NavMenu() {
             </Drawer.Header>
             <Drawer.Body></Drawer.Body>
             <Drawer.Footer>
-              <AuthDialog />
+              <Avatar.Root colorPalette={"grey"} cursor={"pointer"}>
+                <Avatar.Fallback onClick={() => nav("/signup")} />
+              </Avatar.Root>
             </Drawer.Footer>
             <Drawer.CloseTrigger asChild>
               <CloseButton size="sm" color={"white"} />
