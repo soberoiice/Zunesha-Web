@@ -24,8 +24,8 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #32a88b8a;
 }
-* {
+/* * {
   scrollbar-width: thin;
   scrollbar-color: #32a88b #0f0f0f;
   scrollbar-arrow-color: none;
-}
+} */

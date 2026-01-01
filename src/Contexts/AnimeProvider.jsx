@@ -68,7 +68,7 @@ export const AnimeProvider = ({ children }) => {
       setEpisodes({});
       const data = await fetchAnimeEpisodes(id);
       setEpisodes(data);
-      console.log("Episodes data:", data);
+      // console.log("Episodes data:", data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -94,7 +94,7 @@ export const AnimeProvider = ({ children }) => {
       setSchedule({});
       const data = await fetchSchedule(date);
       setSchedule(data);
-      console.log("Current schedule data:", data);
+      // console.log("Current schedule data:", data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -107,7 +107,7 @@ export const AnimeProvider = ({ children }) => {
       setSearchResults({});
       const data = await fetchAnime(searchTerm, page);
       setSearchResults(data);
-      console.log("Search Results data on page", page, data);
+      // console.log("Search Results data on page", page, data);
       // console.log("Current Episodes data:", data);
     } catch (error) {
       console.error(error);
@@ -122,7 +122,7 @@ export const AnimeProvider = ({ children }) => {
       setMetaData({});
       const data = await fetchMetaData(id);
       setMetaData(data);
-      console.log("meta data", data);
+      // console.log("meta data", data);
       // console.log("Current Episodes data:", data);
     } catch (error) {
       console.error(error);
@@ -137,7 +137,7 @@ export const AnimeProvider = ({ children }) => {
       setAnimeCharacters([]);
       const data = await fetchAnimeCharacters(id);
       setAnimeCharacters(data.data);
-      console.log("character data", data);
+      // console.log("character data", data);
       // console.log("Current Episodes data:", data);
     } catch (error) {
       console.error(error);
@@ -147,13 +147,13 @@ export const AnimeProvider = ({ children }) => {
   };
 
   const getAnimeEpisodeSchedule = async (id) => {
-    console.log("schedule id", id);
+    // console.log("schedule id", id);
     try {
       setLoadingEpisodeSchedule(true);
       setEpisodeSchedule([]);
       const data = await fetchAnimeEpisodeSchedule(id);
       setEpisodeSchedule(data);
-      console.log("episode schedule", data);
+      // console.log("episode schedule", data);
     } catch (error) {
       console.error(error);
     } finally {

@@ -1,6 +1,15 @@
-import { Box, Heading, Image, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Grid,
+  GridItem,
+  Heading,
+  IconButton,
+  Image,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import React, { memo } from "react";
-import { FaSearch } from "react-icons/fa";
+import { FaFilter, FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router";
 
 // Overlay for the title on image
@@ -30,7 +39,8 @@ const SearchItem = memo(({ item, onClick, width, height }) => (
     w={width}
     h={height}
     cursor="pointer"
-    aspectRatio={16 / 9}
+    zIndex={1}
+    borderRadius="lg"
   >
     <Image
       w="100%"
@@ -49,33 +59,40 @@ export default function SearchResultsList({ searchTerm, data }) {
 
   if (!data || data.length === 0) {
     return (
-      <Stack width="100%" mt="60px" color="white" alignItems="center">
+      <Stack
+        width="100%"
+        h={"100vh"}
+        mt="60px"
+        color="white"
+        alignItems="center"
+      >
         <Text>No results found.</Text>
       </Stack>
     );
   }
 
   return (
-    <Stack width={{ lg: "80%", base: "100%" }} mt="60px" gap={5} color="white">
-      <Heading display="flex" alignItems="center" gap={2} fontSize="2xl">
-        <FaSearch />
-        <Text> Search results for</Text>{" "}
-        <Text color={"#32a88b"}> {searchTerm}</Text>
-      </Heading>
-
+    <Stack
+      width={{ lg: "95%", base: "100%" }}
+      mx={"auto"}
+      gap={5}
+      color="white"
+    >
       <Box
-        w={{ lg: "95%", base: "100%" }}
-        display="flex"
-        flexWrap="wrap"
-        gap={{ base: 2, lg: 5 }}
+        display={"flex"}
+        flexDir={"row"}
+        flexWrap={"wrap"}
+        justifyContent={"center"}
+        gap="5"
+        w={{ lg: "100%", base: "100%" }}
       >
         {data.map((item) => (
           <SearchItem
             key={item.id}
             item={item}
             onClick={() => nav(`/details/${item.id}`)}
-            width={{ lg: "145px", base: "30%" }}
-            height={{ lg: "200px", base: "165px" }}
+            width={"150px"}
+            height={"200px"}
           />
         ))}
       </Box>

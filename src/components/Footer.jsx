@@ -18,6 +18,7 @@ export default function Footer() {
       gap={5}
       color={"white"}
       py={"20px"}
+      zIndex={1}
     >
       <Stack
         w={"90%"}

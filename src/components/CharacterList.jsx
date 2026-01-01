@@ -13,7 +13,7 @@ export default function CharacterList({ id }) {
   useEffect(() => {
     if (id) {
       getAnimeCharacters(id);
-      console.log(id);
+      // console.log(id);
     }
   }, [id]);
 

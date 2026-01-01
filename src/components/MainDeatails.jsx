@@ -97,7 +97,7 @@ export default function MainDetails({ data }) {
       {/* Poster Image */}
       <Image
         h="400px"
-        w="300px"
+        aspectRatio={2/3}
         mx="auto"
         src={data?.poster}
         loading="lazy"
@@ -106,7 +106,7 @@ export default function MainDetails({ data }) {
         borderRadius="lg"
       />
 
-      <Box display="flex" flexDir="column" gap={5}>
+      <Box display="flex" flexDir="column" gap={5} w={{md:'70%', base:'100%'}}>
         {/* Top Info Tags */}
         <HStack gap={5} flexWrap="wrap">
           <Text

@@ -38,7 +38,6 @@ export default function Navbar() {
       width={"full"}
       height={"60px"}
       backdropFilter="blur(10px)"
-      WebkitBackdropFilter="blur(10px)"
       paddingX={{ lg: 10, base: 2 }}
       justifyContent={"space-between"}
     >

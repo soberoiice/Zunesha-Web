@@ -59,25 +59,24 @@ export default function MiniInfo() {
   }
   return (
     <Box
-      display={{ base: "flex", lg: "block" }}
+      display={"flex"}
       backgroundColor={"#333333ff"}
       width={{ lg: "240px", base: "95%" }}
-      paddingX={0}
       borderRadius={"xl"}
-      h={{ lg: "780px" }}
+      h={{ lg: "350px", base: "175px" }}
       color={"white"}
-      gap={2}
+      flexDir={{ lg: "column", base: "row" }}
+      gap={3}
     >
       <Image
         w={{ lg: "100%", base: "25%" }}
-        aspectRatio={2 / 3}
+        aspectRatio={16 / 9}
         borderBottomLeftRadius={{ lg: 0, base: "xl" }}
         borderTopRightRadius={{ lg: "xl", base: 0 }}
         borderTopLeftRadius={{ lg: "xl", base: "xl" }}
         src={info?.data?.poster}
       />
-      {console.log(info)}
-      <Box w={"90%"} mx={"auto"} mt={3}>
+      <Box w={{ lg: "90%", base: "70%" }} mx={"auto"} h={"90%"} my={"auto"}>
         <Text fontSize={"xl"} fontWeight={"bold"}>
           {info?.data?.title}
         </Text>
@@ -106,23 +105,7 @@ export default function MiniInfo() {
             <Text>No Rating</Text>
           )}
         </HStack>
-        <EpisodeCountdown animeId={animeid} place={'videoplayer'} />
-        {/* <Stack flexDir={"row"} flexWrap={"wrap"}>
-          {info?.data?.animeInfo?.Genres?.map((item) => (
-            <Text
-              cursor={"pointer"}
-              key={item}
-              border="1px solid #ffffffff"
-              borderRadius={"2xl"}
-              paddingX={"3"}
-              paddingY={"1"}
-              color={"#ffffffff"}
-              fontSize={"xs"}
-            >
-              {item}
-            </Text>
-          ))}
-        </Stack> */}
+        <EpisodeCountdown animeId={animeid} place={"videoplayer"} />
       </Box>
     </Box>
   );

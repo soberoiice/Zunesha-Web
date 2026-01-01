@@ -110,15 +110,17 @@ export default function Spotlights({ data }) {
                 right={5}
                 left={5}
                 display={"flex"}
+                flexDir={{ md: "row", base: "column-reverse" }}
                 borderRadius="lg"
                 p="2px"
                 justifyContent={"space-between"}
+                gap={2}
               >
                 <Box
-                  w="50%"
+                  w={{ lg: "50%", base: "100%",md:'70%' }}
                   color="white"
                   flexDir="column"
-                  display={{ lg: "flex", base: "none" }}
+                  display={{ lg: "flex" }}
                   justifyContent={"center"}
                   px={4}
                   zIndex="100"
@@ -126,8 +128,8 @@ export default function Spotlights({ data }) {
                   backgroundColor="rgba(0, 0, 0, 0.57)"
                   backdropFilter="blur(10px)"
                   WebkitBackdropFilter="blur(10px)"
-                  maxH={"300px"}
-                  p={10}
+                  maxH={{ md: "300px", base: "120px" }}
+                  p={{ md: 10, base: 5 }}
                   // border="3px solid #32a88b"
                   gap={3}
                 >
@@ -138,41 +140,51 @@ export default function Spotlights({ data }) {
                   >
                     #{index + 1} Spotlight
                   </Heading>
-                  <Heading fontSize="2xl" fontWeight={"bold"}>
+                  <Heading
+                    fontSize={{ lg: "2xl", base: "lg" }}
+                    fontWeight={"bold"}
+                  >
                     {item.title}
                   </Heading>
-                  <Text lineClamp={2}>{item.description}</Text>
-                  <HStack gap={5}>
-                    <Text
-                      border="1px solid #32a88b"
-                      borderRadius={"lg"}
-                      paddingX={"2"}
-                      paddingY={"1"}
-                      color={"#32a88b"}
-                    >
-                      {item?.tvInfo.showType}
+                  <Box display={{ md: "block", base: "none" }}>
+                    <Text lineClamp={{ md: 2, base: 1 }}>
+                      {item.description}
                     </Text>
-                    <HStack>
-                      <IoIosVideocam size={25} />
-                      {item?.tvInfo?.episodeInfo?.sub}
+                  </Box>
+
+                  <Box display={{ md: "block", base: "none" }}>
+                    <HStack gap={5}>
+                      <Text
+                        border="1px solid #32a88b"
+                        borderRadius={"lg"}
+                        paddingX={"2"}
+                        paddingY={"1"}
+                        color={"#32a88b"}
+                      >
+                        {item?.tvInfo.showType}
+                      </Text>
+                      <HStack>
+                        <IoIosVideocam size={25} />
+                        {item?.tvInfo?.episodeInfo?.sub}
+                      </HStack>
+                      <HStack>
+                        <FaCalendar />
+                        {item?.tvInfo.releaseDate}
+                      </HStack>
+                      <Text
+                        backgroundColor="rgba(0, 0, 0, 0.19)"
+                        backdropFilter="blur(10px)"
+                        WebkitBackdropFilter="blur(10px)"
+                        borderRadius={"lg"}
+                        paddingX={"2"}
+                        paddingY={"1"}
+                      >
+                        {item?.tvInfo.quality}
+                      </Text>
                     </HStack>
-                    <HStack>
-                      <FaCalendar />
-                      {item?.tvInfo.releaseDate}
-                    </HStack>
-                    <Text
-                      backgroundColor="rgba(0, 0, 0, 0.19)"
-                      backdropFilter="blur(10px)"
-                      WebkitBackdropFilter="blur(10px)"
-                      borderRadius={"lg"}
-                      paddingX={"2"}
-                      paddingY={"1"}
-                    >
-                      {item?.tvInfo.quality}
-                    </Text>
-                  </HStack>
+                  </Box>
                 </Box>
-                <HStack marginTop={"auto"}>
+                <HStack marginLeft={"auto"} marginTop={"auto"}>
                   <Button
                     mt={4}
                     colorScheme="teal"

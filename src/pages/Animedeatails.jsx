@@ -21,7 +21,7 @@ export default function Animedeatails() {
 
   const handleclick = (option) => {
     setIsActive(option);
-    console.log("Clicked:", option);
+    // console.log("Clicked:", option);
     scroll(option === "Details" ? "left" : "right");
   };
   const scroll = useCallback((direction) => {
@@ -53,7 +53,7 @@ export default function Animedeatails() {
   ));
 
   useEffect(() => {
-    console.log("anime id", id);
+    // console.log("anime id", id);
     getAnimeDetails(id);
   }, [id]);
 
@@ -77,6 +77,8 @@ export default function Animedeatails() {
         zIndex={-10}
         w={"100%"}
         h={"100vh"}
+        loading="lazy"
+        decoding="async"
         backgroundSize={"cover"}
       ></Box>
       <Navbar />
