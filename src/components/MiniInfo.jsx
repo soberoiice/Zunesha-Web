@@ -77,7 +77,7 @@ export default function MiniInfo() {
         src={info?.data?.poster}
       />
       <Box w={{ lg: "90%", base: "70%" }} mx={"auto"} h={"90%"} my={"auto"}>
-        <Text fontSize={"xl"} fontWeight={"bold"}>
+        <Text lineClamp={'1'} fontSize={"xl"} fontWeight={"bold"}>
           {info?.data?.title}
         </Text>
         <HStack>

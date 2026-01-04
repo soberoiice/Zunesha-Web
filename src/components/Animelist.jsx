@@ -112,7 +112,7 @@ export default function Animelist({ title, data, icon }) {
           scrollbarWidth="none"
           gap={2}
         >
-          {data?.slice(0, 10).map((item) => (
+          {data?.slice(0, 15).map((item) => (
             <Box
               key={item.id}
               position="relative"

@@ -23,9 +23,21 @@ import landingbg from "../assets/landing-bg.jpg";
 import { LuSearch } from "react-icons/lu";
 
 export default function Search() {
-  const { searchTerm } = useParams();
-  const { getAnime, searchResults, loadingSearch } = useAnime();
+  const {
+    getAnime,
+    searchResults,
+    loadingSearch,
+    searchTerm,
+    getFiltereAnime,
+  } = useAnime();
   const [page, setPage] = useState(1);
+  const [params, setParams] = useState({
+    type: { value: "any", visible: false, label: "Any" },
+    status: { value: "any", visible: false, label: "Any" },
+    genre: { value: [], visible: false, label: "Any" },
+    season: { value: "any", visible: false, label: "Any" },
+    rating: { value: "any", visible: false, label: "Any" },
+  });
   const nav = useNavigate();
   useEffect(() => {
     getAnime(searchTerm, page);
@@ -38,8 +50,8 @@ export default function Search() {
 
   if (!searchResults || searchResults.length === 0) {
     return (
-      <Center minH="100vh" color="gray.400">
-        No anime found.
+      <Center minH="100vh" color="gray.400" backgroundColor={"black"}>
+        Search Something
       </Center>
     );
   }
@@ -68,7 +80,13 @@ export default function Search() {
         color={"white"}
         zIndex={10}
       >
-        <FilterSearchForm searchTerm={searchTerm} />
+        <FilterSearchForm
+          params={params}
+          setParams={setParams}
+          searchTerm={searchTerm}
+          submitFilter={() => getFiltereAnime(searchTerm, page, params)}
+          page={page}
+        />
       </Box>
       <Box
         width={"100%"}
@@ -79,10 +97,7 @@ export default function Search() {
         zIndex={1}
       >
         <Box w={"95%"} mx={"auto"}>
-          <SearchResultsList
-            searchTerm={searchTerm}
-            data={searchResults?.data}
-          />
+          <SearchResultsList data={searchResults?.data} />
           <PaginationComponent
             totalPages={searchResults?.totalPage}
             setPage={setPage}

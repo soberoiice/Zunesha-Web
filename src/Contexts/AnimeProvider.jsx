@@ -8,11 +8,13 @@ import { fetchSchedule } from "../utils/fetrchSchedule";
 import { fetchMetaData } from "../utils/fetchMetaData";
 import { fetchAnimeCharacters } from "../utils/fetchAnimeCharacters";
 import { fetchAnimeEpisodeSchedule } from "../utils/fetchAnimeEpisodeSchedule";
+import { fetchFilterdAnime } from "../utils/fetchFilteredAnime";
 
 const AnimeContext = createContext();
 export const useAnime = () => useContext(AnimeContext);
 
 export const AnimeProvider = ({ children }) => {
+  const [searchTerm, setSearchTerm] = useState("");
   const [homepage, setHomepage] = useState([]);
   const [info, setInfo] = useState([]);
   const [schedule, setSchedule] = useState([]);
@@ -101,6 +103,7 @@ export const AnimeProvider = ({ children }) => {
       setLoadingSchedule(false);
     }
   };
+
   const getAnime = async (searchTerm, page) => {
     try {
       setLoadingSearch(true);
@@ -160,6 +163,19 @@ export const AnimeProvider = ({ children }) => {
       setLoadingEpisodeSchedule(false);
     }
   };
+  const getFiltereAnime = async (searchTerm, page, params) => {
+    // console.log("schedule id", id);
+    try {
+      setLoadingSearch(true);
+      const data = await fetchFilterdAnime(searchTerm, page, params);
+      setSearchResults(data);
+      console.log("filtered search", data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoadingSearch(false);
+    }
+  };
   return (
     <AnimeContext.Provider
       value={{
@@ -192,6 +208,9 @@ export const AnimeProvider = ({ children }) => {
         loadingEpisobeSchedule,
         setCurrentEpisodeIndex,
         currentEpisodeIndex,
+        searchTerm,
+        setSearchTerm,
+        getFiltereAnime,
       }}
     >
       {children}

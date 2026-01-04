@@ -15,30 +15,30 @@ import React, { memo, useEffect, useState } from "react";
 import { FaFilter, FaSearch, FaTrash } from "react-icons/fa";
 import { LuChevronsUpDown, LuSearch } from "react-icons/lu";
 import { useNavigate } from "react-router";
+import { useAnime } from "../Contexts/AnimeProvider";
 
-export default function FilterSearchForm({ searchTerm }) {
+export default function FilterSearchForm({
+  params,
+  setParams,
+  submitFilter,
+  page,
+}) {
+  const { searchTerm, setSearchTerm } = useAnime();
   const [query, setQuery] = useState("");
-  const [params, setParams] = useState({
-    type: { value: "any", visible: false, label: "Any" },
-    status: { value: "any", visible: false, label: "Any" },
-    genre: { value: "any", visible: false, label: "Any" },
-    season: { value: "any", visible: false, label: "Any" },
-    rating: { value: "any", visible: false, label: "Any" },
-  });
   const type = [
     { label: "Any", value: "any" },
-    { label: "Movie", value: "movie" },
-    { label: "Special", value: "special" },
-    { label: "OVA", value: "ova" },
+    { label: "Movie", value: "1" },
+    { label: "Special", value: "5" },
+    { label: "OVA", value: "3" },
     { label: "ONA", value: "ona" },
-    { label: "TV", value: "tv" },
+    { label: "TV", value: "2" },
     { label: "Music", value: "music" },
   ];
 
   const status = [
     { label: "Any", value: "any" },
-    { label: "Finished", value: "finished" },
-    { label: "Currently Airing", value: "currently-airing" },
+    { label: "Finished", value: "1" },
+    { label: "Currently Airing", value: "2" },
   ];
 
   const genres = [
@@ -85,13 +85,13 @@ export default function FilterSearchForm({ searchTerm }) {
     "vampire",
   ];
   const rating = [
-    { label: "Any", value: "all" },
-    { label: "G", value: "g" },
-    { label: "PG", value: "pg" },
-    { label: "PG-13", value: "pg-13" },
-    { label: "R", value: "r" },
-    { label: "R+", value: "r+" },
-    { label: "Rx", value: "rx" },
+    { label: "Any", value: "any" },
+    { label: "G", value: "1" },
+    { label: "PG", value: "2" },
+    { label: "PG-13", value: "3" },
+    { label: "R", value: "4" },
+    { label: "R+", value: "5" },
+    { label: "Rx", value: "6" },
   ];
 
   const season = [
@@ -110,10 +110,23 @@ export default function FilterSearchForm({ searchTerm }) {
     e.preventDefault();
 
     if (query) {
-      nav(`/search/${query}`);
+      nav(`/search`);
+      setSearchTerm(query);
+      getFiltereAnime(searchTerm, page, params);
       setQuery("");
     }
   };
+  function handleAddGenre(g) {
+    setParams((prev) => ({
+      ...prev,
+      genre: {
+        value: [...prev.genre.value, g],
+        visible: !prev.genre?.visible,
+        label: "Any",
+      },
+    }));
+    console.log(params.genre.value);
+  }
   const ItemFilter = memo(({ list, title }) => (
     <Stack w={{ lg: "10%", base: "45%" }} height={"100px"}>
       <Heading h={"30px"}>{title}</Heading>
@@ -145,7 +158,7 @@ export default function FilterSearchForm({ searchTerm }) {
         <Box
           backgroundColor={"#16161688"}
           position={"absolute"}
-          height={"150px"}
+          height={params[title]?.visible ? "150px" : "0px"}
           overflowY={"scroll"}
           borderRadius={"xl"}
           px={"5"}
@@ -158,6 +171,7 @@ export default function FilterSearchForm({ searchTerm }) {
           overflowX={"hidden"}
           py={"2"}
           scrollbarColor={"#32a88b "}
+          transition="transform 0.3s ease"
         >
           {list.map((item, index) => (
             <Box
@@ -199,7 +213,7 @@ export default function FilterSearchForm({ searchTerm }) {
         </Heading>
       </Stack>
       <HStack w={"100%"} display={"flex"}>
-        <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+        <Box style={{ width: "100%" }}>
           <InputGroup
             endElement={
               <IconButton
@@ -230,7 +244,7 @@ export default function FilterSearchForm({ searchTerm }) {
               value={query}
             />
           </InputGroup>
-        </form>
+        </Box>
         <Button
           w={"10%"}
           borderRadius={"xl"}
@@ -241,6 +255,18 @@ export default function FilterSearchForm({ searchTerm }) {
         >
           <FaTrash color={"#c9c9c9ff"} />
         </Button>
+        <Button
+          w={"10%"}
+          borderRadius={"xl"}
+          backgroundColor={"#16161688"}
+          backdropFilter="blur(10px)"
+          h={"50px"}
+          onClick={(e) => {
+            handleSubmit(e);
+          }}
+        >
+          <FaSearch color={"#c9c9c9ff"} />
+        </Button>
       </HStack>
       <Stack
         flexDir={"row"}
@@ -248,6 +274,7 @@ export default function FilterSearchForm({ searchTerm }) {
         mt={"20px"}
         w={"100%"}
         mx={"auto"}
+        justifyContent={"space-between"}
       >
         <ItemFilter title={"type"} list={type} />
         <ItemFilter title={"status"} list={status} />
@@ -269,6 +296,8 @@ export default function FilterSearchForm({ searchTerm }) {
                 backgroundColor={"#16161688"}
                 px={2}
                 cursor={"pointer"}
+                onClick={() => handleAddGenre(genre)}
+                key={genre}
               >
                 {genre}
               </Box>

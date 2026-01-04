@@ -49,7 +49,7 @@ export default function Signup() {
       display={"flex"}
       flexDir={"column"}
       h={"100vh"}
-      bg={"rgba(0, 0, 0, 0.95)"}
+      bg={"rgba(0, 0, 0, 0.85)"}
       paddingBottom={"50px"}
     >
       <Navbar />

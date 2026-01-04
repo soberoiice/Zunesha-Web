@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import TopLoadingBar from "./components/TopLoaderBar";
 import LandingPage from "./pages/LandingPage";
 import SignUp from "./pages/Signup";
+import Settings from "./pages/Settings";
 
 function App() {
   return (
@@ -24,7 +25,8 @@ function App() {
             exact
             element={<AnimePlayer />}
           />
-          <Route path="/search/:searchTerm" exact element={<Search />} />
+          <Route path="/search" exact element={<Search />} />
+          <Route path="/settings" exact element={<Settings />} />
           <Route path="/signup" exact element={<SignUp />} />
           <Route path="*" exact element={<NotFound />} />
         </Routes>

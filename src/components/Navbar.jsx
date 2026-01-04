@@ -17,16 +17,19 @@ import { useNavigate } from "react-router";
 import { FaRandom } from "react-icons/fa";
 import AuthDialog from "./AuthDialog";
 import NavMenu from "./NavMenu";
+import { useAnime } from "../Contexts/AnimeProvider";
 
 export default function Navbar() {
   const nav = useNavigate();
-  const [searchTerm, setSearchTerm] = React.useState("");
+  const {setSearchTerm} = useAnime()
+  const [query, setQuery] = React.useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (searchTerm) {
-      nav(`/search/${searchTerm}`);
-      setSearchTerm("");
+    if (query) {
+      nav(`/search`);
+      setSearchTerm(query)
+      setQuery("");
     }
   };
 
@@ -87,7 +90,7 @@ export default function Navbar() {
               border={"none"}
               backgroundColor={"#16161688"}
               borderRadius={"2xl"}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => setQuery(e.target.value)}
               color={"white"}
               backdropFilter="blur(10px)"
               WebkitBackdropFilter="blur(10px)"

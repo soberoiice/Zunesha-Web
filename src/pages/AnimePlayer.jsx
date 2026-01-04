@@ -82,7 +82,7 @@ export default function AnimePlayer() {
         justifyContent={{ lg: "center", base: "flex-start" }}
         gap={5}
         marginTop={"80px"}
-        w={"95%"}
+        w={"98%"}
       >
         <Box
           display={"flex"}

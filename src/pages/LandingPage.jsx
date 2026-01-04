@@ -32,7 +32,7 @@ export default function LandingPage() {
   return (
     <Box
       height={"100vh"}
-      bg={"rgba(0, 0, 0, 0.95)"}
+      bg={"rgba(0, 0, 0, 0.85)"}
       resize={"both"}
       position={"relative"}
     >
