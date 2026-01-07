@@ -90,7 +90,7 @@ export default function SearchResultsList({ searchTerm, data }) {
           <SearchItem
             key={item.id}
             item={item}
-            onClick={() => nav(`/details/${item.id}`)}
+            onClick={() => nav(`/details/${item.id.replace("watch/", "")}`)}
             width={"150px"}
             height={"200px"}
           />

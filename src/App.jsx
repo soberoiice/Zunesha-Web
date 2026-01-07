@@ -10,6 +10,7 @@ import TopLoadingBar from "./components/TopLoaderBar";
 import LandingPage from "./pages/LandingPage";
 import SignUp from "./pages/Signup";
 import Settings from "./pages/Settings";
+import RandomAnime from "./pages/RandomAnime";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             element={<AnimePlayer />}
           />
           <Route path="/search" exact element={<Search />} />
+          <Route path="/random" exact element={<RandomAnime />} />
           <Route path="/settings" exact element={<Settings />} />
           <Route path="/signup" exact element={<SignUp />} />
           <Route path="*" exact element={<NotFound />} />

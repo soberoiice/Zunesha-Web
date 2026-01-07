@@ -1,26 +1,13 @@
-import {
-  Box,
-  Center,
-  Heading,
-  IconButton,
-  Input,
-  InputGroup,
-  Spinner,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Center } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useAnime } from "../Contexts/AnimeProvider";
-import Animelist from "../components/Animelist";
 import Navbar from "../components/Navbar";
 import Loader from "../components/Loader";
 import SearchResultsList from "../components/SearchResultsList";
 import PaginationComponent from "../components/Pagination";
 import FilterSearchForm from "../components/FilterSearchForm";
-import { FaFilter, FaSearch } from "react-icons/fa";
 import landingbg from "../assets/landing-bg.jpg";
-import { LuSearch } from "react-icons/lu";
 
 export default function Search() {
   const {
@@ -28,21 +15,21 @@ export default function Search() {
     searchResults,
     loadingSearch,
     searchTerm,
-    getFiltereAnime,
+    getFilterdAnime,
   } = useAnime();
   const [page, setPage] = useState(1);
   const [params, setParams] = useState({
     type: { value: "any", visible: false, label: "Any" },
     status: { value: "any", visible: false, label: "Any" },
-    genre: { value: [], visible: false, label: "Any" },
+    genre: { value: [] },
     season: { value: "any", visible: false, label: "Any" },
     rating: { value: "any", visible: false, label: "Any" },
   });
   const nav = useNavigate();
   useEffect(() => {
-    getAnime(searchTerm, page);
+    getFilterdAnime(searchTerm, page, params);
     // console.log("Searching for:", searchTerm);
-  }, [searchTerm, page]);
+  }, [searchTerm, page, params]);
 
   if (loadingSearch) {
     return <Loader />;

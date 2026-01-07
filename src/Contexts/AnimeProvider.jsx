@@ -9,12 +9,13 @@ import { fetchMetaData } from "../utils/fetchMetaData";
 import { fetchAnimeCharacters } from "../utils/fetchAnimeCharacters";
 import { fetchAnimeEpisodeSchedule } from "../utils/fetchAnimeEpisodeSchedule";
 import { fetchFilterdAnime } from "../utils/fetchFilteredAnime";
+import { fetchRandomAnime } from "../utils/fetchRandomAnime";
 
 const AnimeContext = createContext();
 export const useAnime = () => useContext(AnimeContext);
 
 export const AnimeProvider = ({ children }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(" ");
   const [homepage, setHomepage] = useState([]);
   const [info, setInfo] = useState([]);
   const [schedule, setSchedule] = useState([]);
@@ -163,7 +164,7 @@ export const AnimeProvider = ({ children }) => {
       setLoadingEpisodeSchedule(false);
     }
   };
-  const getFiltereAnime = async (searchTerm, page, params) => {
+  const getFilterdAnime = async (searchTerm, page, params) => {
     // console.log("schedule id", id);
     try {
       setLoadingSearch(true);
@@ -174,6 +175,19 @@ export const AnimeProvider = ({ children }) => {
       console.error(error);
     } finally {
       setLoadingSearch(false);
+    }
+  };
+  const getRandomAnime = async () => {
+    try {
+      setLoadingDetails(true);
+      setInfo({});
+      const data = await fetchRandomAnime();
+      setInfo(data);
+      console.log("rand Anime info:", data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoadingDetails(false);
     }
   };
   return (
@@ -210,7 +224,8 @@ export const AnimeProvider = ({ children }) => {
         currentEpisodeIndex,
         searchTerm,
         setSearchTerm,
-        getFiltereAnime,
+        getFilterdAnime,
+        getRandomAnime
       }}
     >
       {children}

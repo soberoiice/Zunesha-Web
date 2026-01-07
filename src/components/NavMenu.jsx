@@ -14,7 +14,7 @@ import { TiThMenu } from "react-icons/ti";
 import AuthDialog from "./AuthDialog";
 import Zunisha from "../assets/Zunisha.png";
 import { Link, useNavigate } from "react-router";
-import { FaCog, FaHeart, FaHome, FaRandom, FaSearch } from "react-icons/fa";
+import { FaCog, FaHeart, FaHome, FaNewspaper, FaRandom, FaSearch } from "react-icons/fa";
 import { useAnime } from "../Contexts/AnimeProvider";
 
 const MenuBtn = memo(({ icon, title, handleClick }) => (
@@ -93,6 +93,11 @@ export default function NavMenu() {
                 title={"Random"}
                 icon={<FaRandom />}
                 handleClick={() => nav("/random")}
+              />
+              <MenuBtn
+                title={"News"}
+                icon={<FaNewspaper />}
+                handleClick={() => nav("/signup")}
               />
               <MenuBtn
                 title={"Support"}

@@ -177,6 +177,7 @@ export default function Spotlights({ data }) {
       >
         {Array.from({ length: data?.length }).map((_, index) => (
           <Box
+            key={index}
             borderRadius={"xs"}
             bg={
               index == currentIndex

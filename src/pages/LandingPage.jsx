@@ -137,6 +137,7 @@ export default function LandingPage() {
                   _placeholder={{
                     color: "#c9c9c9ff",
                   }}
+                  px={5}
                 />
               </InputGroup>
             </form>

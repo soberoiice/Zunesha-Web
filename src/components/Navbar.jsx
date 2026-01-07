@@ -21,14 +21,14 @@ import { useAnime } from "../Contexts/AnimeProvider";
 
 export default function Navbar() {
   const nav = useNavigate();
-  const {setSearchTerm} = useAnime()
+  const { setSearchTerm } = useAnime();
   const [query, setQuery] = React.useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (query) {
       nav(`/search`);
-      setSearchTerm(query)
+      setSearchTerm(query);
       setQuery("");
     }
   };
@@ -98,6 +98,7 @@ export default function Navbar() {
                 color: "#c9c9c9ff",
               }}
               w={"400px"}
+              px={5}
             />
           </InputGroup>
         </form>
@@ -105,6 +106,7 @@ export default function Navbar() {
           borderRadius={"xl"}
           backgroundColor={"#16161688"}
           backdropFilter="blur(10px)"
+          onClick={() => nav("/random")}
         >
           <FaRandom color={"#c9c9c9ff"} />
         </IconButton>

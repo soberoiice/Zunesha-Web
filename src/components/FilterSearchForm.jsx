@@ -23,8 +23,15 @@ export default function FilterSearchForm({
   submitFilter,
   page,
 }) {
-  const { searchTerm, setSearchTerm } = useAnime();
+  const { searchTerm, setSearchTerm, getFilterdAnime } = useAnime();
   const [query, setQuery] = useState("");
+  const [tempParams, setTempParams] = useState({
+    type: { value: "any", visible: false, label: "Any" },
+    status: { value: "any", visible: false, label: "Any" },
+    genre: { value: [] },
+    season: { value: "any", visible: false, label: "Any" },
+    rating: { value: "any", visible: false, label: "Any" },
+  });
   const type = [
     { label: "Any", value: "any" },
     { label: "Movie", value: "1" },
@@ -103,29 +110,37 @@ export default function FilterSearchForm({
   ];
 
   const nav = useNavigate();
+
   useEffect(() => {
     setQuery(searchTerm);
   }, []);
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
-    if (query) {
-      nav(`/search`);
-      setSearchTerm(query);
-      getFiltereAnime(searchTerm, page, params);
-      setQuery("");
-    }
+  const handleSubmit = () => {
+    setSearchTerm(query);
+    setParams(tempParams);
+    console.log("temp params", tempParams);
+    // getFilterdAnime(searchTerm, page, params);
+    // setQuery("");
   };
   function handleAddGenre(g) {
-    setParams((prev) => ({
-      ...prev,
-      genre: {
-        value: [...prev.genre.value, g],
-        visible: !prev.genre?.visible,
-        label: "Any",
-      },
-    }));
+    setTempParams((prev) => {
+      const exists = isInGenreList(g);
+
+      const nextValue = exists
+        ? prev.genre.value.filter((item) => item !== g)
+        : [...prev.genre.value, g];
+
+      return {
+        ...prev,
+        genre: {
+          value: nextValue,
+        },
+      };
+    });
     console.log(params.genre.value);
+  }
+  function isInGenreList(g) {
+    return tempParams.genre.value.includes(g);
   }
   const ItemFilter = memo(({ list, title }) => (
     <Stack w={{ lg: "10%", base: "45%" }} height={"100px"}>
@@ -141,7 +156,7 @@ export default function FilterSearchForm({
           backgroundColor={"#16161688"}
           justifyContent={"space-between"}
           onClick={() =>
-            setParams((prev) => ({
+            setTempParams((prev) => ({
               ...prev,
               [title]: {
                 value: "any",
@@ -151,21 +166,21 @@ export default function FilterSearchForm({
             }))
           }
         >
-          {params[title]?.label || "Any"}
+          {tempParams[title]?.label || "Any"}
 
           <LuChevronsUpDown />
         </Box>
         <Box
           backgroundColor={"#16161688"}
           position={"absolute"}
-          height={params[title]?.visible ? "150px" : "0px"}
+          height={tempParams[title]?.visible ? "150px" : "0px"}
           overflowY={"scroll"}
           borderRadius={"xl"}
           px={"5"}
           w={"100%"}
           top={"50px"}
           left={0}
-          display={params[title]?.visible ? "flex" : "none"}
+          display={tempParams[title]?.visible ? "flex" : "none"}
           flexDir={"column"}
           gap={2}
           overflowX={"hidden"}
@@ -176,7 +191,7 @@ export default function FilterSearchForm({
           {list.map((item, index) => (
             <Box
               onClick={() =>
-                setParams((prev) => ({
+                setTempParams((prev) => ({
                   ...prev,
                   [title]: {
                     value: item.value ?? "any",
@@ -208,8 +223,14 @@ export default function FilterSearchForm({
       >
         <Heading display="flex" alignItems="center" gap={2} fontSize="2xl">
           <FaSearch />
-          <Text> Search results for</Text>{" "}
-          <Text color={"#32a88b"}> {searchTerm}</Text>
+          {searchTerm != " " ? (
+            <HStack>
+              <Text> Search results for</Text>{" "}
+              <Text color={"#32a88b"}> {searchTerm}</Text>
+            </HStack>
+          ) : (
+            <Text> Search Something</Text>
+          )}
         </Heading>
       </Stack>
       <HStack w={"100%"} display={"flex"}>
@@ -242,11 +263,12 @@ export default function FilterSearchForm({
               w={"100%"}
               h={"50px"}
               value={query}
+              px={5}
             />
           </InputGroup>
         </Box>
         <Button
-          w={"10%"}
+          w={"7%"}
           borderRadius={"xl"}
           backgroundColor={"#16161688"}
           backdropFilter="blur(10px)"
@@ -256,13 +278,13 @@ export default function FilterSearchForm({
           <FaTrash color={"#c9c9c9ff"} />
         </Button>
         <Button
-          w={"10%"}
+          w={"7%"}
           borderRadius={"xl"}
           backgroundColor={"#16161688"}
           backdropFilter="blur(10px)"
           h={"50px"}
-          onClick={(e) => {
-            handleSubmit(e);
+          onClick={() => {
+            handleSubmit();
           }}
         >
           <FaSearch color={"#c9c9c9ff"} />
@@ -292,12 +314,13 @@ export default function FilterSearchForm({
               <Box
                 borderRadius={"lg"}
                 borderWidth={"1px"}
-                borderColor={"transparent"}
+                borderColor={isInGenreList(genre) ? "#32a88b" : "transparent"}
                 backgroundColor={"#16161688"}
                 px={2}
                 cursor={"pointer"}
                 onClick={() => handleAddGenre(genre)}
                 key={genre}
+                color={isInGenreList(genre) ? "#32a88b" : "white"}
               >
                 {genre}
               </Box>
