@@ -52,7 +52,6 @@ export default function Signup() {
       bg={"rgba(0, 0, 0, 0.85)"}
       paddingBottom={"50px"}
     >
-      <Navbar />
       <Box
         backgroundImage={`url(${landingbg})`}
         w={"100%"}

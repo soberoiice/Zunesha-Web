@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router";
 import Homepage from "./pages/Homepage";
 import Animedeatails from "./pages/Animedeatails";
 import AnimePlayer from "./pages/AnimePlayer";
@@ -11,12 +11,33 @@ import LandingPage from "./pages/LandingPage";
 import SignUp from "./pages/Signup";
 import Settings from "./pages/Settings";
 import RandomAnime from "./pages/RandomAnime";
+import { useEffect } from "react";
+import NavMenu from "./components/NavMenu";
+import { Box, HStack, Stack } from "@chakra-ui/react";
+import Navbar from "./components/Navbar";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   return (
+    <Box w={'100%'}>
     <AnimeProvider>
       <BrowserRouter>
+        <Navbar/>
         <TopLoadingBar />
+        <ScrollToTop />
+        <Stack direction={"row"} gap={0} width={"full"} height={'100%'}>
+        <NavMenu/>
+        <Box w={{md:'80px',base:'0'}}></Box>
+        <Box w={{md:'95%',base:'100%'}}>
         <Routes>
           <Route path="/" exact element={<LandingPage />} />
           <Route path="/home" exact element={<Homepage />} />
@@ -32,9 +53,12 @@ function App() {
           <Route path="/signup" exact element={<SignUp />} />
           <Route path="*" exact element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
       <Footer />
+        </Box>
+        </Stack>
+      </BrowserRouter>
     </AnimeProvider>
+    </Box>
   );
 }
 

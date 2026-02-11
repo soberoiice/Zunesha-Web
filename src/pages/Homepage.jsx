@@ -12,12 +12,13 @@ import Schedule from "../components/Schedule";
 import { RiFilmFill } from "react-icons/ri";
 
 export default function Homepage() {
-  const { getHomepage, homepage, loadingHomepage, getMalDetails } = useAnime();
+  const { getHomepage, homepage, loadingHomepage, getMalDetails, setCurrentPage } = useAnime();
   const { content, setContent } = useState();
 
   const list = ["New Episodes"];
   useEffect(() => {
     getHomepage();
+    setCurrentPage('home')
   }, []);
 
   if (loadingHomepage) {
@@ -40,7 +41,6 @@ export default function Homepage() {
       backgroundColor={"black"}
       paddingBottom={"50px"}
     >
-      <Navbar />
       <Box marginTop={"80px"}>
         <Spotlights data={homepage.spotlights} />
         <Box
@@ -55,7 +55,7 @@ export default function Homepage() {
             flexDir={"column"}
             gap={5}
             marginTop={"60px"}
-            width={{ lg: "68%", base: "100%" }}
+            width={{ lg: "75%", base: "100%" }}
           >
             <Animelist
               title={"Latest Episodes"}

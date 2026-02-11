@@ -10,14 +10,29 @@ import CharacterList from "../components/CharacterList";
 import Animelist from "../components/Animelist";
 import { FaGripLinesVertical } from "react-icons/fa";
 
-export default function Animedeatails() {
+    const TabButton = memo(({ children }) => (
+      <Button
+        position="relative"
+        bg="transparent"
+        borderRadius={0}
+        h="50px"
+        w={"100px"}
+        onClick={() => handleclick(children)}
+        flex={1}
+      >
+        {children}
+      </Button>
+    ));
+export default function Animedeatails({data}) {
   const { id } = useParams();
-  const { info, getAnimeDetails, loadingDetails, getMalDetails } = useAnime();
+  const { info, getAnimeDetails, loadingDetails, getMalDetails, setCurrentPage } = useAnime();
   const [isActive, setIsActive] = useState("Details");
   const scrollRef = useRef(null);
 
   const tabs = ["Details", "Characters"];
   const activeIndex = tabs.indexOf(isActive);
+
+  useEffect(()=>{},[])
 
   const handleclick = (option) => {
     setIsActive(option);
@@ -38,23 +53,11 @@ export default function Animedeatails() {
       behavior: "smooth",
     });
   }, []);
-  const TabButton = memo(({ children }) => (
-    <Button
-      position="relative"
-      bg="transparent"
-      borderRadius={0}
-      h="50px"
-      w={"100px"}
-      onClick={() => handleclick(children)}
-      flex={1}
-    >
-      {children}
-    </Button>
-  ));
 
   useEffect(() => {
     // console.log("anime id", id);
     getAnimeDetails(id);
+    setCurrentPage('details');
   }, [id]);
 
   if (loadingDetails) {
@@ -81,7 +84,6 @@ export default function Animedeatails() {
         decoding="async"
         backgroundSize={"cover"}
       ></Box>
-      <Navbar />
       <Stack
         w={"100%"}
         background={"rgba(31, 31, 31, 0.84)"}

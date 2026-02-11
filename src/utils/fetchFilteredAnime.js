@@ -14,6 +14,7 @@ export async function fetchFilterdAnime(searchTerm, page, filters) {
     keyword: encodedTerm,
     genre: filters.genre.value.join(", "),
   };
+  console.log('filtered params: ', params)
   const res = await axios.get(`${API_URL}filter`, { params });
   return res.data.results;
 }

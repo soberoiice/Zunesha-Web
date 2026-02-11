@@ -33,7 +33,7 @@ function ToptenAnimeList({ data, title }) {
     <Box
       display="flex"
       flexDir="column"
-      width={{ lg: "30%", base: "100%" }}
+      width={{ lg: "25%", base: "100%" }}
       gap={3}
       mt="60px"
       color="white"

@@ -8,6 +8,7 @@ import SearchResultsList from "../components/SearchResultsList";
 import PaginationComponent from "../components/Pagination";
 import FilterSearchForm from "../components/FilterSearchForm";
 import landingbg from "../assets/landing-bg.jpg";
+import { set } from "nprogress";
 
 export default function Search() {
   const {
@@ -16,20 +17,15 @@ export default function Search() {
     loadingSearch,
     searchTerm,
     getFilterdAnime,
+    setCurrentPage,
   } = useAnime();
   const [page, setPage] = useState(1);
-  const [params, setParams] = useState({
-    type: { value: "any", visible: false, label: "Any" },
-    status: { value: "any", visible: false, label: "Any" },
-    genre: { value: [] },
-    season: { value: "any", visible: false, label: "Any" },
-    rating: { value: "any", visible: false, label: "Any" },
-  });
   const nav = useNavigate();
   useEffect(() => {
-    getFilterdAnime(searchTerm, page, params);
+    getFilterdAnime(searchTerm, page);
+    setCurrentPage("search");
     // console.log("Searching for:", searchTerm);
-  }, [searchTerm, page, params]);
+  }, [searchTerm, page]);
 
   if (loadingSearch) {
     return <Loader />;
@@ -48,10 +44,9 @@ export default function Search() {
       position={"relative"}
       display={"flex"}
       flexDir={"column"}
-      height={"100%"}
+      // height={"100%"}
       backgroundColor={"rgba(0, 0, 0, 0.34)"}
     >
-      <Navbar />
       <Box
         backgroundImage={`url(${landingbg})`}
         w={"100%"}
@@ -68,8 +63,6 @@ export default function Search() {
         zIndex={10}
       >
         <FilterSearchForm
-          params={params}
-          setParams={setParams}
           searchTerm={searchTerm}
           submitFilter={() => getFiltereAnime(searchTerm, page, params)}
           page={page}

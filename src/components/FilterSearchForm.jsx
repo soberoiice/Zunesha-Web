@@ -18,12 +18,8 @@ import { useNavigate } from "react-router";
 import { useAnime } from "../Contexts/AnimeProvider";
 
 export default function FilterSearchForm({
-  params,
-  setParams,
-  submitFilter,
-  page,
 }) {
-  const { searchTerm, setSearchTerm, getFilterdAnime } = useAnime();
+  const { searchTerm, setSearchTerm, getFilterdAnime, params, setParams } = useAnime();
   const [query, setQuery] = useState("");
   const [tempParams, setTempParams] = useState({
     type: { value: "any", visible: false, label: "Any" },
@@ -156,7 +152,7 @@ export default function FilterSearchForm({
           backgroundColor={"#16161688"}
           justifyContent={"space-between"}
           onClick={() =>
-            setTempParams((prev) => ({
+            setParams((prev) => ({
               ...prev,
               [title]: {
                 value: "any",
@@ -166,21 +162,21 @@ export default function FilterSearchForm({
             }))
           }
         >
-          {tempParams[title]?.label || "Any"}
+          {params[title]?.label}
 
           <LuChevronsUpDown />
         </Box>
         <Box
           backgroundColor={"#16161688"}
           position={"absolute"}
-          height={tempParams[title]?.visible ? "150px" : "0px"}
+          height={params[title]?.visible ? "150px" : "0px"}
           overflowY={"scroll"}
           borderRadius={"xl"}
           px={"5"}
           w={"100%"}
           top={"50px"}
           left={0}
-          display={tempParams[title]?.visible ? "flex" : "none"}
+          display={params[title]?.visible ? "flex" : "none"}
           flexDir={"column"}
           gap={2}
           overflowX={"hidden"}
@@ -190,8 +186,9 @@ export default function FilterSearchForm({
         >
           {list.map((item, index) => (
             <Box
+            key={index}
               onClick={() =>
-                setTempParams((prev) => ({
+                setParams((prev) => ({
                   ...prev,
                   [title]: {
                     value: item.value ?? "any",
@@ -284,7 +281,8 @@ export default function FilterSearchForm({
           backdropFilter="blur(10px)"
           h={"50px"}
           onClick={() => {
-            handleSubmit();
+            getFilterdAnime();
+            console.log('filter this: ',params)
           }}
         >
           <FaSearch color={"#c9c9c9ff"} />

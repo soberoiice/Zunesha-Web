@@ -24,6 +24,7 @@ export default function AnimePlayer() {
     loadingEpisodes,
     getCurrentEpisodeInfo,
     currentEpisodeInfo,
+    setCurrentPage
   } = useAnime();
   // const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(null);
   const [type, setType] = useState("sub");
@@ -51,6 +52,7 @@ export default function AnimePlayer() {
   useEffect(() => {
     setType("sub");
     getAnimeEpisodes(animeid);
+    setCurrentPage('player');
   }, [animeid]);
 
   if (loadingEpisodes) {
@@ -75,7 +77,6 @@ export default function AnimePlayer() {
       background={"black"}
       paddingBottom={"50px"}
     >
-      <Navbar />
       <Stack
         flexDir={{ lg: "row", base: "column" }}
         alignItems={{ base: "center", lg: "flex-start" }}

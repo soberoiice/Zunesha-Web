@@ -8,7 +8,7 @@ import {
   Toast,
   Toaster,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { memo } from "react";
 import {
   FaCamera,
   FaExpand,
@@ -30,6 +30,19 @@ import {
 import VideoPlayerSettings from "./VideoPlayerSettings";
 import { useAnime } from "../Contexts/AnimeProvider";
 import { useNavigate, useParams } from "react-router";
+
+const actionButton = memo(
+  ({ children, onClick, bg = "#32a88b", size = 50 }) => (
+    <Button
+      backgroundColor={"rgba(0, 0, 0, 0.47)"}
+      borderRadius={"xl"}
+      onClick={onClick}
+      cursor={"pointer"}
+    >
+      {children}
+    </Button>
+  ),
+);
 
 export default function CustomOverlay({
   playing,
@@ -95,20 +108,19 @@ export default function CustomOverlay({
         {playing ? <FaPause /> : <FaPlay />}
       </Box>
       <Box
-        backgroundColor={"rgba(0, 0, 0, 0.47)"}
         position="absolute"
         bottom="12px"
         left="0"
         right="0"
         py={"5px"}
         px="16px"
-        height={{ md: "15%", base: "22%" }}
+        height={{ md: "70px", base: "40px" }}
         display={"flex"}
         flexDir={"column"}
         w={"98%"}
         mx={"auto"}
         borderRadius={"lg"}
-        justifyContent={"space-evenly"}
+        justifyContent={"space-between"}
       >
         <Box
           display={"flex"}
@@ -118,6 +130,9 @@ export default function CustomOverlay({
           fontSize={"18px"}
         >
           <Text
+            backgroundColor={"rgba(0, 0, 0, 0.47)"}
+            padding={"5px 7px"}
+            borderRadius={"xl"}
             display={{ md: "block", base: "none" }}
             lineHeight={0.9}
             textOverflow="ellipsis"
@@ -128,7 +143,14 @@ export default function CustomOverlay({
           >
             {episodes[Number(currentEpisode) - 1]?.title}
           </Text>
-          <Text lineHeight={0.9} color="white" fontSize="sm">
+          <Text
+            lineHeight={0.9}
+            color="white"
+            fontSize="sm"
+            backgroundColor={"rgba(0, 0, 0, 0.47)"}
+            padding={"5px 7px"}
+            borderRadius={"xl"}
+          >
             {formatTime(currentTime)} / {formatTime(duration)}
           </Text>
           <Box gap={2} display={{ md: "none", base: "flex" }} flexDir={"row"}>
@@ -188,7 +210,13 @@ export default function CustomOverlay({
           justifyContent={"space-between"}
           fontSize={"18px"}
         >
-          <HStack gap={2} h={"20px"}>
+          <HStack
+            gap={2}
+            backgroundColor={"rgba(0, 0, 0, 0.47)"}
+            padding={"7px 10px"}
+            height={"20px"}
+            borderRadius={"xl"}
+          >
             {currentEpisode != 1 && (
               <Box
                 cursor={"pointer"}

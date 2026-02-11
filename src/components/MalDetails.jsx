@@ -58,6 +58,7 @@ export default function MalDetails({ animeId, id }) {
       px={{ md: "20px" }}
       py="20px"
     >
+      {console.log(metaData)}
       {/* Left section: info + countdown */}
       <Box
         w={{ lg: "60%", base: "100%" }}

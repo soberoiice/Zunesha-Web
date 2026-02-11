@@ -36,7 +36,6 @@ export default function LandingPage() {
       resize={"both"}
       position={"relative"}
     >
-      <Navbar />
       <Box
         backgroundImage={`url(${landingbg})`}
         w={"100%"}

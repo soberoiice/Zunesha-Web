@@ -1,17 +1,57 @@
-import { Box, Center } from "@chakra-ui/react";
-import React, { useEffect } from "react";
-import Animedeatails from "./Animedeatails";
 import { useAnime } from "../Contexts/AnimeProvider";
 import Loader from "../components/Loader";
 import { useNavigate } from "react-router";
+import { Box, Button, Center, Stack } from "@chakra-ui/react";
+import Navbar from "../components/Navbar";
+import MalDetails from "../components/MalDetails";
+import CharacterList from "../components/CharacterList";
+import Animelist from "../components/Animelist";
+import { FaGripLinesVertical } from "react-icons/fa";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
+import MainDetails from "../components/MainDeatails";
 
 export default function RandomAnime() {
-  const { getRandomAnime, info, loadingDetails } = useAnime();
+  const { getRandomAnime, info, loadingDetails, setCurrentPage } = useAnime();
+  const [isActive, setIsActive] = useState("Details");
+  const scrollRef = useRef(null);
+
+  const tabs = ["Details", "Characters"];
+  const activeIndex = tabs.indexOf(isActive);
+
   const nav = useNavigate();
+
+  const scroll = useCallback((direction) => {
+      if (!scrollRef.current) return;
+  
+      const { scrollLeft, clientWidth } = scrollRef.current;
+      const amount =
+        direction === "left"
+          ? scrollLeft - clientWidth
+          : scrollLeft + clientWidth + 2;
+  
+      scrollRef.current.scrollTo({
+        left: amount,
+        behavior: "smooth",
+      });
+    }, []);
   useEffect(() => {
     getRandomAnime();
+    setCurrentPage('random')
   }, []);
 
+  const TabButton = memo(({ children }) => (
+    <Button
+      position="relative"
+      bg="transparent"
+      borderRadius={0}
+      h="50px"
+      w={"100px"}
+      onClick={() => handleclick(children)}
+      flex={1}
+    >
+      {children}
+    </Button>
+  ));
   if (loadingDetails) {
     return <Loader />;
   }
@@ -24,9 +64,88 @@ export default function RandomAnime() {
     );
   }
 
+  
+  const handleclick = (option) => {
+    setIsActive(option);
+    // console.log("Clicked:", option);
+    scroll(option === "Details" ? "left" : "right");
+  };
+
+
+
+
   return (
-    <Box height={"100vh"} bg={"black"}>
-      {nav(`/details/${info.id}`)}
-    </Box>
+    <Stack w={"100%"} alignItems={"center"}>
+      {console.log('info details', info)}
+          <Box
+            backgroundImage={`url(${info?.poster})`}
+            position={"fixed"}
+            zIndex={-10}
+            w={"100%"}
+            h={"100vh"}
+            loading="lazy"
+            decoding="async"
+            backgroundSize={"cover"}
+          ></Box>
+          <Stack
+            w={"100%"}
+            background={"rgba(31, 31, 31, 0.84)"}
+            backdropFilter="blur(20px)"
+            alignItems={"center"}
+            justifyContent={"center"}
+          >
+            <Box w={"90%"} marginTop={"120px"}>
+              <MainDetails data={info} />
+            </Box>
+            <Box position="relative" w="200px" mx="auto" mt="60px">
+              <Stack direction="row" spacing={0}>
+                {tabs.map((tab) => (
+                  <TabButton key={tab}>{tab}</TabButton>
+                ))}
+              </Stack>
+    
+              <Box
+                position="absolute"
+                bottom="0"
+                left="0"
+                h="3px"
+                w="100px"
+                bg="#32a88b"
+                transform={`translateX(${activeIndex * 100}%)`}
+                transition="transform 0.3s ease"
+                marginBottom={2}
+              />
+            </Box>
+    
+            <Box
+              w="90%"
+              ref={scrollRef}
+              maxH={
+                isActive === "Details" ? { lg: "400px", base: "auto" } : "250px"
+              }
+              display="flex"
+              overflowX="hidden"
+              scrollbarWidth={"none"}
+              gap={2}
+              alignItems={"center"}
+              overflowY={"hidden"}
+            >
+              <Box minW="100%">
+                <MalDetails animeId={info?.id} id={info?.malId} />
+              </Box>
+    
+              <Box minW="100%">
+                <CharacterList id={info?.malId} />
+              </Box>
+            </Box>
+            <Box w="90%" mb={"50px"}>
+              <Animelist
+                icon={<FaGripLinesVertical />}
+                title={"Recomended"}
+                data={info?.recommended_data}
+              />
+            </Box>
+          </Stack>
+        </Stack>
   );
 }

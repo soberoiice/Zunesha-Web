@@ -34,6 +34,14 @@ export const AnimeProvider = ({ children }) => {
   const [loadingMetaData, setLoadingMetaData] = useState(false);
   const [loadingCharacters, setLoadingCharacters] = useState(false);
   const [loadingEpisobeSchedule, setLoadingEpisodeSchedule] = useState(false);
+  const [currentPage, setCurrentPage] = useState('home');
+  const [params, setParams] = useState({
+      type: { value: "any", visible: false, label: "Any" },
+      status: { value: "any", visible: false, label: "Any" },
+      genre: { value: [] },
+      season: { value: "any", visible: false, label: "Any" },
+      rating: { value: "any", visible: false, label: "Any" },
+    });
   useEffect(() => {
     setCurrentEpisodeIndex(0);
   }, [episodes]);
@@ -164,7 +172,7 @@ export const AnimeProvider = ({ children }) => {
       setLoadingEpisodeSchedule(false);
     }
   };
-  const getFilterdAnime = async (searchTerm, page, params) => {
+  const getFilterdAnime = async (searchTerm, page) => {
     // console.log("schedule id", id);
     try {
       setLoadingSearch(true);
@@ -225,7 +233,11 @@ export const AnimeProvider = ({ children }) => {
         searchTerm,
         setSearchTerm,
         getFilterdAnime,
-        getRandomAnime
+        getRandomAnime,
+        params,
+        setParams,
+        currentPage,
+        setCurrentPage,
       }}
     >
       {children}

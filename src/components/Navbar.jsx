@@ -44,33 +44,30 @@ export default function Navbar() {
       paddingX={{ lg: 10, base: 2 }}
       justifyContent={"space-between"}
     >
-      <HStack>
-        <NavMenu />
-        <HStack
-          gap={2}
-          onClick={() => {
-            nav("/home");
-          }}
-          cursor={"pointer"}
+      <HStack
+        gap={2}
+        onClick={() => {
+          nav("/home");
+        }}
+        cursor={"pointer"}
+      >
+        <Image
+          boxShadow="0 0 50px #32a88b57"
+          src={Zunisha}
+          width={"45px"}
+          borderRadius={"4xl"}
+        />
+        <Text
+          color={"#32a88b"}
+          fontSize={"2xl"}
+          fontWeight={"bold"}
+          textAlign={"left"}
+          display={{ lg: "block", base: "none" }}
         >
-          <Image
-            boxShadow="0 0 50px #32a88b57"
-            src={Zunisha}
-            width={"45px"}
-            borderRadius={"4xl"}
-          />
-          <Text
-            color={"#32a88b"}
-            fontSize={"2xl"}
-            fontWeight={"bold"}
-            textAlign={"left"}
-            display={{ lg: "block", base: "none" }}
-          >
-            Zunisha
-          </Text>
-        </HStack>
+          Zunisha
+        </Text>
       </HStack>
-      <HStack w={{ lg: "65%" }} justifyContent={"flex-start"} display={"flex"}>
+      <HStack  justifyContent={"flex-start"} display={"flex"}>
         <form onSubmit={handleSubmit}>
           <InputGroup
             endElement={
@@ -111,6 +108,9 @@ export default function Navbar() {
           <FaRandom color={"#c9c9c9ff"} />
         </IconButton>
       </HStack>
+      <Avatar.Root colorPalette={"grey"} cursor={"pointer"}>
+        <Avatar.Fallback onClick={() => nav("/signup")} />
+      </Avatar.Root>
     </HStack>
   );
 }
