@@ -37,11 +37,12 @@ export default function Navbar() {
     <HStack
       position={"fixed"}
       zIndex={"100"}
+      background={"rgba(31, 31, 31, 0.84)"}
       top={0}
       width={"full"}
       height={"60px"}
       backdropFilter="blur(10px)"
-      paddingX={{ lg: 10, base: 2 }}
+      paddingX={{ lg: 5, base: 2 }}
       justifyContent={"space-between"}
     >
       <HStack
@@ -64,10 +65,10 @@ export default function Navbar() {
           textAlign={"left"}
           display={{ lg: "block", base: "none" }}
         >
-          Zunisha
+          ZUNESHA
         </Text>
       </HStack>
-      <HStack  justifyContent={"flex-start"} display={"flex"}>
+      <HStack justifyContent={"flex-start"} display={"flex"}>
         <form onSubmit={handleSubmit}>
           <InputGroup
             endElement={

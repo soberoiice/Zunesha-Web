@@ -123,7 +123,7 @@ export default function Spotlights({ data }) {
         >
           #{currentIndex + 1} Spotlight
         </Heading>
-        <Heading fontSize={{ lg: "2xl", base: "lg" }} fontWeight={"bold"}>
+        <Heading fontSize={{ lg: "2xl", base: "lg" }} lineClamp={{md:'',base:'2'}} fontWeight={"bold"}>
           {data[currentIndex].title}
         </Heading>
         <Box display={{ md: "block", base: "none" }}>

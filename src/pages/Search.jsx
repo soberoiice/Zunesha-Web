@@ -50,23 +50,21 @@ export default function Search() {
       <Box
         backgroundImage={`url(${landingbg})`}
         w={"100%"}
-        h={"100vh"}
-        backgroundSize={"cover"}
-        position={"fixed"}
-        zIndex={-1}
-      ></Box>
-      <Box
         h={{ lg: "350px", base: "600px" }}
+        backgroundSize={"cover"}
+        // position={"fixed"}
+      >
+      <Box
+        h={'100%'}
         w={"100%"}
         backdropFilter="blur(10px)"
         color={"white"}
-        zIndex={10}
       >
         <FilterSearchForm
           searchTerm={searchTerm}
           submitFilter={() => getFiltereAnime(searchTerm, page, params)}
           page={page}
-        />
+        /></Box>
       </Box>
       <Box
         width={"100%"}

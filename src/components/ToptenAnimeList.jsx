@@ -33,7 +33,7 @@ function ToptenAnimeList({ data, title }) {
     <Box
       display="flex"
       flexDir="column"
-      width={{ lg: "25%", base: "100%" }}
+      width={{ lg: "30%", base: "100%" }}
       gap={3}
       mt="60px"
       color="white"
@@ -53,6 +53,7 @@ function ToptenAnimeList({ data, title }) {
               boxShadow={content === item.link ? "0 0 10px #32a88bff" : "none"}
               _hover={{ transform: "scale(1.03)" }}
               transition="transform 0.15s ease"
+              w={'50px'}
             >
               {item.name}
             </Button>
@@ -71,13 +72,13 @@ function ToptenAnimeList({ data, title }) {
             cursor="pointer"
             borderBottomWidth={index !== data?.[content]?.length - 1 && "1px"}
             borderBottomColor={"rgba(63, 63, 63, 0.76)"}
-            gap={5}
+            gap={3}
           >
             {/* <CenterBadge number={item.number} /> */}
             <Text
               color={index < 3 ? `rgba(50,168,139,${1 - index / 5})` : "white"}
               fontWeight={"bold"}
-              fontSize={"2xl"}
+              fontSize={"xl"}
               borderBottomWidth={index < 3 && "3px"}
               borderBottomColor={`rgba(50,168,139,${1 - index / 5})`}
             >
@@ -85,7 +86,7 @@ function ToptenAnimeList({ data, title }) {
             </Text>
             <Image
               src={item.poster}
-              w="70px"
+              maxW="70px"
               h="80px"
               borderRadius="lg"
               loading="lazy"

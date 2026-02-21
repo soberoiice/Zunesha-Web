@@ -6,92 +6,98 @@ import { FaBalanceScale } from "react-icons/fa";
 export default function Footer() {
   const links = ["FAQ", "Contact", "Terms of use", "Privacy policy"];
   return (
-    <Stack
-      w={"100%"}
-      h={{ lg: "250px", base: "auto" }}
-      backgroundColor={"black"}
-      bgGradient="to-tr"
-      gradientFrom="rgba(0, 0, 0, 1)"
-      gradientTo="#32a88b1a"
-      flexDir={"column"}
-      justifyContent={"center"}
-      gap={5}
-      color={"white"}
-      py={"20px"}
-      zIndex={1}
-    >
+    <Box backgroundColor={"black"} w={"100%"}>
       <Stack
-        w={"90%"}
-        flexDir={{ lg: "row" }}
-        flexWrap={"wrap"}
-        alignItems={"center"}
-        justifyContent={"space-between"}
-        gap={10}
-        mx={"auto"}
+        w={"100%"}
+        h={{ lg: "250px", base: "auto" }}
+        bgGradient="to-tr"
+        gradientFrom="rgba(0, 0, 0, 1)"
+        gradientTo="#32a88b1a"
+        flexDir={"column"}
+        justifyContent={"center"}
+        gap={5}
+        color={"white"}
+        py={"20px"}
+        zIndex={100}
       >
-        <Box w={{ lg: "60%", base: "100%" }}>
-          <HStack gap={2}>
-            <Image
-              boxShadow="0 0 50px #32a88b57"
-              src={Zunisha}
-              width={"70px"}
-              borderRadius={"4xl"}
-            />
-            <Text
-              color={"#32a88b"}
-              fontSize={"2xl"}
-              fontWeight={"bold"}
-              textAlign={"left"}
-              display={{ lg: "block", base: "none" }}
-            >
-              Zunisha
+        <Stack
+          w={"90%"}
+          flexDir={{ lg: "row" }}
+          flexWrap={"wrap"}
+          alignItems={"center"}
+          justifyContent={"space-between"}
+          gap={10}
+          mx={"auto"}
+        >
+          <Box w={{ lg: "60%", base: "100%" }}>
+            <HStack gap={2}>
+              <Image
+                boxShadow="0 0 50px #32a88b57"
+                src={Zunisha}
+                width={"70px"}
+                borderRadius={"4xl"}
+              />
+              <Text
+                color={"#32a88b"}
+                fontSize={"2xl"}
+                fontWeight={"bold"}
+                textAlign={"left"}
+                display={{ lg: "block", base: "none" }}
+              >
+                Zunisha
+              </Text>
+            </HStack>
+            <Text>
+              Please note: Zunesha does not host any files itself but instead
+              only displays <br /> content from 3rd party providers. Legal
+              issues should be taken up with them.
             </Text>
-          </HStack>
+          </Box>
+          <Box w={{ lg: "15%" }}>
+            <Text fontSize={"lg"} fontWeight={"bold"}>
+              Resourses
+            </Text>
+            {links.map((link, index) => (
+              <Text key={index}>
+                <Link color={"white"}>{link}</Link>
+              </Text>
+            ))}
+          </Box>
+          <Box w={{ lg: "15%" }}>
+            <Text fontSize={"lg"} fontWeight={"bold"}>
+              Browse
+            </Text>
+            {links.map((link, index) => (
+              <Text key={index}>
+                <Link color={"white"}>{link}</Link>
+              </Text>
+            ))}
+          </Box>
+        </Stack>
+        <Box
+          mx={"auto"}
+          w={"90%"}
+          h={"1px"}
+          backgroundColor={"#3b3b3b57"}
+        ></Box>
+        <Stack
+          w={"90%"}
+          mx={"auto"}
+          flexDir={"row"}
+          justifyContent={"space-between"}
+        >
           <Text>
-            Please note: Zunesha does not host any files itself but instead only
-            displays <br /> content from 3rd party providers. Legal issues
-            should be taken up with them.
+            © 2025{" "}
+            <Link fontWeight={"bold"} color={"#32a88b"}>
+              Zunisha
+            </Link>
+            . All rights reserved.
           </Text>
-        </Box>
-        <Box w={{ lg: "15%" }}>
-          <Text fontSize={"lg"} fontWeight={"bold"}>
-            Resourses
-          </Text>
-          {links.map((link, index) => (
-            <Text key={index}>
-              <Link color={"white"}>{link}</Link>
-            </Text>
-          ))}
-        </Box>
-        <Box w={{ lg: "15%" }}>
-          <Text fontSize={"lg"} fontWeight={"bold"}>
-            Browse
-          </Text>
-          {links.map((link, index) => (
-            <Text key={index}>
-              <Link color={"white"}>{link}</Link>
-            </Text>
-          ))}
-        </Box>
-      </Stack>
-      <Box mx={"auto"} w={"90%"} h={"1px"} backgroundColor={"#3b3b3b57"}></Box>
-      <Stack
-        w={"90%"}
-        mx={"auto"}
-        flexDir={"row"}
-        justifyContent={"space-between"}
-      >
-        <Text>
-          © 2025{" "}
-          <Link fontWeight={"bold"} color={"#32a88b"}>
-            Zunisha
+          <Link>
+            <FaBalanceScale /> DMCA
           </Link>
-          . All rights reserved.
-        </Text>
-        <Link>
-          <FaBalanceScale /> DMCA
-        </Link>
+        </Stack>
       </Stack>
-    </Stack>
+    </Box>
   );
 }

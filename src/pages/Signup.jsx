@@ -68,7 +68,7 @@ export default function Signup() {
         flexDir={"column"}
       >
         <Box mx="auto" mt="60px" position={"relative"} w={"200px"}>
-          <Stack direction="row" spacing={0}>
+          <Stack direction="row" >
             {tabs.map((tab) => (
               <TabButton key={tab}>{tab}</TabButton>
             ))}

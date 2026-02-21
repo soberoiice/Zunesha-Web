@@ -213,7 +213,7 @@ export default function FilterSearchForm({
     <Box w={"95%"} h={"100%"} mx={"auto"}>
       <Stack
         w={"100%"}
-        mt={"80px"}
+        mt={"60px"}
         justifyContent={"space-between"}
         flexDir={"row"}
         marginBottom={"20px"}

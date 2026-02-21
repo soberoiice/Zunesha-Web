@@ -79,14 +79,12 @@ export default function RandomAnime() {
       {console.log('info details', info)}
           <Box
             backgroundImage={`url(${info?.poster})`}
-            position={"fixed"}
-            zIndex={-10}
             w={"100%"}
-            h={"100vh"}
+            h={"100%"}
             loading="lazy"
             decoding="async"
             backgroundSize={"cover"}
-          ></Box>
+          >
           <Stack
             w={"100%"}
             background={"rgba(31, 31, 31, 0.84)"}
@@ -145,7 +143,7 @@ export default function RandomAnime() {
                 data={info?.recommended_data}
               />
             </Box>
-          </Stack>
+          </Stack></Box>
         </Stack>
   );
 }

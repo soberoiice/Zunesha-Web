@@ -9,30 +9,37 @@ import MalDetails from "../components/MalDetails";
 import CharacterList from "../components/CharacterList";
 import Animelist from "../components/Animelist";
 import { FaGripLinesVertical } from "react-icons/fa";
+import Footer from "../components/Footer";
 
-    const TabButton = memo(({ children }) => (
-      <Button
-        position="relative"
-        bg="transparent"
-        borderRadius={0}
-        h="50px"
-        w={"100px"}
-        onClick={() => handleclick(children)}
-        flex={1}
-      >
-        {children}
-      </Button>
-    ));
-export default function Animedeatails({data}) {
+const TabButton = memo(({ children }) => (
+  <Button
+    position="relative"
+    bg="transparent"
+    borderRadius={0}
+    h="50px"
+    w={"100px"}
+    onClick={() => handleclick(children)}
+    flex={1}
+  >
+    {children}
+  </Button>
+));
+export default function Animedeatails({ data }) {
   const { id } = useParams();
-  const { info, getAnimeDetails, loadingDetails, getMalDetails, setCurrentPage } = useAnime();
+  const {
+    info,
+    getAnimeDetails,
+    loadingDetails,
+    getMalDetails,
+    setCurrentPage,
+  } = useAnime();
   const [isActive, setIsActive] = useState("Details");
   const scrollRef = useRef(null);
 
   const tabs = ["Details", "Characters"];
   const activeIndex = tabs.indexOf(isActive);
 
-  useEffect(()=>{},[])
+  useEffect(() => {}, []);
 
   const handleclick = (option) => {
     setIsActive(option);
@@ -57,11 +64,25 @@ export default function Animedeatails({data}) {
   useEffect(() => {
     // console.log("anime id", id);
     getAnimeDetails(id);
-    setCurrentPage('details');
+    setCurrentPage("details");
   }, [id]);
 
   if (loadingDetails) {
-    return <Loader />;
+    return (
+      <Stack w={"100%"} alignItems={"center"}>
+        <Box
+          backgroundImage={`url(${info?.data?.poster})`}
+          position={"fixed"}
+          zIndex={1}
+          w={"100%"}
+          h={"100vh"}
+          loading="lazy"
+          decoding="async"
+          backgroundSize={"cover"}
+        ></Box>
+        <Loader />
+      </Stack>
+    );
   }
 
   if (!info) {
@@ -76,20 +97,21 @@ export default function Animedeatails({data}) {
     <Stack w={"100%"} alignItems={"center"}>
       <Box
         backgroundImage={`url(${info?.data?.poster})`}
-        position={"fixed"}
-        zIndex={-10}
+        // position={"fixed"}
+        zIndex={1}
         w={"100%"}
-        h={"100vh"}
+        h={"100%"}
         loading="lazy"
         decoding="async"
         backgroundSize={"cover"}
-      ></Box>
+      >
       <Stack
         w={"100%"}
         background={"rgba(31, 31, 31, 0.84)"}
         backdropFilter="blur(20px)"
         alignItems={"center"}
         justifyContent={"center"}
+        zIndex={2}
       >
         <Box w={"90%"} marginTop={"120px"}>
           <MainDeatails data={info?.data} />
@@ -142,7 +164,7 @@ export default function Animedeatails({data}) {
             data={info?.data?.recommended_data}
           />
         </Box>
-      </Stack>
+      </Stack></Box>
     </Stack>
   );
 }

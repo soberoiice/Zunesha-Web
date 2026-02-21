@@ -10,6 +10,7 @@ import {
   Portal,
   Stack,
   Text,
+  Tooltip,
   VStack,
 } from "@chakra-ui/react";
 import React, { memo } from "react";
@@ -27,29 +28,33 @@ import {
 } from "react-icons/fa";
 import { useAnime } from "../Contexts/AnimeProvider";
 import { FaPerson } from "react-icons/fa6";
+import Footer from "./Footer";
 
 const MenuBtn = memo(({ icon, title, handleClick, currentPage }) => (
-  <VStack
-    fontSize={"sm"}
-    w={"full"}
-    h={"60px"}
-    justifyContent={"center"}
-    _hover={{
-      transform: "translateY(-7%)",
-    }}
-    transition={"transform 0.3s ease"}
-    cursor={"pointer"}
-    onClick={handleClick}
-    backgroundColor={
-      currentPage === title.toLowerCase() ? "#32a88b1e" : "transparent"
-    }
-    borderRightWidth={{base:'0', md:'3px'}}
-    borderColor={currentPage === title.toLowerCase() ? "#32a88b" : "transparent"}
-    borderTopWidth={{base:'3px', md:'0'}}
-  >
-    <Text color={"rgb(255, 255, 255)"}>{icon}</Text>
-    {title}
-  </VStack>
+    <VStack
+      w={"full"}
+      h={"60px"}
+      justifyContent={"center"}
+      _hover={{
+        transform: "translateY(-7%)",
+      }}
+      transition={"transform 0.3s ease"}
+      cursor={"pointer"}
+      onClick={handleClick}
+      backgroundColor={
+        currentPage === title.toLowerCase() ? "#32a88b1e" : "transparent"
+      }
+      borderRightWidth={{ base: "0", md: "3px" }}
+      borderColor={
+        currentPage === title.toLowerCase() ? "#32a88b" : "transparent"
+      }
+      borderTopWidth={{ base: "3px", md: "0" }}
+    >
+      <Text fontSize={"xl"} color={"rgb(255, 255, 255)"}>
+        {icon}
+      </Text>
+      {/* {title} */}
+    </VStack>
 ));
 export default function NavMenu() {
   const { setSearchTerm, setCurrentPage, currentPage } = useAnime();
@@ -58,18 +63,25 @@ export default function NavMenu() {
     <Box
       width={"full"}
       backdropFilter="blur(10px)"
-      w={{md:"80px", base:'100%'}}
-      height={{base:"60px", md:'100%'}}
-      backgroundColor={"rgb(0, 0, 0)"}
+      w={{ md: "50px", base: "100%" }}
+      height={{ base: "60px", md: "100%" }}
+      background={"rgba(31, 31, 31, 0.84)"}
       color={"white"}
       display={"flex"}
-      flexDir={{base:"row", md:"column"}}
+      flexDir={{ base: "row", md: "column" }}
       justifyContent={"space-between"}
       position={"fixed"}
-      zIndex={"10"}
-      bottom={{base:0}}
+      zIndex={"99"}
+      bottom={{ base: 0 }}
     >
-      <Stack flexDir={{base:'row', md:'column'}} justifyContent={'center'} gap={{md:5,base:0}} w={'100%'} height={'100%'}>
+      <Stack
+        flexDir={{ base: "row", md: "column" }}
+        justifyContent={"center"}
+        gap={{ md: 5, base: 0 }}
+        w={"100%"}
+        height={"100%"}
+      >
+        
         <MenuBtn
           title={"Home"}
           currentPage={currentPage}

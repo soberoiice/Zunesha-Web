@@ -10,15 +10,22 @@ import { IoSparkles, IoTimeSharp } from "react-icons/io5";
 import { FaStar } from "react-icons/fa";
 import Schedule from "../components/Schedule";
 import { RiFilmFill } from "react-icons/ri";
+import Footer from "../components/Footer";
 
 export default function Homepage() {
-  const { getHomepage, homepage, loadingHomepage, getMalDetails, setCurrentPage } = useAnime();
+  const {
+    getHomepage,
+    homepage,
+    loadingHomepage,
+    getMalDetails,
+    setCurrentPage,
+  } = useAnime();
   const { content, setContent } = useState();
 
   const list = ["New Episodes"];
   useEffect(() => {
     getHomepage();
-    setCurrentPage('home')
+    setCurrentPage("home");
   }, []);
 
   if (loadingHomepage) {
@@ -37,46 +44,47 @@ export default function Homepage() {
       position={"relative"}
       display={"flex"}
       flexDir={"column"}
-      h={"100%"}
       backgroundColor={"black"}
-      paddingBottom={"50px"}
+      marginTop={"80px"}
+      gap={5}
+      marginBottom={'50px'}
     >
-      <Box marginTop={"80px"}>
-        <Spotlights data={homepage.spotlights} />
+      <Spotlights data={homepage.spotlights} />
+      <Box
+        display={"flex"}
+        flexDir={{ base: "column", lg: "row" }}
+        width={"95%"}
+        mx={"auto"}
+        justifyContent={"space-between"}
+      >
         <Box
           display={"flex"}
-          flexDir={{ base: "column", lg: "row" }}
-          width={"95%"}
-          mx={"auto"}
-          justifyContent={"space-between"}
+          flexDir={"column"}
+          gap={5}
+          marginTop={"60px"}
+          width={{ lg: "70%", base: "100%" }}
         >
-          <Box
-            display={"flex"}
-            flexDir={"column"}
-            gap={5}
-            marginTop={"60px"}
-            width={{ lg: "75%", base: "100%" }}
-          >
-            <Animelist
-              title={"Latest Episodes"}
-              icon={<RiFilmFill />}
-              data={homepage.latestEpisode}
-            />
-            <Animelist
-              title={"Latest Completed"}
-              icon={<IoTimeSharp />}
-              data={homepage.latestCompleted}
-            />
-            <Animelist
-              title={"Most Favorite"}
-              icon={<FaStar />}
-              data={homepage.mostFavorite}
-            />
-            <Schedule />
-          </Box>
-          <ToptenAnimeList data={homepage.topTen} title={"Top 10"} />
+          <Animelist
+            title={"Latest Episodes"}
+            icon={<RiFilmFill />}
+            data={homepage.latestEpisode}
+          />
+          <Animelist
+            title={"Latest Completed"}
+            icon={<IoTimeSharp />}
+            data={homepage.latestCompleted}
+          />
+          <Animelist
+            title={"Most Favorite"}
+            icon={<FaStar />}
+            data={homepage.mostFavorite}
+          />
+          <Schedule />
         </Box>
+        <ToptenAnimeList data={homepage.topTen} title={"Top 10"} />
       </Box>
+
+      {/* <Footer /> */}
     </Box>
   );
 }
