@@ -17,10 +17,16 @@ import {
   FaCalendar,
   FaChevronLeft,
   FaChevronRight,
+  FaClosedCaptioning,
+  FaInfo,
   FaPlay,
 } from "react-icons/fa";
 import { useNavigate } from "react-router";
-import { IoIosVideocam } from "react-icons/io";
+import {
+  IoIosInformationCircleOutline,
+  IoIosVideocam,
+  IoLogoClosedCaptioning,
+} from "react-icons/io";
 
 export default function Spotlights({ data }) {
   const sliderRef = useRef();
@@ -94,11 +100,11 @@ export default function Spotlights({ data }) {
       mx="auto"
       position="relative"
       borderRadius={"xl"}
-      h={{ lg: "400px", base: "300px" }}
+      h={{ lg: "550px", base: "300px" }}
       boxShadow="0 0 50px #32a88b57"
     >
       <Box
-        w={{ lg: "50%", base: "90%", md: "70%" }}
+        w={{ lg: "40%", base: "90%", md: "70%" }}
         color="white"
         flexDir="column"
         display={{ lg: "flex" }}
@@ -108,10 +114,10 @@ export default function Spotlights({ data }) {
         borderRadius={"xl"}
         backgroundColor="rgba(0, 0, 0, 0.57)"
         backdropFilter="blur(10px)"
-        maxH={{ md: "300px", base: "120px" }}
+        maxH={{ md: "220px", base: "120px" }}
         p={{ md: 10, base: 5 }}
         // border="3px solid #32a88b"
-        gap={3}
+        gap={1}
         bottom={{ base: "60px", md: 10 }}
         left={2.5}
         position={"absolute"}
@@ -123,7 +129,11 @@ export default function Spotlights({ data }) {
         >
           #{currentIndex + 1} Spotlight
         </Heading>
-        <Heading fontSize={{ lg: "2xl", base: "lg" }} lineClamp={{md:'',base:'2'}} fontWeight={"bold"}>
+        <Heading
+          fontSize={{ lg: "2xl", base: "lg" }}
+          lineClamp={{ md: "", base: "2" }}
+          fontWeight={"bold"}
+        >
           {data[currentIndex].title}
         </Heading>
         <Box display={{ md: "block", base: "none" }}>
@@ -134,7 +144,7 @@ export default function Spotlights({ data }) {
 
         <Box display={{ md: "block", base: "none" }}>
           <HStack gap={5}>
-            <Text
+            {/* <Text
               border="1px solid #32a88b"
               borderRadius={"lg"}
               paddingX={"2"}
@@ -142,15 +152,21 @@ export default function Spotlights({ data }) {
               color={"#32a88b"}
             >
               {data[currentIndex]?.tvInfo.showType}
-            </Text>
-            <HStack>
-              <IoIosVideocam size={25} />
-              {data[currentIndex]?.tvInfo?.episodeInfo?.sub}
-            </HStack>
-            <HStack>
+            </Text> */}
+            {data[currentIndex]?.hasSub && (
+              <HStack>
+                <FaClosedCaptioning size={25} />
+              </HStack>
+            )}
+            {data[currentIndex]?.hasDub && (
+              <HStack>
+                <IoIosVideocam size={25} />
+              </HStack>
+            )}
+            {/* <HStack>
               <FaCalendar />
               {data[currentIndex]?.tvInfo.releaseDate}
-            </HStack>
+            </HStack> */}
             <Text
               backgroundColor="rgba(0, 0, 0, 0.19)"
               backdropFilter="blur(10px)"
@@ -159,7 +175,7 @@ export default function Spotlights({ data }) {
               paddingX={"2"}
               paddingY={"1"}
             >
-              {data[currentIndex]?.tvInfo.quality}
+              {data[currentIndex]?.quality}
             </Text>
           </HStack>
         </Box>
@@ -205,10 +221,10 @@ export default function Spotlights({ data }) {
             >
               <Image
                 key={item.id || index}
-                src={item.poster}
+                src={item.banner?.bannerImage}
                 alt={item.title || "Anime poster"}
                 borderRadius="xl"
-                h={{ lg: "400px", base: "300px" }}
+                h={{ lg: "550px", base: "300px" }}
                 minW={"full"}
               />
               <Box
@@ -234,7 +250,7 @@ export default function Spotlights({ data }) {
           colorScheme="teal"
           width={50}
           height={50}
-          onClick={() => nav(`/watch/${data[currentIndex].id}/1`)}
+          onClick={() => nav(`/details/${data[currentIndex].id}`)}
           backgroundColor="rgba(0, 0, 0, 0.57)"
           backdropFilter="blur(10px)"
           WebkitBackdropFilter="blur(10px)"
@@ -244,14 +260,15 @@ export default function Spotlights({ data }) {
             transform: "scale(1.1)",
           }}
         >
-          <FaPlay />
+          <IoIosInformationCircleOutline />
         </Button>
         <Button
           colorScheme="teal"
           fontSize={"lg"}
-          width={90}
+          width={{ base: 50, lg: 180 }}
+          display={{ base: "none", lg: "flex" }}
           height={50}
-          onClick={() => nav(`/details/${data[currentIndex].id}`)}
+          onClick={() => nav(`/watch/${data[currentIndex].id}`)}
           borderRadius={"xl"}
           backgroundColor="rgba(255, 255, 255, 0.66)"
           backdropFilter="blur(10px)"
@@ -261,7 +278,25 @@ export default function Spotlights({ data }) {
           }}
           color={"black"}
         >
-          Details
+          <FaPlay /> Watch Now
+        </Button>
+        <Button
+          colorScheme="teal"
+          fontSize={"lg"}
+          width={50}
+          display={{ base: "block", lg: "none" }}
+          height={50}
+          onClick={() => nav(`/watch/${data[currentIndex].id}`)}
+          borderRadius={"xl"}
+          backgroundColor="rgba(255, 255, 255, 0.66)"
+          backdropFilter="blur(10px)"
+          WebkitBackdropFilter="blur(10px)"
+          _hover={{
+            transform: "scale(1.1)",
+          }}
+          color={"black"}
+        >
+          <FaPlay />
         </Button>
       </HStack>
     </Box>

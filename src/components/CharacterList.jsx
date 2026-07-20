@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useAnime } from "../Contexts/AnimeProvider";
 
-export default function CharacterList({ id }) {
+export default function CharacterList({ id, data }) {
   const scrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(false);
@@ -130,11 +130,11 @@ export default function CharacterList({ id }) {
         w="100%"
         overflowX="scroll"
         spacing={{ base: 2, lg: 5 }}
-        height={{ lg: "210px", base: "165px" }}
+        height={{ lg: "240px", base: "165px" }}
         scrollbarWidth="none"
         gap={2}
       >
-        {animeCharacters?.slice(0, 20).map((item) => (
+        {data?.slice(0, 20).map((item) => (
           <Box
             key={item.character.id}
             position="relative"
@@ -157,15 +157,11 @@ export default function CharacterList({ id }) {
             />
             <Box
               width="95%"
-              position="absolute"
               borderRadius="md"
-              backgroundColor="rgba(0, 0, 0, 0.57)"
               WebkitBackdropFilter="blur(10px)"
-              left={1}
-              bottom={1}
-              px={2}
+              fontSize={"15px"}
             >
-              <Text truncate>{item.character.name}</Text>
+              <Text lineClamp={2}>{item.character.name}</Text>
             </Box>
             <Box
               width="auto"

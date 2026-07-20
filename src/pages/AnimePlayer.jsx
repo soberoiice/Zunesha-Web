@@ -16,56 +16,15 @@ import ServerListContainer from "../components/ServerListContainer";
 import MiniInfo from "../components/MiniInfo";
 import { useAnime } from "../Contexts/AnimeProvider";
 import Loader from "../components/Loader";
+import VideoPlayer from "../components/VideoPlayer";
+import EpisodesList from "../components/EpisodesList";
 
 export default function AnimePlayer() {
-  const {
-    getAnimeEpisodes,
-    episodes,
-    loadingEpisodes,
-    getCurrentEpisodeInfo,
-    currentEpisodeInfo,
-    setCurrentPage
-  } = useAnime();
-  // const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(null);
-  const [type, setType] = useState("sub");
-  const [server, setServer] = useState("hd-2");
-  const { animeid, currentEpisode } = useParams();
-  const file = currentEpisodeInfo?.streamingLink?.link?.file;
-  const subServers = currentEpisodeInfo?.servers?.filter(
-    (subs) => subs?.type.toString() === "sub"
-  );
-  const dubServers = currentEpisodeInfo?.servers?.filter(
-    (dubs) => dubs?.type.toString() === "dub"
-  );
+  const { id } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [episode, setEpisode] = useState(1);
 
-  useEffect(() => {
-    if (episodes && episodes.length > 0) {
-      getCurrentEpisodeInfo(
-        episodes[Number(currentEpisode) - 1].id,
-        server,
-        type
-      );
-      // console.log("current ep index", episodes[currentEpisodeIndex].id);
-    }
-  }, [currentEpisode, episodes, server, type, loadingEpisodes]);
-
-  useEffect(() => {
-    setType("sub");
-    getAnimeEpisodes(animeid);
-    setCurrentPage('player');
-  }, [animeid]);
-
-  if (loadingEpisodes) {
-    return <Loader />;
-  }
-
-  if (!episodes || episodes.length === 0) {
-    return (
-      <Center minH="100vh" color="gray.400">
-        No anime found.
-      </Center>
-    );
-  }
   return (
     <Box
       position={"relative"}
@@ -82,7 +41,6 @@ export default function AnimePlayer() {
         alignItems={{ base: "center", lg: "flex-start" }}
         justifyContent={{ lg: "center", base: "flex-start" }}
         gap={5}
-        marginTop={"80px"}
         w={"98%"}
       >
         <Box
@@ -93,18 +51,16 @@ export default function AnimePlayer() {
         >
           <Box
             w={"100%"}
+            height={"600px"}
             borderRadius={"lg"}
             paddingTop={0}
             backgroundColor={"#333333ff"}
           >
-            <HLSReactPlayer
-              src={file}
-              epInfo={currentEpisodeInfo}
-              episodes={episodes}
-              currentEpisodeIndex={currentEpisode}
+            <VideoPlayer
+              url={`https://api.yenime.net/anime/${id}/${episode}`}
             />
           </Box>
-          <Box
+          {/* <Box
             backgroundColor={"#333333ff"}
             w={"full"}
             borderRadius={"lg"}
@@ -128,9 +84,12 @@ export default function AnimePlayer() {
                 setType={setType}
               />
             </Stack>
-          </Box>
+          </Box> */}
         </Box>
-        <MiniInfo animeId={animeid} />
+        {/* <MiniInfo animeId={id} /> */}
+        <Box width={"30%"}>
+          <EpisodesList id={id} episode={episode} setEpisode={setEpisode} />
+        </Box>
       </Stack>
     </Box>
   );

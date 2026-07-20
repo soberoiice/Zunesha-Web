@@ -42,7 +42,7 @@ export default function LandingPage() {
         h={"100vh"}
         backgroundSize={"cover"}
         position={"absolute"}
-        zIndex={-1}
+        opacity={0.1}
       ></Box>
       <Center h={"100%"} flexDir={"column"} gap={5}>
         <HStack gap={2}>

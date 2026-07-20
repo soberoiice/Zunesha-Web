@@ -1,5 +1,5 @@
-import { Box, HStack, Stack, Text, VStack } from "@chakra-ui/react";
-import React, { useState, useEffect } from "react";
+import { Box, HStack, Text } from "@chakra-ui/react";
+import React, { useState, useEffect, useRef } from "react";
 import { useAnime } from "../Contexts/AnimeProvider";
 
 export default function EpisodeCountdown({ animeId, place }) {
@@ -12,37 +12,30 @@ export default function EpisodeCountdown({ animeId, place }) {
     seconds: "00",
   });
 
+  const targetTimeRef = useRef(null);
+
   useEffect(() => {
     if (animeId) {
       getAnimeEpisodeSchedule(animeId);
     }
   }, [animeId]);
 
-  function getCountdownFromDateTime(dateTimeString) {
-    if (!dateTimeString) {
+  function getCountdownFromTargetTime(targetTime) {
+    if (!targetTime) {
       return { days: "00", hours: "00", minutes: "00", seconds: "00" };
     }
 
-    const now = Date.now();
-
-    const targetTime = new Date(
-      dateTimeString.replace(" ", "T") + "Z"
-    ).getTime();
-    console.log("target time", targetTime);
-    if (isNaN(targetTime)) {
-      return { days: "00", hours: "00", minutes: "00", seconds: "00" };
-    }
-
-    const diffMs = targetTime - now;
+    const diffMs = targetTime - Date.now();
 
     if (diffMs <= 0) {
       return { days: "00", hours: "00", minutes: "00", seconds: "00" };
     }
+
     return {
       days: String(Math.floor(diffMs / (1000 * 60 * 60 * 24))).padStart(2, "0"),
       hours: String(Math.floor((diffMs / (1000 * 60 * 60)) % 24)).padStart(
         2,
-        "0"
+        "0",
       ),
       minutes: String(Math.floor((diffMs / (1000 * 60)) % 60)).padStart(2, "0"),
       seconds: String(Math.floor((diffMs / 1000) % 60)).padStart(2, "0"),
@@ -50,14 +43,34 @@ export default function EpisodeCountdown({ animeId, place }) {
   }
 
   useEffect(() => {
-    if (!episodeSchedule) return;
+    const timeUntilAiring = episodeSchedule;
 
+    if (typeof timeUntilAiring !== "number" || isNaN(timeUntilAiring)) {
+      targetTimeRef.current = null;
+      return;
+    }
+
+    targetTimeRef.current = Date.now() + timeUntilAiring * 1000;
+    setCountdown(getCountdownFromTargetTime(targetTimeRef.current));
+  }, [episodeSchedule]);
+
+  useEffect(() => {
     const interval = setInterval(() => {
-      setCountdown(getCountdownFromDateTime(episodeSchedule));
+      setCountdown(getCountdownFromTargetTime(targetTimeRef.current));
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [episodeSchedule]);
+  }, []);
+
+  const groups = [
+    { key: "days", label: "d", value: countdown.days },
+    { key: "hours", label: "h", value: countdown.hours },
+    { key: "minutes", label: "m", value: countdown.minutes },
+    { key: "seconds", label: "s", value: countdown.seconds },
+  ];
+
+  const digitFontSize =
+    place === "details" ? { md: "30px", base: "20px" } : "auto";
 
   return (
     <Box>
@@ -73,46 +86,32 @@ export default function EpisodeCountdown({ animeId, place }) {
         h="60px"
         justifyContent="center"
         px={{ md: 5, base: 5 }}
-        alignItems={"center"}
+        alignItems="center"
+        gap={2}
+        justifyContent="Space-evenly"
       >
-        {[
-          { label: "d", value: countdown.days },
-          { label: "h", value: countdown.hours },
-          { label: "m", value: countdown.minutes },
-          { label: "s", value: countdown.seconds },
-        ].map((item, index) => (
-          <Stack
-            flexDir="row"
-            key={item.label}
-            justifyContent={"space-around"}
-            alignItems={"center"}
-            w={"90%"}
-            h={"90%"}
+        {groups.map((group, groupIndex) => (
+          <HStack
+            key={group.key}
+            gap={{ md: "10", base: "5" }}
+            alignItems="center"
+            w
           >
-            <HStack gap={0} alignItems={"center"} h={"100%"}>
-              <Text
-                fontWeight="bold"
-                fontSize={
-                  place === "details" ? { md: "30px", base: "20px" } : "auto"
-                }
-              >
-                {item.value}
+            <HStack gap={0.5} alignItems="baseline">
+              <Text fontWeight="bold" fontSize={digitFontSize}>
+                {group.value}
               </Text>
-              <Text
-                fontWeight="bold"
-                fontSize={
-                  place === "details" ? { md: "30px", base: "20px" } : "auto"
-                }
-              >
-                {item.label}
+              <Text fontWeight="bold" fontSize={digitFontSize}>
+                {group.label}
               </Text>
             </HStack>
-            {index < 3 && (
-              <Text fontWeight="bold" fontSize={{ md: "30px", base: "20px" }}>
+
+            {groupIndex < groups.length - 1 && (
+              <Text fontWeight="bold" fontSize={digitFontSize} ml={1}>
                 :
               </Text>
             )}
-          </Stack>
+          </HStack>
         ))}
       </HStack>
     </Box>

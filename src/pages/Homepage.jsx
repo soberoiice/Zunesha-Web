@@ -39,6 +39,11 @@ export default function Homepage() {
       </Center>
     );
   }
+  const topTenData = {
+    today: homepage.topDay,
+    week: homepage.topWeek,
+    month: homepage.topMonth,
+  };
   return (
     <Box
       position={"relative"}
@@ -47,9 +52,10 @@ export default function Homepage() {
       backgroundColor={"black"}
       marginTop={"80px"}
       gap={5}
-      marginBottom={'50px'}
+      marginBottom={"50px"}
     >
-      <Spotlights data={homepage.spotlights} />
+      <Spotlights data={homepage.spotlight} />
+      {console.log("topTenData:", topTenData)}
       <Box
         display={"flex"}
         flexDir={{ base: "column", lg: "row" }}
@@ -65,23 +71,23 @@ export default function Homepage() {
           width={{ lg: "70%", base: "100%" }}
         >
           <Animelist
-            title={"Latest Episodes"}
+            title={"Top Airing"}
             icon={<RiFilmFill />}
-            data={homepage.latestEpisode}
+            data={homepage.topAiring}
           />
-          <Animelist
+          {/* <Animelist
             title={"Latest Completed"}
             icon={<IoTimeSharp />}
-            data={homepage.latestCompleted}
+            data={homepage.justCompleted}
           />
           <Animelist
             title={"Most Favorite"}
             icon={<FaStar />}
             data={homepage.mostFavorite}
-          />
+          /> */}
           <Schedule />
         </Box>
-        <ToptenAnimeList data={homepage.topTen} title={"Top 10"} />
+        <ToptenAnimeList data={topTenData} title={"Top 10"} />
       </Box>
 
       {/* <Footer /> */}

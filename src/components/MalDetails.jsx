@@ -14,7 +14,7 @@ const InfoRow = memo(({ label, value }) => (
   </Box>
 ));
 
-export default function MalDetails({ animeId, id }) {
+export default function MalDetails({ animeId, id, details }) {
   const { metaData, getMetaData, loadingMetaData } = useAnime();
 
   // Fetch metadata when id changes
@@ -40,7 +40,7 @@ export default function MalDetails({ animeId, id }) {
     );
   }
 
-  const studios = metaData?.studios?.map((s) => s.name).join(", ");
+  const studios = details?.studios?.map((s) => s.name).join(", ");
 
   return (
     <Box
@@ -58,7 +58,6 @@ export default function MalDetails({ animeId, id }) {
       px={{ md: "20px" }}
       py="20px"
     >
-      {console.log(metaData)}
       {/* Left section: info + countdown */}
       <Box
         w={{ lg: "60%", base: "100%" }}
@@ -77,33 +76,30 @@ export default function MalDetails({ animeId, id }) {
           <VStack alignItems="flex-start" spacing={2}>
             <InfoRow
               label="Japanese:"
-              value={metaData?.alternative_titles?.ja}
+              value={details?.alternative_titles?.ja}
             />
             <InfoRow label="Studios:" value={studios} />
-            <InfoRow label="Rating:" value={metaData?.rating} />
+            <InfoRow label="Rating:" value={details?.rating} />
           </VStack>
           <VStack alignItems="flex-start" spacing={2}>
-            <InfoRow label="Start date:" value={metaData?.start_date} />
-            <InfoRow label="End date:" value={metaData?.end_date} />
+            <InfoRow label="Start date:" value={details?.start_date} />
+            <InfoRow label="End date:" value={details?.end_date} />
             <InfoRow
               label="Season:"
-              value={`${metaData?.start_season?.season || "N/A"} ${
-                metaData?.start_season?.year || ""
+              value={`${details?.start_season?.season || "N/A"} ${
+                details?.start_season?.year || ""
               }`}
             />
           </VStack>
         </HStack>
 
         {/* Countdown component */}
-        <EpisodeCountdown
-          animeId={animeId}
-          place={'details'}
-        />
+        <EpisodeCountdown animeId={details?.id} place={"details"} />
       </Box>
 
       {/* Right section: trailer */}
-      {metaData?.videos?.length > 0 ? (
-        <YouTubeEmbed url={metaData?.videos[0]?.url} />
+      {details?.videos?.length > 0 ? (
+        <YouTubeEmbed url={details?.videos[0]?.url} />
       ) : (
         <Text>No trailer available</Text>
       )}

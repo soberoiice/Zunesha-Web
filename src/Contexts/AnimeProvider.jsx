@@ -25,7 +25,7 @@ export const AnimeProvider = ({ children }) => {
   const [animeCharacters, setAnimeCharacters] = useState([]);
   const [currentEpisodeInfo, setCurrentEpisodeInfo] = useState({});
   const [searchResults, setSearchResults] = useState([]);
-  const [episodeSchedule, setEpisodeSchedule] = useState([]);
+  const [episodeSchedule, setEpisodeSchedule] = useState(0);
   const [loadingHomepage, setLoadingHomepage] = useState(false);
   const [loadingDetails, setLoadingDetails] = useState(false);
   const [loadingEpisodes, setLoadingEpisodes] = useState(false);
@@ -34,14 +34,14 @@ export const AnimeProvider = ({ children }) => {
   const [loadingMetaData, setLoadingMetaData] = useState(false);
   const [loadingCharacters, setLoadingCharacters] = useState(false);
   const [loadingEpisobeSchedule, setLoadingEpisodeSchedule] = useState(false);
-  const [currentPage, setCurrentPage] = useState('home');
+  const [currentPage, setCurrentPage] = useState("home");
   const [params, setParams] = useState({
-      type: { value: "any", visible: false, label: "Any" },
-      status: { value: "any", visible: false, label: "Any" },
-      genre: { value: [] },
-      season: { value: "any", visible: false, label: "Any" },
-      rating: { value: "any", visible: false, label: "Any" },
-    });
+    type: { value: "any", visible: false, label: "Any" },
+    status: { value: "any", visible: false, label: "Any" },
+    genre: { value: [] },
+    season: { value: "any", visible: false, label: "Any" },
+    rating: { value: "any", visible: false, label: "Any" },
+  });
   useEffect(() => {
     setCurrentEpisodeIndex(0);
   }, [episodes]);
@@ -51,7 +51,7 @@ export const AnimeProvider = ({ children }) => {
       setHomepage([]);
       const data = await fetchHomepage();
       setHomepage(data);
-      // console.log("Homepage data:", data);
+      console.log("Homepage data:", data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -73,11 +73,11 @@ export const AnimeProvider = ({ children }) => {
     }
   };
 
-  const getAnimeEpisodes = async (id) => {
+  const getAnimeEpisodes = async (id, page) => {
     try {
       setLoadingEpisodes(true);
       setEpisodes({});
-      const data = await fetchAnimeEpisodes(id);
+      const data = await fetchAnimeEpisodes(id, page);
       setEpisodes(data);
       // console.log("Episodes data:", data);
     } catch (error) {
@@ -87,12 +87,12 @@ export const AnimeProvider = ({ children }) => {
     }
   };
 
-  const getCurrentEpisodeInfo = async (id, server, type) => {
+  const getCurrentEpisodeInfo = async (id, ep) => {
     try {
       setCurrentEpisodeInfo({});
-      const data = await fetchCurrentEpisodeInfo(id, server, type);
+      const data = await fetchCurrentEpisodeInfo(id, ep);
       setCurrentEpisodeInfo(data);
-      // console.log("Current Episodes data:", data);
+      console.log("Current Episodes data:", data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -162,7 +162,7 @@ export const AnimeProvider = ({ children }) => {
     // console.log("schedule id", id);
     try {
       setLoadingEpisodeSchedule(true);
-      setEpisodeSchedule([]);
+      setEpisodeSchedule();
       const data = await fetchAnimeEpisodeSchedule(id);
       setEpisodeSchedule(data);
       // console.log("episode schedule", data);

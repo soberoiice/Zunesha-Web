@@ -15,6 +15,8 @@ import { MdBookmarkAdd } from "react-icons/md";
 import { useNavigate } from "react-router";
 import anilist from "../assets/anilist_logo_icon.svg";
 import mal from "../assets/myanimelist_logo_icon.svg";
+import { IoCamera } from "react-icons/io5";
+import { IoIosVideocam } from "react-icons/io";
 
 // Reusable Icon Button for consistent styling
 const IconButton = memo(({ children, onClick, bg = "#32a88b", size = 50 }) => (
@@ -62,9 +64,9 @@ export default function MainDetails({ data }) {
 
   // Memoize the genres list to avoid recalculating on each render
   const genreList = useMemo(() => {
-    return data?.animeInfo?.Genres?.map((item) => (
+    return data?.animeInfo?.Genres?.map((index, item) => (
       <Text
-        key={item}
+        key={index}
         cursor="pointer"
         border="1px solid #fff"
         borderRadius="2xl"
@@ -97,16 +99,21 @@ export default function MainDetails({ data }) {
       {/* Poster Image */}
       <Image
         h="400px"
-        aspectRatio={2/3}
+        aspectRatio={2 / 3}
         mx="auto"
-        src={data?.poster}
+        src={data?.main_picture?.large}
         loading="lazy"
         decoding="async"
         objectFit="cover"
         borderRadius="lg"
       />
 
-      <Box display="flex" flexDir="column" gap={5} w={{md:'70%', base:'100%'}}>
+      <Box
+        display="flex"
+        flexDir="column"
+        gap={5}
+        w={{ md: "70%", base: "100%" }}
+      >
         {/* Top Info Tags */}
         <HStack gap={5} flexWrap="wrap">
           <Text
@@ -117,27 +124,26 @@ export default function MainDetails({ data }) {
             color="#32a88b"
             fontWeight="bold"
           >
-            {data?.showType}
+            {data?.media_type}
           </Text>
 
           <Text borderRadius="2xl" color="#fff">
-            {data?.animeInfo?.Status}
+            {data?.status}
           </Text>
 
-          {data?.animeInfo["MAL Score"] !== "?" ? (
+          {data?.mean !== "?" ? (
             <HStack>
-              <FaStar color="#32a88b" /> {data?.animeInfo["MAL Score"]}
+              <FaStar color="#32a88b" /> {data?.mean}
             </HStack>
           ) : (
             <Text>No Rating</Text>
           )}
 
           <HStack>
-            <FaClosedCaptioning color="#32a88b" />{" "}
-            {data?.animeInfo?.tvInfo?.sub}
+            <IoIosVideocam color="#32a88b" /> {data?.num_episodes}
           </HStack>
 
-          {data?.animeInfo?.tvInfo?.dub && (
+          {data?.hasDub && (
             <HStack>
               <FaVolumeHigh color="#32a88b" /> {data?.animeInfo?.tvInfo?.dub}
             </HStack>
@@ -146,17 +152,33 @@ export default function MainDetails({ data }) {
 
         {/* Titles */}
         <Heading fontSize="4xl" fontWeight="bold" lineHeight={1.2}>
-          {data?.title}
+          {data?.alternative_titles?.en || data?.title}
         </Heading>
         <Text fontSize="md" color="#32a88b" fontWeight="bold">
-          {data?.japanese_title}
+          {data?.title}
         </Text>
 
         {/* Genres */}
-        {genreList?.length > 0 && <HStack flexWrap="wrap">{genreList}</HStack>}
+        {data?.genres?.length > 0 && (
+          <HStack flexWrap="wrap">
+            {data?.genres?.map((genre) => (
+              <Text
+                key={genre.id}
+                border="1px solid #fff"
+                borderRadius="2xl"
+                px={3}
+                py={1}
+                fontSize="xs"
+                color="#fff"
+              >
+                {genre.name}
+              </Text>
+            ))}
+          </HStack>
+        )}
 
         {/* Overview Section */}
-        <Overview text={data?.animeInfo?.Overview} />
+        <Overview text={data?.synopsis} />
 
         {/* Action Buttons */}
         <HStack flexWrap="wrap" gap={3}>
@@ -183,24 +205,13 @@ export default function MainDetails({ data }) {
           </IconButton>
 
           {/* External Links */}
-          {data?.malId && (
+          {data?.id && (
             <Link
-              href={`https://myanimelist.net/anime/${data?.malId}`}
+              href={`https://myanimelist.net/anime/${data?.id}`}
               target="_blank"
             >
               <IconButton bg="rgba(0, 0, 0, 0.34)">
                 <Image src={mal} filter="invert(1)" />
-              </IconButton>
-            </Link>
-          )}
-
-          {data?.anilistId && (
-            <Link
-              href={`https://anilist.co/anime/${data?.anilistId}`}
-              target="_blank"
-            >
-              <IconButton bg="rgba(0, 0, 0, 0.34)">
-                <Image src={anilist} w="50px" filter="invert(1)" />
               </IconButton>
             </Link>
           )}

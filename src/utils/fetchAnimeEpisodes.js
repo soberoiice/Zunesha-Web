@@ -3,7 +3,12 @@ import axios from "axios";
 const API_URL = import.meta.env.VITE_API_URL;
 const PROXY_URL = import.meta.env.VITE_PROXY_URL;
 
-export async function fetchAnimeEpisodes(id) {
-  const res = await axios.get(`${PROXY_URL}${API_URL}episodes/${id}`);
-  return res.data.results.episodes;
+const API_BASE_URL =
+  window.location.hostname === "localhost"
+    ? "http://localhost:3000/api"
+    : "/api";
+
+export async function fetchAnimeEpisodes(id, page) {
+  const episodes = await axios.get(`${API_BASE_URL}/episodes?id=${id}&page=${page}`);
+  return episodes.data;
 }

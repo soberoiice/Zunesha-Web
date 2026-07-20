@@ -26,7 +26,7 @@ function ToptenAnimeList({ data, title }) {
     (id) => {
       nav(`/details/${id}`);
     },
-    [nav]
+    [nav],
   );
 
   return (
@@ -53,7 +53,7 @@ function ToptenAnimeList({ data, title }) {
               boxShadow={content === item.link ? "0 0 10px #32a88bff" : "none"}
               _hover={{ transform: "scale(1.03)" }}
               transition="transform 0.15s ease"
-              w={'50px'}
+              w={"50px"}
             >
               {item.name}
             </Button>
@@ -64,7 +64,7 @@ function ToptenAnimeList({ data, title }) {
         {data?.[content]?.map((item, index) => (
           <HStack
             key={item.id}
-            onClick={() => handleNavigate(item.id)}
+            onClick={() => handleNavigate(item.slug)}
             h="100px"
             px={3}
             w={"95%"}
@@ -74,7 +74,7 @@ function ToptenAnimeList({ data, title }) {
             borderBottomColor={"rgba(63, 63, 63, 0.76)"}
             gap={3}
           >
-            {/* <CenterBadge number={item.number} /> */}
+            <CenterBadge number={item.rank} />
             <Text
               color={index < 3 ? `rgba(50,168,139,${1 - index / 5})` : "white"}
               fontWeight={"bold"}
@@ -85,7 +85,7 @@ function ToptenAnimeList({ data, title }) {
               {item.number}
             </Text>
             <Image
-              src={item.poster}
+              src={item.image}
               maxW="70px"
               h="80px"
               borderRadius="lg"
@@ -100,9 +100,9 @@ function ToptenAnimeList({ data, title }) {
               <HStack mt={1}>
                 <MetaBadge
                   icon={<FaClosedCaptioning />}
-                  value={item.tvInfo.sub}
+                  value={item.episodes.sub}
                 />
-                <MetaBadge icon={<FaVolumeHigh />} value={item.tvInfo.dub} />
+                {/* <MetaBadge icon={<FaVolumeHigh />} value={item.episodes.dub} /> */}
               </HStack>
             </Box>
           </HStack>

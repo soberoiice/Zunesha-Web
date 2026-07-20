@@ -48,7 +48,7 @@ export default function HLSPlayer({
         srcLang: t.srcLang || "en",
         label: t.label || `Subtitle ${i + 1}`,
         default: t.default || i === 0,
-      }))
+      })),
     );
   }, [epInfo, PROXY_URL]);
 

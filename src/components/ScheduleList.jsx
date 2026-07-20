@@ -1,15 +1,21 @@
-import { Box, Center, Spinner, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  DataListItemValue,
+  Spinner,
+  Text,
+} from "@chakra-ui/react";
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router";
 
-export default function ScheduleList({ data, loadingSchedule }) {
+export default function ScheduleList({ data, loadingSchedule, date }) {
   const nav = useNavigate();
 
   const handleNavigate = useCallback(
     (id) => {
       nav(`/details/${id}`);
     },
-    [nav]
+    [nav],
   );
   if (loadingSchedule) {
     return (
@@ -36,7 +42,7 @@ export default function ScheduleList({ data, loadingSchedule }) {
       gap={4}
       color={"white"}
     >
-      {data.map((anime) => (
+      {data[date]?.animes?.map((anime) => (
         <Box
           key={anime?.id}
           display={"flex"}
@@ -52,7 +58,7 @@ export default function ScheduleList({ data, loadingSchedule }) {
           onClick={() => handleNavigate(anime?.id)}
         >
           <Box textAlign={"center"} width={{ md: "10%", base: "20%" }}>
-            <Text>{anime?.time}</Text>
+            <Text>{anime?.date}</Text>
           </Box>
           <Box
             w={"2px"}
@@ -63,7 +69,7 @@ export default function ScheduleList({ data, loadingSchedule }) {
             <Text>{anime?.title}</Text>
           </Box>
           <Box textAlign={"center"} width={"20%"}>
-            <Text>EP{anime?.episode_no}</Text>
+            <Text>{anime?.type}</Text>
           </Box>
         </Box>
       ))}

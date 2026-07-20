@@ -9,8 +9,8 @@ export default function Schedule() {
   const [content, setContent] = useState(0);
   const { schedule, getSchedule, loadingSchedule } = useAnime();
   useEffect(() => {
-    getSchedule(getNextSevenDays()[content]?.date);
-  }, [content]);
+    getSchedule();
+  }, []);
   const getNextSevenDays = () => {
     const dates = [];
     const today = new Date();
@@ -44,6 +44,7 @@ export default function Schedule() {
         <RiCalendarScheduleFill />
         <Text>Schedule</Text>
       </Heading>
+      {console.log("schedule:", schedule)}
       <Box
         w={"100%"}
         display={"flex"}
@@ -79,7 +80,11 @@ export default function Schedule() {
         ))}
       </Box>
       <Box borderRadius={"xl"} py={"10px"} scrollBarWidth={"none"}>
-        <ScheduleList data={schedule} loadingSchedule={loadingSchedule} />
+        <ScheduleList
+          data={schedule}
+          date={content}
+          loadingSchedule={loadingSchedule}
+        />
       </Box>
     </Box>
   );

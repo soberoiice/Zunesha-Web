@@ -1,54 +1,29 @@
+import "./env.js"; // must be first — loads .env.local before other imports read process.env
 import express from "express";
-import axios from "axios";
 import cors from "cors";
-import dotenv from "dotenv";
+import animeRoutes from "./routes/anime.routes.js";
 
-dotenv.config({ path: ".env.local" });
-const CLIENT_ID = process.env.VITE_MAL_CLIENT_ID;
+if (!process.env.VITE_MAL_CLIENT_ID) {
+  console.warn(
+    "⚠️  VITE_MAL_CLIENT_ID is not set — MAL requests will fail. Add it to .env.local",
+  );
+}
+
 const app = express();
+const PORT = process.env.PORT || 3000;
+
 app.use(cors());
+app.use(express.json());
 
-app.get("/api/meta", async (req, res) => {
-  try {
-    const { id } = req.query;
-    if (!id) return res.status(400).json({ error: "Missing anime ID" });
+app.get("/health", (req, res) => res.json({ status: "ok" }));
 
-    const response = await axios.get(
-      `https://api.myanimelist.net/v2/anime/${id}`,
-      {
-        params: {
-          fields:
-            "id,title,main_picture,episodes,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,background,related_anime,related_manga,recommendations,studios,statistics,videos,trailer",
-        },
-        headers: { "X-MAL-CLIENT-ID": CLIENT_ID },
-      }
-    );
+app.use(animeRoutes);
 
-    res.json(response.data);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ error: "MAL request failed" });
-  }
+// Fallback 404
+app.use((req, res) => {
+  res.status(404).json({ error: "Not found" });
 });
 
-app.get("/api/characters", async (req, res) => {
-  try {
-    const { id, offset = 0 } = req.query;
-    if (!id) return res.status(400).json({ error: "Missing anime ID" });
-
-    const response = await axios.get(
-      `https://api.jikan.moe/v4/anime/${id}/characters`,
-      {
-        params: {
-          offset: Number(offset),
-        },
-      }
-    );
-
-    res.json(response.data);
-  } catch (error) {
-    console.error("MAL API Error:", error.response?.data || error.message);
-    res.status(500).json({ error: "MAL request failed" });
-  }
-});
-app.listen(3000, () => console.log("Server running on http://localhost:3000"));
+app.listen(PORT, () =>
+  console.log(`Server running on http://localhost:${PORT}`),
+);

@@ -43,7 +43,7 @@ export default function Animelist({ title, data, icon }) {
   }, [data, updateScrollButtons]);
 
   return (
-    <Stack gap={2} color={"white"}>
+    <Stack color={"white"} fontWeight={"bold"}>
       <Heading display={"flex"} alignItems={"center"} gap={2} fontSize={"2xl"}>
         {icon}
         <Text>{title}</Text>
@@ -67,7 +67,7 @@ export default function Animelist({ title, data, icon }) {
               border: "none",
             }}
             color="white"
-            height={{ lg: "200px", base: "165px" }}
+            height={"100%"}
             borderRadius={"none"}
             bgGradient="to-r"
             gradientFrom="rgba(0,0,0,0.8)"
@@ -92,7 +92,7 @@ export default function Animelist({ title, data, icon }) {
             }}
             bg="transparent"
             color="white"
-            height={{ lg: "200px", base: "165px" }}
+            height={"100%"}
             borderRadius={"none"}
             bgGradient="to-l"
             gradientFrom="rgba(0, 0, 0, 1)"
@@ -107,47 +107,59 @@ export default function Animelist({ title, data, icon }) {
           onScroll={updateScrollButtons}
           w="100%"
           overflowX="scroll"
-          spacing={{ base: 2, lg: 5 }}
-          height={{ lg: "210px", base: "165px" }}
+          overflowY={"hidden"}
+          height={"270px"}
           scrollbarWidth="none"
           gap={2}
         >
           {data?.slice(0, 15).map((item) => (
             <Box
               key={item.id}
-              position="relative"
               zIndex={1}
               onClick={() => nav(`/details/${item.id}`)}
-              w={{ lg: "145px", base: "120px" }}
+              w={{ lg: "150px", base: "125px" }}
               cursor="pointer"
-              h={{ lg: "200px", base: "165px" }}
+              h={"250px"}
               flex="0 0 auto"
               borderRadius="lg"
+              display="flex"
+              flexDir="column"
+              alignItems="center"
+              gap={2}
+              _hover={{
+                color: "#32a88b",
+                transition: "0.3s",
+              }}
             >
               <Image
                 w="100%"
-                h="100%"
+                maxH="200px"
+                minH={"200px"}
                 borderRadius="lg"
-                src={item.poster}
+                src={item.main_picture?.large}
                 mx="auto"
-                _hover={{
-                  scale: 1.05,
-                  transition: "0.3s",
-                }}
                 loading="lazy"
                 decoding="async"
               />
-              <Box
-                width="95%"
-                position="absolute"
-                borderRadius="md"
-                backgroundColor="rgba(0, 0, 0, 0.57)"
-                WebkitBackdropFilter="blur(10px)"
-                left={1}
-                bottom={1}
-                px={2}
-              >
-                <Text truncate>{item.title}</Text>
+              <Box w={"100%"}>
+                {item?.media_type && (
+                  <HStack
+                    color={"#7a7a7a"}
+                    fontSize={"11px"}
+                    justifyContent={"space-between"}
+                  >
+                    <Text lineClamp={2}>{item.media_type}</Text>
+                    <Text lineClamp={2}>EP{item.num_episodes}</Text>
+                  </HStack>
+                )}
+                <Box
+                  width="95%"
+                  borderRadius="md"
+                  WebkitBackdropFilter="blur(10px)"
+                  fontSize={"12px"}
+                >
+                  <Text lineClamp={2}>{item.title}</Text>
+                </Box>
               </Box>
             </Box>
           ))}
