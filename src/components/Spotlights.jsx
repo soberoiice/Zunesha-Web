@@ -134,7 +134,7 @@ export default function Spotlights({ data }) {
           lineClamp={{ md: "", base: "2" }}
           fontWeight={"bold"}
         >
-          {data[currentIndex].title}
+          {data[currentIndex]?.title}
         </Heading>
         <Box display={{ md: "block", base: "none" }}>
           <Text lineClamp={{ md: 2, base: 1 }}>

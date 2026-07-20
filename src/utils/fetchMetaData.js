@@ -9,7 +9,7 @@ const API_BASE_URL =
     : `${API_URL}`;
 
 export async function fetchMetaData(id) {
-  const res = await axios.get(`${API_BASE_URL}?id=${id}`);
+  const res = await axios.get(`${PROXY_URL}${API_BASE_URL}?id=${id}`);
   return res.data;
 }
 // async function getAnimeDetails(id) {
