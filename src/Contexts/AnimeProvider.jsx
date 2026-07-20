@@ -79,7 +79,6 @@ export const AnimeProvider = ({ children }) => {
       setEpisodes({});
       const data = await fetchAnimeEpisodes(id, page);
       setEpisodes(data);
-      // console.log("Episodes data:", data);
     } catch (error) {
       console.error(error);
     } finally {

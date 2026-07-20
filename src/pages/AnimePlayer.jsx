@@ -21,7 +21,7 @@ import EpisodesList from "../components/EpisodesList";
 
 export default function AnimePlayer() {
   const { id } = useParams();
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [episode, setEpisode] = useState(1);
 
@@ -60,34 +60,9 @@ export default function AnimePlayer() {
               url={`https://api.yenime.net/anime/${id}/${episode}`}
             />
           </Box>
-          {/* <Box
-            backgroundColor={"#333333ff"}
-            w={"full"}
-            borderRadius={"lg"}
-            py={3}
-            px={2}
-            minH={"250px"}
-          >
-            <Stack
-              mx={"auto"}
-              width={"95%"}
-              flexDir={{ md: "row", base: "column" }}
-              maxH={"460px"}
-            >
-              <EpisodesContainer episodes={episodes} />
-              <ServerListContainer
-                setServer={setServer}
-                server={server}
-                subServers={subServers}
-                dubServers={dubServers}
-                type={type}
-                setType={setType}
-              />
-            </Stack>
-          </Box> */}
         </Box>
         {/* <MiniInfo animeId={id} /> */}
-        <Box width={"30%"}>
+        <Box width={{ base: "95%", lg: "30%" }}>
           <EpisodesList id={id} episode={episode} setEpisode={setEpisode} />
         </Box>
       </Stack>

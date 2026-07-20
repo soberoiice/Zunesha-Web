@@ -349,7 +349,7 @@ router.get("/api/episodes", async (req, res) => {
   try {
     const { id, page } = req.query;
     if (!id) return res.status(400).json({ error: "Missing anime ID" });
-    // if (!page) return res.status(400).json({ error: "Missing page parameter" });
+    if (!page) page = 1;
 
     const data = await withCache(`/api/episodes:${id}:${page}`, 60 * MIN, () =>
       fetchEpisodes(id, page),

@@ -34,6 +34,12 @@ export default function EpisodesList({ id, episode, setEpisode }) {
   const [page, setPage] = React.useState(1);
   const [isListView, setIsListView] = React.useState(true);
   const { episodes, getAnimeEpisodes, loadingEpisodes } = useAnime();
+  console.log(
+    "RENDER — loadingEpisodes:",
+    loadingEpisodes,
+    "episodes:",
+    episodes,
+  );
 
   const numbers = useMemo(() => {
     const length = episodes?.pagination?.last_visible_page || 0;
@@ -43,9 +49,9 @@ export default function EpisodesList({ id, episode, setEpisode }) {
       itemToString: (item) => String(item),
       itemToValue: (item) => String(item),
     });
-  }, [episodes?.pagination?.length]);
-
+  }, [episodes?.pagination?.last_visible_page]);
   useEffect(() => {
+    console.log("effect fired", { id, page });
     getAnimeEpisodes(id, page);
   }, [id, page]);
 
@@ -127,7 +133,7 @@ export default function EpisodesList({ id, episode, setEpisode }) {
         <HStack overflowY={"Scroll"} flexDir={"column"} paddingY={5}>
           {episodes?.data?.map((ep) => (
             <HStack
-              key={ep.id}
+              key={ep.mal_id}
               // justifyContent={"space-evenly"}
               w={"90%"}
               padding={2}
@@ -151,12 +157,8 @@ export default function EpisodesList({ id, episode, setEpisode }) {
                 alignItems={"center"}
                 justifyContent={"center"}
                 fontSize={"18px"}
-                backgroundColor={"#ffffff4d"}
-                _hover={{
-                  Children: <Text>Cat</Text>,
-                }}
               >
-                {/* <Text>{ep?.mal_id}</Text> */}
+                <Text>{ep?.mal_id}</Text>
               </Box>
               <Box
                 w={"80%"}
@@ -184,7 +186,7 @@ export default function EpisodesList({ id, episode, setEpisode }) {
         >
           {episodes?.data?.map((ep) => (
             <VStack
-              key={ep.id}
+              key={ep.mal_id}
               justifyContent={"space-evenly"}
               padding={2}
               borderRadius={"lg"}

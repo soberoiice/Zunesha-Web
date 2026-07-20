@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const API_BASE_URL =
-  window.location.hostname === "localhost"
+  import.meta.env.VITE_DEPLOYMENT === "development"
     ? "http://localhost:3000/api/characters"
-    : "/api/characters";
+    : `${API_URL}/api/characters`;
 
 export async function fetchAnimeCharacters(id) {
   const res = await axios.get(`${API_BASE_URL}?id=${id}`);

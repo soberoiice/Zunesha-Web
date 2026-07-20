@@ -185,7 +185,7 @@ export default function MainDetails({ data }) {
           <Button
             colorScheme="teal"
             height={50}
-            onClick={() => nav(`/watch/${data?.id}/1`)}
+            onClick={() => nav(`/watch/${data?.id}`)}
             backgroundColor={"#32a88b"}
             boxShadow={"0 0 20px #32a88b"}
             _hover={{ transform: "scale(1.05)" }}
