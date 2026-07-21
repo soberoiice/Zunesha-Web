@@ -88,7 +88,7 @@ export default function EpisodeCountdown({ animeId, place }) {
         px={{ md: 5, base: 5 }}
         alignItems="center"
         gap={2}
-        justifyContent="Space-evenly"
+        justify={"space-evenly"}
       >
         {groups.map((group, groupIndex) => (
           <HStack
