@@ -1,4 +1,4 @@
-import "./env.js"; // must be first — loads .env.local before other imports read process.env
+import "./env.js";
 import express from "express";
 import cors from "cors";
 import animeRoutes from "./routes/anime.routes.js";
@@ -19,11 +19,15 @@ app.get("/health", (req, res) => res.json({ status: "ok" }));
 
 app.use(animeRoutes);
 
-// Fallback 404
 app.use((req, res) => {
   res.status(404).json({ error: "Not found" });
 });
 
-app.listen(PORT, () =>
-  console.log(`Server running on http://localhost:${PORT}`),
-);
+// Only listen when actually running locally, not when Vercel imports this module
+if (process.env.VITE_DEPLOYMENT !== "production") {
+  app.listen(PORT, () =>
+    console.log(`Server running on http://localhost:${PORT}`),
+  );
+}
+
+export default app;

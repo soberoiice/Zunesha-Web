@@ -18,7 +18,7 @@ import {
   fetchSchedule,
   WEEKDAYS,
   fetchEpisodes,
-} from "../lib/jikanClient.js";
+} from "../lib/tenraiClient.js";
 import {
   fetchBannerByMalId,
   fetchBannersByMalIds,
